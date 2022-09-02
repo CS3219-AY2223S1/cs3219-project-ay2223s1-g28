@@ -1,11 +1,13 @@
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 import {Box} from "@mui/material";
 
+import Navbar from './components/Navbar';
 import SignupPage from './pages/Signup';
 
 function App() {
     return (
         <div className="App">
+            <Navbar />
             <Box display={"flex"} flexDirection={"column"} padding={"4rem"}>
                 <Router>
                     <Routes>
