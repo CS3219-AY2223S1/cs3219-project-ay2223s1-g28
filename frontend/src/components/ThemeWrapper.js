@@ -24,8 +24,13 @@ function ThemeWrapper(props) {
           },
           secondary: {
             main: "#ffffff",
-          }
+          },
         },
+        typography: {
+            button: {
+              textTransform: 'none'
+            }
+          }
       }),
     [mode]
   );
