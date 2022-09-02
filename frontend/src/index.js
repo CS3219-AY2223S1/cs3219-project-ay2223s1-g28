@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ThemeWrapper from "./components/ThemeWrapper";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+
 root.render(
-    <App/>
+    <ThemeWrapper colorModeContext={ColorModeContext}>
+      <App colorModeContext={ColorModeContext} />
+    </ThemeWrapper>
 );
 
 // If you want to start measuring performance in your app, pass a function
