@@ -13,8 +13,8 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: "white" }}>
             PeerPrep
           </Typography>
-          <Button color="secondary">Sign in</Button>
-          <Button color="secondary">Sign up</Button>
+          <Button color="secondary" size="large">Sign in</Button>
+          <Button color="secondary" size="large">Sign up</Button>
         </Toolbar>
       </AppBar>
     </Box>
