@@ -4,9 +4,7 @@ import styles from './OutlinedContainer.module.css';
 
 function OutlinedContainer(props) {
   return (
-    <Container
-      className={`${styles.container__border} ${styles.container__shadow} ${styles['border--green']}`}
-    >
+    <Container className={styles.outlined_container}>
       {props.children}
     </Container>
   );
