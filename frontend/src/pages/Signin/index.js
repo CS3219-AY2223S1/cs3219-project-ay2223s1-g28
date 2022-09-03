@@ -19,7 +19,7 @@ function SigninPage() {
             variant="h5"
             fontWeight="lighter"
             textAlign="center"
-            sx={{ mt: '10px' }}
+            sx={{ mt: '32px' }}
           >
             Start acing your technical interview with{' '}
             <Typography variant="h5" component="span" fontWeight="bold">
