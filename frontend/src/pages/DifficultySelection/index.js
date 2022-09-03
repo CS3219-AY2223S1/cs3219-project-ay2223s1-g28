@@ -36,6 +36,27 @@ function DifficultySelectionPage() {
             Start by choosing a difficulty level for your coding question. Let
             PeerPrep handle the rest!
           </Typography>
+          <Button
+            className={styles.easydifficulty_button}
+            variant="outlined"
+            size="large"
+          >
+            Easy
+          </Button>
+          <Button
+            className={styles.mediumdifficulty_button}
+            variant="outlined"
+            size="large"
+          >
+            Medium
+          </Button>
+          <Button
+            className={styles.harddifficulty_button}
+            variant="outlined"
+            size="large"
+          >
+            Hard
+          </Button>
         </Grid>
       </Grid>
     </OutlinedContainer>
