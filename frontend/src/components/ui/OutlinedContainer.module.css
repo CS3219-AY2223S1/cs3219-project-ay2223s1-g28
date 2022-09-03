@@ -1,0 +1,11 @@
+.container__border {
+    border-radius: 30px;
+}
+
+.container__shadow {
+    box-shadow: 0 8px #d7d7d7;
+}
+
+.border--green {
+    border: 3px solid #3fa7a5; 
+}
