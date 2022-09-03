@@ -13,9 +13,9 @@ import SigninPage from './pages/Signin';
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Box display={'flex'} flexDirection={'column'} padding={'4rem'}>
-        <Router>
+      <Router>
+        <Navbar />
+        <Box display={'flex'} flexDirection={'column'} padding={'4rem'}>
           <Routes>
             <Route
               exact
@@ -25,8 +25,8 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/signin" element={<SigninPage />} />
           </Routes>
-        </Router>
-      </Box>
+        </Box>
+      </Router>
     </div>
   );
 }
