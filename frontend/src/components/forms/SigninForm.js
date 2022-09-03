@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import Grid from '@mui/material/Grid';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
@@ -14,7 +16,7 @@ function SigninForm() {
       container
       justifyContent="center"
       alignItems="center"
-      spacing={3}
+      spacing={6}
     >
       <Grid item xs={12}>
         <IconTextField
@@ -34,13 +36,25 @@ function SigninForm() {
         direction="column"
         justifyContent="center"
         alignItems="center"
+        rowSpacing={1}
       >
-        <Button className={styles.signin_button} variant="outlined" size="large">
-          Sign in
-        </Button>
-        <Typography variant="button">
-          Don't have an account? <Button href="/signup">Sign up here!</Button>
-        </Typography>
+        <Grid item>
+          <Button
+            className={styles.signin_button}
+            variant="outlined"
+            size="large"
+          >
+            Sign in
+          </Button>
+        </Grid>
+        <Grid item>
+          <Typography variant="button">
+            Don't have an account?{' '}
+            <Link to="/signup" style={{ color: '#0078FF' }}>
+              Sign up here!
+            </Link>
+          </Typography>
+        </Grid>
       </Grid>
     </Grid>
   );
