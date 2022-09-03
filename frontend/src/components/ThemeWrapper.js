@@ -1,49 +1,30 @@
-import React from "react";
+import React from 'react';
 
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 function ThemeWrapper(props) {
-  const [mode, setMode] = React.useState("light");
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#3fa7a5',
       },
-    }),
-    []
-  );
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-          primary: {
-            main: "#3fa7a5",
-          },
-          secondary: {
-            main: "#ffffff",
-          },
-        },
-        typography: {
-            button: {
-              textTransform: 'none'
-            }
-          }
-      }),
-    [mode]
-  );
-
-  const ColorModeContext = props.colorModeContext;
+      secondary: {
+        main: '#ffffff',
+      },
+    },
+    typography: {
+      button: {
+        textTransform: 'none',
+      },
+    },
+  });
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {props.children}
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {props.children}
+    </ThemeProvider>
   );
 }
 

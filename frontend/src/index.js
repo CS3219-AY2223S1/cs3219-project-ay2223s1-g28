@@ -6,11 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import ThemeWrapper from "./components/ThemeWrapper";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 root.render(
-    <ThemeWrapper colorModeContext={ColorModeContext}>
-      <App colorModeContext={ColorModeContext} />
+    <ThemeWrapper>
+      <App />
     </ThemeWrapper>
 );
 
