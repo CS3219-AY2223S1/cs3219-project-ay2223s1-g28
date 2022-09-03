@@ -7,7 +7,7 @@ function IconTextField({ icon, label, variant = 'filled' }) {
   return (
     <Box className={styles.icon_text_field}>
       {icon}
-      <TextField label={label} variant={variant} />
+      <TextField label={label} variant={variant} fullWidth/>
     </Box>
   );
 }
