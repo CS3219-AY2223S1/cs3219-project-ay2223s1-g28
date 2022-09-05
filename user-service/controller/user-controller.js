@@ -1,4 +1,4 @@
-import { ormCreateUser as _createUser } from '../model/user-orm.js'
+import { ormCreateUser as _createUser, ormSignin as _signin } from '../model/user-orm.js'
 
 export async function createUser(req, res) {
     try {
@@ -17,5 +17,25 @@ export async function createUser(req, res) {
         }
     } catch (err) {
         return res.status(500).json({message: 'Database failure when creating new user!'})
+    }
+}
+
+export async function signin(req, res) {
+    try {
+        const { username, password } = req.body;
+        if (username && password) {
+            const resp = await _signin(username, password);
+            console.log(resp);
+            if (resp.err) {
+                return res.status(400).json({message: 'Wrong password! Please try again.'});
+            } else {
+                console.log(`Signed user ${username} in successfully!`)
+                return res.status(201).json({message: `Signed user ${username} in successfully!`});
+            }
+        } else {
+            return res.status(400).json({message: 'Username and/or Password are missing!'});
+        }
+    } catch (err) {
+        return res.status(500).json({message: 'Database failure when signing in user!'})
     }
 }

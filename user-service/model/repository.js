@@ -15,3 +15,7 @@ export async function createUser(params) {
   return new UserModel(params)
 }
 
+export async function getUserPassword(username) {
+  const password = await UserModel.findOne({username: username}, {password: 1, _id: 0}).exec();
+  return password;
+}
