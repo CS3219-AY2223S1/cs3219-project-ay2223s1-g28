@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import IconTextField from './IconTextField';
 
 describe('IconTextField component', () => {
-  test('renders correct label', () => {
+  it('renders correct label', () => {
     const label = "I am a text field label";
     render(<IconTextField label={label}/>);
 

@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from './Navbar';
 
 describe('Navbar component', () => {
-  test('renders "PeerPrep" text', () => {
+  it('renders "PeerPrep" text', () => {
     render(
       <Router>
         <Navbar />
@@ -17,7 +17,7 @@ describe('Navbar component', () => {
     expect(textElement).toBeInTheDocument();
   });
 
-  test('renders "Sign in" button', () => {
+  it('renders "Sign in" button', () => {
     render(
       <Router>
         <Navbar />
@@ -29,7 +29,7 @@ describe('Navbar component', () => {
     expect(signinPageLink).toBeInTheDocument();
   });
 
-  test('renders "Sign up" link', () => {
+  it('renders "Sign up" link', () => {
     render(
       <Router>
         <Navbar />
@@ -41,7 +41,7 @@ describe('Navbar component', () => {
     expect(signupPageLink).toBeInTheDocument();
   });
 
-  test('changes URL to "/signup" upon clicking "Sign up" button', () => {
+  it('changes URL to "/signup" upon clicking "Sign up" button', () => {
     render(
       <Router>
         <Navbar />
@@ -53,7 +53,7 @@ describe('Navbar component', () => {
     expect(global.window.location.href).toContain('/signup')
   });
 
-  test('changes URL to "/signin" upon clicking "Sign up" button', () => {
+  it('changes URL to "/signin" upon clicking "Sign up" button', () => {
     render(
       <Router>
         <Navbar />
