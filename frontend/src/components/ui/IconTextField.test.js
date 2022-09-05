@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
 import IconTextField from './IconTextField';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 
 describe('IconTextField component', () => {
   test('renders correct label', () => {
