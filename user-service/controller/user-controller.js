@@ -30,7 +30,7 @@ export async function signin(req, res) {
                 return res.status(400).json({message: 'Wrong password! Please try again.'});
             } else {
                 console.log(`Signed user ${username} in successfully!`)
-                return res.status(201).json({message: `Signed user ${username} in successfully!`});
+                return res.status(201).json({message: `Signed in successfully!`});
             }
         } else {
             return res.status(400).json({message: 'Username and/or Password are missing!'});
