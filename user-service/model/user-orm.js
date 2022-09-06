@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-import { createUser, getUserPassword } from './repository.js';
+import { createUser, getUserByUsername } from './repository.js';
 
 const saltRounds = 10;
 
@@ -18,16 +18,17 @@ export async function ormCreateUser(username, password) {
     }
 }
 
-export async function ormSignin(username, password) {
-    try {
-        const hashedPassword = await getUserPassword(username);
-        const isMatch = await bcrypt.compare(password, hashedPassword);
-        if (!isMatch) {
-            throw new Error("Password entered does not match hashed password!");
-        }
-        return true;
-    } catch (err) {
-        console.log('ERROR: Signin failed!');
-        return { err };
+// Returns the authenticated user, or null if not authenticated
+export async function authenticateUser(username, password) {
+    // Check if user exists
+    const user = await getUserByUsername(username);
+    if (!user) {
+        return null;
     }
+    // Check if password is correct
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+        return null;
+    }
+    return user.toObject();
 }
