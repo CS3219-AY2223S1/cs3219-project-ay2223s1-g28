@@ -21,9 +21,9 @@ export async function ormCreateUser(username, password) {
 export async function ormSignin(username, password) {
     try {
         const hashedPassword = await getUserPassword(username);
-        const isMatch = await bcrypt.compare(password, hashedPassword['password']);
+        const isMatch = await bcrypt.compare(password, hashedPassword);
         if (!isMatch) {
-            throw new Error("Input password does not match hashed password!");
+            throw new Error("Password entered does not match hashed password!");
         }
         return true;
     } catch (err) {
