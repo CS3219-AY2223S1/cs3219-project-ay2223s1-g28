@@ -23,9 +23,8 @@ export async function ormSignin(username, password) {
         const isMatch = await bcrypt.compare(password, hashedPassword['password']);
         if (!isMatch) {
             throw new Error("Input password does not match hashed password!");
-        } else {
-            return true;
         }
+        return true;
     } catch (err) {
         console.log('ERROR: Signin failed!');
         return { err };
