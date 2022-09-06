@@ -53,7 +53,7 @@ describe('Navbar component', () => {
     expect(global.window.location.href).toContain('/signup')
   });
 
-  it('changes URL to "/signin" upon clicking "Sign up" button', () => {
+  it('changes URL to "/signin" upon clicking "Sign in" button', () => {
     render(
       <Router>
         <Navbar />
