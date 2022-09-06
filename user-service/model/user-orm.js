@@ -1,5 +1,6 @@
-import { createUser, getUserPassword } from './repository.js';
 import bcrypt from 'bcrypt';
+
+import { createUser, getUserPassword } from './repository.js';
 
 const saltRounds = 10;
 
