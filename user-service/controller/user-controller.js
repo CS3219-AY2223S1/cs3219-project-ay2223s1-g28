@@ -1,4 +1,7 @@
-import { ormCreateUser as _createUser, ormSignin as _signin } from '../model/user-orm.js'
+import 'dotenv/config'
+import jwt from 'jsonwebtoken';
+
+import { ormCreateUser as _createUser, authenticateUser } from '../model/user-orm.js'
 
 export async function createUser(req, res) {
     try {
@@ -20,22 +23,23 @@ export async function createUser(req, res) {
     }
 }
 
+// Returns an acess token upon successful sign in, else the corresponding error message
 export async function signin(req, res) {
     try {
         const { username, password } = req.body;
         if (username && password) {
-            const resp = await _signin(username, password);
-            console.log(resp);
-            if (resp.err) {
-                return res.status(400).json({message: 'Wrong password! Please try again.'});
-            } else {
-                console.log(`Signed user ${username} in successfully!`)
-                return res.status(201).json({message: `Signed in successfully!`});
+            // Authenticate user
+            const signedInUser = await authenticateUser(username, password);
+            if (!signedInUser) {
+                return res.status(401).json({ message: 'User does not exist and/or wrong password.' });
             }
+            // Create JWT
+            const token = jwt.sign(signedInUser, process.env.JWT_SECRET_KEY);
+            return res.status(200).json({ token });
         } else {
-            return res.status(400).json({message: 'Username and/or Password are missing!'});
+            return res.status(400).json({ message: 'Missing username and/or password.' });
         }
     } catch (err) {
-        return res.status(500).json({message: 'Database failure when signing in user!'})
+        return res.status(500).json({ message: 'Server error when signing in user.' });
     }
 }
