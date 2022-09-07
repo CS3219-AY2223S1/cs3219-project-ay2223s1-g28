@@ -23,7 +23,6 @@ export async function createUser(req, res) {
             return res.status(400).json({message: 'Username and/or Password are missing!'});
         }
     } catch (err) {
-        console.log('error log: ', err)
         return res.status(500).json({message: 'Database failure when creating new user!'})
     }
 }
