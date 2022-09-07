@@ -36,9 +36,5 @@ export async function authenticateUser(username, password) {
 // checks if username exists in database
 export async function isExistingUser(username) {
     const user = await getUserByUsername(username);
-    if (user) {
-        return true;
-    } else {
-        return false;
-    }
+    return user ? true : false;
 }
