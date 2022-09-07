@@ -32,3 +32,9 @@ export async function authenticateUser(username, password) {
     }
     return user.toObject();
 }
+
+// checks if username exists in database
+export async function isExistingUser(username) {
+    const user = await getUserByUsername(username);
+    return user ? true : false;
+}
