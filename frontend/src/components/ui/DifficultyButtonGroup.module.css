@@ -1,27 +1,3 @@
-.easy {
-    padding: 8px 75px !important;
-    font-size: 24px !important;
-    font-weight: lighter !important;
-    border-color: #A7C7C8 !important;
-    color: #A7C7C8 !important;
-    margin-right: 10px !important;
-}
-.medium {
-    padding: 8px 75px !important;
-    font-size: 24px !important;
-    font-weight: lighter !important;
-    border-color: #FFCE0C !important;
-    color: #FFCE0C !important;
-    margin-right: 10px !important;
-}
-.hard {
-    padding: 8px 75px !important;
-    font-size: 24px !important;
-    font-weight: lighter !important;
-    border-color: #FFA2A2 !important;
-    color: #FFA2A2 !important;
-    margin-right: 10px !important;
-}
 .container {
     display: flex !important;
     justify-content: center !important;

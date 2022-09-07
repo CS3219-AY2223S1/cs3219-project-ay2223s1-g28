@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import OutlinedContainer from "../../components/ui/OutlinedContainer";
 import DifficultyButtonGroup from "../../components/ui/DifficultyButtonGroup";
 
-function DifficultySelectionPage() {
+function Home() {
   return (
     <>
       <Grid container>
@@ -36,7 +36,7 @@ function DifficultySelectionPage() {
           <Grid item>
             <img
               src={
-                require("../../assets/difficultyselectionpage_media.svg")
+                require("../../assets/home_media.svg")
                   .default
               }
               alt="Code"
@@ -95,4 +95,4 @@ function DifficultySelectionPage() {
   );
 }
 
-export default DifficultySelectionPage;
+export default Home;

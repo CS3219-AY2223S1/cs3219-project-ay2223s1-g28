@@ -9,7 +9,7 @@ import { Box } from '@mui/material';
 import Navbar from './components/Navbar';
 import SignupPage from './pages/Signup';
 import SigninPage from './pages/Signin';
-import DifficultyselectionPage from './pages/Difficultyselection';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
             ></Route>
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/signin" element={<SigninPage />} />
-            <Route path="/home" element={<DifficultyselectionPage />} />
+            <Route path="/home" element={<Home />} />
           </Routes>
         </Box>
       </Router>
