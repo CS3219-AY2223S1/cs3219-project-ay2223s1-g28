@@ -1,5 +1,6 @@
+import 'dotenv/config';
+
 import UserModel from './user-model.js';
-import 'dotenv/config'
 
 //Set up mongoose connection
 import mongoose from 'mongoose';
@@ -15,7 +16,7 @@ export async function createUser(params) {
   return new UserModel(params)
 }
 
-export async function getUserPassword(username) {
-  const userDocument = await UserModel.findOne({username: username}, {password: 1, _id: 0}).exec();
-  return userDocument['password'];
+// Returns the queried user, or null if not found
+export async function getUserByUsername(username) {
+  return await UserModel.findOne({ username }).exec();
 }
