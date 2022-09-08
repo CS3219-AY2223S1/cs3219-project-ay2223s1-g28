@@ -10,9 +10,9 @@ function DifficultyButtonGroup() {
   return (
     <Container className={styles.container}>
       <ButtonGroup>
-        <DifficultyButton buttonText="Easy"/>
-        <DifficultyButton buttonText="Medium"/>
-        <DifficultyButton buttonText="Hard"/>
+        <DifficultyButton buttonText="Easy" id="easyDifficulty" />
+        <DifficultyButton buttonText="Medium" id="mediumDifficulty"/>
+        <DifficultyButton buttonText="Hard" id="hardDifficulty"/>
       </ButtonGroup>
     </Container>
   );

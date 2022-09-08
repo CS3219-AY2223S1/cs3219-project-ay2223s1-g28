@@ -8,7 +8,7 @@ function Home() {
   return (
     <>
       <Grid container>
-        <Grid container direction="column" item xs={3} alignItems="center">
+        <Grid container direction="column" item xs={12} md={4} alignItems="center">
           <Grid item>
             <Typography
               variant="h2"
@@ -35,17 +35,14 @@ function Home() {
           </Grid>
           <Grid item>
             <img
-              src={
-                require("../../assets/home_media.svg")
-                  .default
-              }
+              src={require("../../assets/home_media.svg").default}
               alt="Code"
               height="90%"
               width="90%"
             />
           </Grid>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs container>
           <OutlinedContainer>
             <Grid
               container
@@ -67,13 +64,14 @@ function Home() {
                   variant="h5"
                   fontWeight="lighter"
                   textAlign="center"
-                  sx={{ mt: "100px" }}
+                  sx={{ mt: "150px" }}
                   color="#A7C7C8"
                 >
                   Start by choosing <br />a{" "}
                   <Typography variant="h4" component="span" fontWeight="bold">
                     difficulty
-                  </Typography> level for <br />
+                  </Typography>{" "}
+                  level for <br />
                   your coding question.
                   <br />
                   Let PeerPrep handle the rest!
@@ -82,7 +80,7 @@ function Home() {
                   item
                   justifyContent="center"
                   alignItems="center"
-                  sx={{ mt: "120px" }}
+                  sx={{ mt: "130px" }}
                 >
                   <DifficultyButtonGroup />
                 </Grid>

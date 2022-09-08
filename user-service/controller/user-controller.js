@@ -35,6 +35,8 @@ export async function signin(req, res) {
             }
             // Create JWT
             const token = jwt.sign(signedInUser, process.env.JWT_SECRET_KEY);
+            //Store JWT in local storage to check if user is logged in
+            localStorage.setItem('token', token);
             return res.status(200).json({ token });
         } else {
             return res.status(400).json({ message: 'Missing username and/or password.' });
