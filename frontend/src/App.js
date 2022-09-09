@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       <Router>
         <Navbar />
-        <Box display={"flex"} flexDirection={"column"} padding={"4rem"}>
+        <Box display="flex" flexDirection="column" padding="4rem">
           <Routes>
             <Route
               exact

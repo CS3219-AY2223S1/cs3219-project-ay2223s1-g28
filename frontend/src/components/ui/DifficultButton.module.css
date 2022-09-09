@@ -4,14 +4,17 @@
     font-weight: lighter !important;
     margin-right: 20px !important;
 }
+
 .btn_easy {
     border-color: #A7C7C8 !important;
     color: #A7C7C8 !important;
 }
+
 .btn_medium {
     border-color: #FFCE0C !important;
     color: #FFCE0C !important;
 }
+
 .btn_hard {
     border-color: #FFA2A2 !important;
     color: #FFA2A2 !important;

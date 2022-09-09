@@ -7,6 +7,7 @@ import styles from "./DifficultButton.module.css";
 function DifficultyButton(props) {
   //Logic for button color
   let btnStyling = styles.btn;
+
   switch (props.buttonText) {
     case "Easy":
       btnStyling += " " + styles.btn_easy;
@@ -18,7 +19,9 @@ function DifficultyButton(props) {
       btnStyling += " " + styles.btn_hard;
       break;
     default:
+      break;
   }
+
   return (
     <Button
       className={btnStyling}
