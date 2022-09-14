@@ -2,7 +2,7 @@ import 'dotenv/config'
 import jwt from 'jsonwebtoken';
 
 import { ormCreateUser as _createUser, authenticateUser, isExistingUser } from '../model/user-orm.js'
-import { blacklistJwt } from '../model/jwt.js';
+import { blacklistJwt, generateJwt } from '../model/jwt.js';
 
 export async function createUser(req, res) {
     try {
@@ -39,7 +39,9 @@ export async function signin(req, res) {
                 return res.status(401).json({ message: 'User does not exist and/or wrong password.' });
             }
             // Create JWT
-            const token = jwt.sign(signedInUser, process.env.JWT_SECRET_KEY);
+            const token = generateJwt(signedInUser);
+            // send cookie
+            res.cookie('token', token, { httpOnly: true });
             return res.status(200).json({ token });
         } else {
             return res.status(400).json({ message: 'Missing username and/or password.' });
@@ -52,5 +54,6 @@ export async function signin(req, res) {
 export async function logout(req, res) {
     const { token } = req;
     await blacklistJwt(token);
+    res.clearCookie('token');
     return res.status(200).json({ message: 'Logout successful.'})
 }
