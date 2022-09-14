@@ -2,6 +2,7 @@ import 'dotenv/config'
 import jwt from 'jsonwebtoken';
 
 import { ormCreateUser as _createUser, authenticateUser, isExistingUser } from '../model/user-orm.js'
+import { blacklistJwt } from '../model/jwt.js';
 
 export async function createUser(req, res) {
     try {
@@ -46,4 +47,10 @@ export async function signin(req, res) {
     } catch (err) {
         return res.status(500).json({ message: 'Server error when signing in user.' });
     }
+}
+
+export async function logout(req, res) {
+    const { token } = req;
+    await blacklistJwt(token);
+    return res.status(200).json({ message: 'Logout successful.'})
 }
