@@ -21,6 +21,6 @@ export async function getUserByUsername(username) {
   return await UserModel.findOne({ username }).exec();
 }
 
-export async function deleteAccountByUsername(uname) {
-  return await UserModel.deleteOne({ username: uname });
+export async function deleteAccountByUsername(username) {
+  return await UserModel.deleteOne({ username });
 }

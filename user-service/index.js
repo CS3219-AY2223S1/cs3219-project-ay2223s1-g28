@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { createUser, deleteAccount, logout, signin } from './controller/user-controller.js';
+import { authenticateJwt } from './model/jwt.js';
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
@@ -8,8 +10,6 @@ app.use(express.json())
 app.use(cors()) // config cors so that front-end can use
 app.options('*', cors())
 app.use(cookieParser())
-import { createUser, deleteAccount, logout, signin } from './controller/user-controller.js';
-import { authenticateJwt } from './model/jwt.js';
 
 const router = express.Router()
 

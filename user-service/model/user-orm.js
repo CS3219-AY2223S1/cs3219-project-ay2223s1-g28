@@ -33,13 +33,13 @@ export async function authenticateUser(username, password) {
     return user.toObject();
 }
 
-// checks if username exists in database
+// Checks if username exists in database
 export async function isExistingUser(username) {
     const user = await getUserByUsername(username);
     return user ? true : false;
 }
 
-// returns true upon successful deletion
+// Returns true upon successful deletion
 export async function ormDeleteAccount(username) {
     const d = await deleteAccountByUsername(username);
     return d.deletedCount == 1;

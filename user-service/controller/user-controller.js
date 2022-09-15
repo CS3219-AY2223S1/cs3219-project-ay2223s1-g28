@@ -1,7 +1,7 @@
-import 'dotenv/config'
+import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 
-import { ormCreateUser as _createUser, authenticateUser, isExistingUser, ormDeleteAccount } from '../model/user-orm.js'
+import { ormCreateUser as _createUser, authenticateUser, isExistingUser, ormDeleteAccount } from '../model/user-orm.js';
 import { blacklistJwt, generateJwt } from '../model/jwt.js';
 
 export async function createUser(req, res) {
@@ -40,7 +40,7 @@ export async function signin(req, res) {
             }
             // Create JWT
             const token = generateJwt(signedInUser);
-            // send cookie
+            // Send cookie
             res.cookie('token', token, { httpOnly: true });
             return res.status(200).json({ token });
         } else {
