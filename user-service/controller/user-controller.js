@@ -1,7 +1,8 @@
-import 'dotenv/config'
+import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 
-import { ormCreateUser as _createUser, authenticateUser, isExistingUser } from '../model/user-orm.js'
+import { ormCreateUser as _createUser, authenticateUser, isExistingUser, ormDeleteAccount } from '../model/user-orm.js';
+import { blacklistJwt, generateJwt } from '../model/jwt.js';
 
 export async function createUser(req, res) {
     try {
@@ -38,12 +39,33 @@ export async function signin(req, res) {
                 return res.status(401).json({ message: 'User does not exist and/or wrong password.' });
             }
             // Create JWT
-            const token = jwt.sign(signedInUser, process.env.JWT_SECRET_KEY);
+            const token = generateJwt(signedInUser);
+            // Send cookie
+            res.cookie('token', token, { httpOnly: true });
             return res.status(200).json({ token });
         } else {
             return res.status(400).json({ message: 'Missing username and/or password.' });
         }
     } catch (err) {
         return res.status(500).json({ message: 'Server error when signing in user.' });
+    }
+}
+
+export async function logout(req, res) {
+    const { token } = req;
+    await blacklistJwt(token);
+    res.clearCookie('token');
+    return res.status(200).json({ message: 'Logout successful.'})
+}
+
+export async function deleteAccount(req, res) {
+    const { token } = req;
+    const { username } = req.body;
+    await blacklistJwt(token);
+    res.clearCookie('token');
+    if (await ormDeleteAccount(username)) {
+        return res.status(200).json({ message: `Deleted account ${username} successfully.` });
+    } else {
+        return res.status(409).json({ message: 'Account does not exist / delete unsuccessful.' });
     }
 }

@@ -1,12 +1,15 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import { createUser, deleteAccount, logout, signin } from './controller/user-controller.js';
+import { authenticateJwt } from './model/jwt.js';
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors()) // config cors so that front-end can use
 app.options('*', cors())
-import { createUser, signin } from './controller/user-controller.js';
+app.use(cookieParser())
 
 const router = express.Router()
 
@@ -14,6 +17,8 @@ const router = express.Router()
 router.get('/', (_, res) => res.send('Hello World from user-service'))
 router.post('/', createUser)
 router.post('/signin', signin)
+router.post('/logout', authenticateJwt, logout)
+router.post('/delete', authenticateJwt, deleteAccount)
 
 app.use('/api/user', router).all((_, res) => {
     res.setHeader('content-type', 'application/json')

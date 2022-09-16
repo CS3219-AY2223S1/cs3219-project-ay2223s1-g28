@@ -20,3 +20,7 @@ export async function createUser(params) {
 export async function getUserByUsername(username) {
   return await UserModel.findOne({ username }).exec();
 }
+
+export async function deleteAccountByUsername(username) {
+  return await UserModel.deleteOne({ username });
+}
