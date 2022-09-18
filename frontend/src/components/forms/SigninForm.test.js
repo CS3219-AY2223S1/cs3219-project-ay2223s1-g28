@@ -6,17 +6,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import SigninForm from './SigninForm';
 
 describe('SigninForm component', () => {
-  it('renders two text fields', () => {
-    render(
-      <Router>
-        <SigninForm />
-      </Router>
-    );
-
-    const textFieldElements = screen.getAllByRole('textbox');
-    expect(textFieldElements).toHaveLength(2);
-  });
-
   it('renders "Email/Username" label', () => {
     render(
       <Router>
@@ -24,7 +13,9 @@ describe('SigninForm component', () => {
       </Router>
     );
 
-    const labelElement = screen.getByLabelText("Email/Username");
+    const labelElement = screen.getByLabelText('Email/Username', {
+      exact: false,
+    });
     expect(labelElement).toBeInTheDocument();
   });
 
@@ -35,7 +26,7 @@ describe('SigninForm component', () => {
       </Router>
     );
 
-    const labelElement = screen.getByLabelText("Password");
+    const labelElement = screen.getByLabelText('Password', { exact: false });
     expect(labelElement).toBeInTheDocument();
   });
 
@@ -58,7 +49,7 @@ describe('SigninForm component', () => {
     );
 
     const buttonElement = screen.getByRole('button');
-    expect(buttonElement).toHaveTextContent("Sign in");
+    expect(buttonElement).toHaveTextContent('Sign in');
   });
 
   it('renders one link', () => {
@@ -80,7 +71,7 @@ describe('SigninForm component', () => {
     );
 
     const linkElement = screen.getByRole('link');
-    expect(linkElement).toHaveTextContent("Sign up here!");
+    expect(linkElement).toHaveTextContent('Sign up here!');
   });
 
   it('changes URL to "/signup" upon clicking "Sign up here!" link', () => {
@@ -91,7 +82,7 @@ describe('SigninForm component', () => {
     );
 
     const linkElement = screen.getByRole('link');
-    userEvent.click(linkElement)
-    expect(global.window.location.href).toContain('/signup')
+    userEvent.click(linkElement);
+    expect(global.window.location.href).toContain('/signup');
   });
 });
