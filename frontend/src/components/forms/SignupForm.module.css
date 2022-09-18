@@ -1,0 +1,9 @@
+.signup_form {
+    margin: 50px 0;
+}
+
+.signup_button {
+    padding: 8px 75px !important;
+    font-size: 24px !important;
+    font-weight: lighter !important;
+}
