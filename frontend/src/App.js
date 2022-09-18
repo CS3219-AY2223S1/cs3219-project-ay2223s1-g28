@@ -10,6 +10,8 @@ import Navbar from './components/Navbar';
 import SignupPage from './pages/Signup';
 import SigninPage from './pages/Signin';
 
+import AlertMessage from './components/ui/AlertMessage';
+
 function App() {
   return (
     <div className="App">
@@ -27,6 +29,7 @@ function App() {
           </Routes>
         </Box>
       </Router>
+      <AlertMessage />
     </div>
   );
 }
