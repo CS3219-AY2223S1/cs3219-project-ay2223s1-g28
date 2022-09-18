@@ -5,11 +5,11 @@ import redis from 'redis';
 const EXPIRATION = 86400; // 24hrs
 
 const client = redis.createClient({
-    socket: {
-        host: process.env.REDIS_CLOUD_HOST,
-        port: process.env.REDIS_CLOUD_PORT
-    },
-    password: process.env.REDIS_CLOUD_PASSWORD
+    // socket: {
+    //     host: process.env.REDIS_CLOUD_HOST,
+    //     port: process.env.REDIS_CLOUD_PORT
+    // },
+    // password: process.env.REDIS_CLOUD_PASSWORD
 });
 
 await client.connect();
