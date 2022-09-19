@@ -18,7 +18,7 @@ function QuestionBox() {
     },
   ];
 
-  const [state, setState] = useState({
+  const [state] = useState({
     categories: DUMMY_DATA,
     title: "Question Title",
     question:

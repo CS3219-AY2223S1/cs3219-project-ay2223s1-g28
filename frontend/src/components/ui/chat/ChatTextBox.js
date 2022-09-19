@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import style from "./ChatTextBox.module.css";
 
 function ChatTextBox() {
-  const [state, setState] = useState({ message: "" });
+  const [state] = useState({ message: "" });
   return (
     <div className={style.chattextbox}>
       <input

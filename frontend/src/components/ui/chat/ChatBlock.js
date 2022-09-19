@@ -23,7 +23,7 @@ const DUMMY_DATA = [
 ];
 
 function ChatBlock() {
-  const[state, setState] = useState({ chats: DUMMY_DATA });
+  const[state] = useState({ chats: DUMMY_DATA });
   return (
     <div className={style.chat_block}>
       <Title />
