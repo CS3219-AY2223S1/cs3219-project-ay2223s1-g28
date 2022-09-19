@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute.js";
 import SignupPage from "./pages/Signup";
 import SigninPage from "./pages/Signin";
-import Home from "./pages/Home";
+import HomePage from "./pages/Home";
 
 import AlertMessage from './components/ui/AlertMessage';
 
@@ -29,7 +29,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/signin" element={<SigninPage />} />
             <Route path="/home" element={<PrivateRoute path="/home" />}>
-              <Route path="/home" element={<Home />} />
+              <Route path="/home" element={<HomePage />} />
             </Route>
           </Routes>
         </Box>
