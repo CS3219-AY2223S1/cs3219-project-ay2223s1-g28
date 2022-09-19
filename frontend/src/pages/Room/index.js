@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Editor from "react-monaco-editor";
 
 import ChatBlock from "../../components/ui/chat/ChatBlock";
+import QuestionBox from "../../components/ui/question/QuestionBox";
 import style from "./Room.module.css";
 
 function RoomPage() {
@@ -32,7 +33,9 @@ function RoomPage() {
       </Grid>
       <Grid container spacing={4}>
         {/* Question component */}
-        <Grid xs={5} item></Grid>
+        <Grid xs={5} item>
+          <QuestionBox />
+        </Grid>
         <Grid xs={7} item container direction="column">
           {/* Chat component */}
           <Grid item>
