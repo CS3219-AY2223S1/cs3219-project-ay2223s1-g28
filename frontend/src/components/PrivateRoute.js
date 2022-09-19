@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import axios from "axios";
-import { STATUS_CODE_SUCCESS } from "../constants";
+import { STATUS_CODE_OK } from "../constants";
 
 function PrivateRoute(props) {
   const [isAuthenticated, setAuthentication] = useState();
