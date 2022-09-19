@@ -44,7 +44,7 @@ export async function isExistingUser(username) {
 
 // Checks if email exists in database
 export async function isExistingEmail(email) {
-    const user = await getUserByEmail(email);
+    const user = await getUserByEmail(email.toLowerCase());
     return user ? true : false;
 }
 
