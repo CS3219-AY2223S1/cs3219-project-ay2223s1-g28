@@ -2,13 +2,14 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-import ChatBlock from "../../components/ui/chat/ChatBlock";
+import Editor from "react-monaco-editor";
 
+import ChatBlock from "../../components/ui/chat/ChatBlock";
 import style from "./Room.module.css";
 
 function RoomPage() {
   return (
-    <div className={style.room}>
+    <div>
       <Grid container>
         <Grid xs={2} item></Grid>
         <Grid xs={8} item>
@@ -38,7 +39,19 @@ function RoomPage() {
             <ChatBlock />
           </Grid>
           {/* Code Editor component */}
-          <Grid item></Grid>
+          <Grid item>
+            <div className={style.code_editor}>
+              <Editor
+                height="50vh"
+                defaultLanguage="javascript"
+                defaultValue="Start your coding here..."
+              />
+              <div className={style.code_editor_buttons}>
+                <Button variant="outlined">Run code</Button>
+                <Button variant="outlined">Submit</Button>
+              </div>
+            </div>
+          </Grid>
         </Grid>
       </Grid>
     </div>
