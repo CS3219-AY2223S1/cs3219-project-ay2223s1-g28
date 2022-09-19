@@ -1,16 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 
 import { Navigate, Outlet } from 'react-router-dom';
-import axios from 'axios';
 
 import AlertContext from '../context/alert-context';
-
-import { STATUS_CODE_OK } from '../constants';
 import UserContext from '../context/user-context';
-
-// Todo: Change to NGINX URL to check for JWT validity,
-// using user service URL at the moment
-const JWT_VERIFICATION_ENDPOINT = 'http://localhost:8000/api/user/verify-jwt';
 
 function PrivateRoute() {
   const alertCtx = useContext(AlertContext);
@@ -34,7 +27,7 @@ function PrivateRoute() {
       setIsAuthenticated(isAuthSuccess);
       setChecked(true);
     });
-  }, []);
+  }, [userCtx, alertCtx]);
 
   if (checked) {
     // Crucial step to make sure that we do not return anything
