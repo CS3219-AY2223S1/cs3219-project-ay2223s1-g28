@@ -11,7 +11,7 @@ function PrivateRoute(props) {
       .catch((error) => {
         console.log("Error!");
       });
-    if (res && res.status === STATUS_CODE_SUCCESS) {
+    if (res && res.status === STATUS_CODE_OK) {
       setAuthentication(true);
     } else {
       setAuthentication(false);
