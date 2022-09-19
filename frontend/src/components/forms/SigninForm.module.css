@@ -1,9 +1,13 @@
 .signin_form {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 .signin_button {
-    padding: 8px 75px !important;
-    font-size: 24px !important;
-    font-weight: lighter !important;
+  padding: 8px 75px !important;
+  font-size: 24px !important;
+  font-weight: lighter !important;
+}
+
+.signup_link {
+  color: #0078ff;
 }

@@ -3,11 +3,11 @@ import Box from '@mui/material/Box';
 
 import styles from './IconTextfield.module.css';
 
-function IconTextField({ icon, label, variant = 'filled' }) {
+function IconTextField(props) {
   return (
     <Box className={styles.icon_text_field}>
-      {icon}
-      <TextField label={label} variant={variant} fullWidth/>
+      {props.icon}
+      <TextField variant='filled' {...props}/>
     </Box>
   );
 }

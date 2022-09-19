@@ -1,18 +1,21 @@
 import 'dotenv/config';
-import jwt from 'jsonwebtoken';
 
-import { ormCreateUser as _createUser, authenticateUser, isExistingUser, ormDeleteAccount } from '../model/user-orm.js';
+import { ormCreateUser as _createUser, authenticateUser, isExistingUser, isExistingEmail, ormDeleteAccount } from '../model/user-orm.js';
 import { blacklistJwt, generateJwt } from '../model/jwt.js';
 
 export async function createUser(req, res) {
     try {
-        const { username, password } = req.body;
-        if (username && password) {
+        const { username, email, password } = req.body;
+        if (username && email && password) {
             if (await isExistingUser(username)) {
                 return res.status(409).json({message: 'Existing username!'});
             }
+
+            if (await isExistingEmail(email)) {
+                return res.status(409).json({message: 'Email has already been taken!'});
+            }
             
-            const resp = await _createUser(username, password);
+            const resp = await _createUser(username, email, password);
             console.log(resp);
             if (resp.err) {
                 return res.status(400).json({message: 'Could not create a new user!'});

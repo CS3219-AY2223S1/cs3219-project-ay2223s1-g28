@@ -12,6 +12,8 @@ import SignupPage from "./pages/Signup";
 import SigninPage from "./pages/Signin";
 import Home from "./pages/Home";
 
+import AlertMessage from './components/ui/AlertMessage';
+
 function App() {
   return (
     <div className="App">
@@ -32,6 +34,7 @@ function App() {
           </Routes>
         </Box>
       </Router>
+      <AlertMessage />
     </div>
   );
 }
