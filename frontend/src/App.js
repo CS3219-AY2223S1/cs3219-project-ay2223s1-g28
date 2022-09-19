@@ -3,12 +3,14 @@ import {
   Routes,
   Route,
   Navigate,
-} from 'react-router-dom';
-import { Box } from '@mui/material';
+} from "react-router-dom";
+import Box from "@mui/material/Box";
 
-import Navbar from './components/Navbar';
-import SignupPage from './pages/Signup';
-import SigninPage from './pages/Signin';
+import Navbar from "./components/Navbar";
+import PrivateRoute from "./components/PrivateRoute.js";
+import SignupPage from "./pages/Signup";
+import SigninPage from "./pages/Signin";
+import Home from "./pages/Home";
 
 import AlertMessage from './components/ui/AlertMessage';
 
@@ -17,7 +19,7 @@ function App() {
     <div className="App">
       <Router>
         <Navbar />
-        <Box display={'flex'} flexDirection={'column'} padding={'4rem'}>
+        <Box display="flex" flexDirection="column" padding="4rem">
           <Routes>
             <Route
               exact
@@ -26,6 +28,9 @@ function App() {
             ></Route>
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/signin" element={<SigninPage />} />
+            <Route path="/home" element={<PrivateRoute path="/home" />}>
+              <Route path="/home" element={<Home />} />
+            </Route>
           </Routes>
         </Box>
       </Router>
