@@ -10,6 +10,7 @@ const SIGNIN_ROUTE = '/signin';
 // Change to NGINX URL to check for JWT validity in the future,
 // using user service URL at the moment
 const JWT_VERIFICATION_ENDPOINT = 'http://localhost:8000/api/user/verify-jwt';
+const LOGOUT_ENDPOINT = 'http://localhost:8000/api/user/logout';
 
 const UserContext = createContext({
   isSignedIn: false,
@@ -22,7 +23,7 @@ export function UserContextProvider(props) {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   const verifyTokenHandler = async (callback) => {
-    const res = await axios
+    await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
       .get(JWT_VERIFICATION_ENDPOINT, { withCredentials: true })
@@ -38,7 +39,7 @@ export function UserContextProvider(props) {
   };
 
   const signinHandler = async (username, password, callback) => {
-    const res = await axios
+    await axios
       .post(
         URL_USER_SVC + SIGNIN_ROUTE,
         {
@@ -58,7 +59,24 @@ export function UserContextProvider(props) {
       });
   };
 
-  const signoutHandler = () => {};
+  const signoutHandler = async (callback) => {
+    await axios
+      // Must set "withCredentials" to true so the cookie stored on browser
+      // is sent to the server for checking
+      .get(LOGOUT_ENDPOINT, { withCredentials: true })
+      .then((res) => {
+        const isSignoutSuccess = res && res.status === STATUS_CODE_OK;
+        setIsSignedIn(isSignoutSuccess);
+        return res.data;
+      })
+      .then((data) => {
+        callback(data.message, null);
+      })
+      .catch((error) => {
+        setIsSignedIn(false);
+        callback(false, error);
+      });
+  };
 
   return (
     <UserContext.Provider
