@@ -1,0 +1,9 @@
+.chat_block {
+    height: 100px;
+    width: 95%;
+    margin-bottom: 40px;
+}
+
+.chat_input {
+    width: 100%;
+}

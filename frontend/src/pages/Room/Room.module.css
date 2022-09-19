@@ -1,0 +1,19 @@
+.room {
+  text-align: center;
+}
+
+.code_editor {
+  border: 1px solid #707070;
+  padding: 5px;
+  margin-top: 150px;
+  margin-bottom: 50px;
+  border-radius: 6px;
+  width: 95%;
+}
+
+.code_editor_buttons {
+  margin-top: 7px;
+  color: #A7C7C8;
+  border-color: #A7C7C8;
+  float: left;
+}

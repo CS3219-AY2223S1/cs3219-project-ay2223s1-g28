@@ -8,9 +8,10 @@ import Box from "@mui/material/Box";
 
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute.js";
+import Home from "./pages/Home";
+import Room from "./pages/Room";
 import SignupPage from "./pages/Signup";
 import SigninPage from "./pages/Signin";
-import Home from "./pages/Home";
 
 import AlertMessage from './components/ui/AlertMessage';
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/home" element={<PrivateRoute path="/home" />}>
               <Route path="/home" element={<Home />} />
             </Route>
+            <Route path="/room" element={<Room />} />
           </Routes>
         </Box>
       </Router>
