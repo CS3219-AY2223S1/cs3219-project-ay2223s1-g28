@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+
 import { Navigate, Outlet } from "react-router-dom";
+
 import axios from "axios";
+
 import { STATUS_CODE_OK } from "../constants";
 
 function PrivateRoute(props) {
@@ -17,7 +20,7 @@ function PrivateRoute(props) {
       setAuthentication(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); //Will run once when component first mounts
+  }, []); // Will run once when component first mounts
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/signin" />;
 }

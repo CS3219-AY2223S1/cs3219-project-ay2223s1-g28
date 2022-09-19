@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import OutlinedContainer from "../../components/ui/OutlinedContainer";
 import DifficultyButtonGroup from "../../components/ui/DifficultyButtonGroup";
 
-function Home() {
+function HomePage() {
   return (
     <Grid container>
       <Grid
@@ -99,4 +99,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

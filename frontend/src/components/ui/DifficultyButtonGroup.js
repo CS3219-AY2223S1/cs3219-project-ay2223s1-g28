@@ -1,10 +1,8 @@
-import { ButtonGroup, Container } from "@mui/material";
-
-import React from "react";
-
-import styles from "./DifficultyButtonGroup.module.css";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Container from "@mui/material/Container";
 
 import DifficultyButton from "./DifficultyButton.js";
+import styles from "./DifficultyButtonGroup.module.css";
 
 function DifficultyButtonGroup() {
   return (

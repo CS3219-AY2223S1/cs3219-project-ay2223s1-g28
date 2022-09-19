@@ -1,11 +1,9 @@
-import { Button } from "@mui/material";
-
-import React from "react";
+import Button from "@mui/material/Button";
 
 import styles from "./DifficultButton.module.css";
 
 function DifficultyButton(props) {
-  //Logic for button color
+  // Logic for button color
   let btnStyling = styles.btn;
 
   switch (props.buttonText) {
@@ -35,7 +33,7 @@ function DifficultyButton(props) {
   );
 }
 
-//Clicking on Difficulty button
+// Clicking on Difficulty button
 function chooseDifficulty(e) {
   console.log(e.currentTarget.id);
 }
