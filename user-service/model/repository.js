@@ -21,6 +21,10 @@ export async function getUserByUsername(username) {
   return await UserModel.findOne({ username }).exec();
 }
 
+export async function getUserByEmail(email) {
+  return await UserModel.findOne({ email }).exec();
+}
+
 export async function deleteAccountByUsername(username) {
   return await UserModel.deleteOne({ username });
 }
