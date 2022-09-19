@@ -40,13 +40,13 @@ const useInput = (validateValue) => {
   };
 
   return {
-    value: inputState.value,
-    isValid: valueIsValid,
-    hasError,
-    errorHelperText,
-    valueChangeHandler,
-    inputBlurHandler,
-    reset,
+    value: inputState.value, // The input given by the user
+    isValid: valueIsValid, // Whether input is valid
+    hasError, // Whether the input has error, trigger only after the user start inputting
+    errorHelperText, // Hint that is given to the user when there is an error
+    valueChangeHandler, // A handler function that change the value and touch state
+    inputBlurHandler, // A handler function that marks the input as touched when user leave the input
+    reset, // A function that resets the input as if the user never touch it
   };
 };
 
