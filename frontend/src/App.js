@@ -4,7 +4,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute.js";
@@ -19,7 +19,7 @@ function App() {
     <div className="App">
       <Router>
         <Navbar />
-        <Box display={"flex"} flexDirection={"column"} padding={"4rem"}>
+        <Box display="flex" flexDirection="column" padding="4rem">
           <Routes>
             <Route
               exact

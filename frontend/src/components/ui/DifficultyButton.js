@@ -3,6 +3,11 @@ import Button from "@mui/material/Button";
 import styles from "./DifficultButton.module.css";
 
 function DifficultyButton(props) {
+  // Clicking on a Difficulty button
+  const selectDifficulty = (e) => {
+    console.log(e.currentTarget.id);
+  }
+
   // Logic for button color
   let btnStyling = styles.btn;
 
@@ -25,17 +30,12 @@ function DifficultyButton(props) {
       className={btnStyling}
       variant="outlined"
       size="large"
-      onClick={chooseDifficulty}
+      onClick={selectDifficulty}
       id={props.buttonText}
     >
       {props.buttonText}
     </Button>
   );
-}
-
-// Clicking on Difficulty button
-function chooseDifficulty(e) {
-  console.log(e.currentTarget.id);
 }
 
 export default DifficultyButton;

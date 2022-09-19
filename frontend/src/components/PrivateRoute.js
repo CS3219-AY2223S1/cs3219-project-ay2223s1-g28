@@ -22,7 +22,7 @@ function PrivateRoute(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Will run once when component first mounts
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/signin" />;
+  return !isAuthenticated ? <Navigate to="/signin" /> : <Outlet />;
 }
 
 export default PrivateRoute;
