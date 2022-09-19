@@ -136,7 +136,7 @@ function SigninForm() {
           <Grid item>
             <Typography variant="button">
               Don't have an account?{' '}
-              <Link to="/signup" style={{ color: '#0078FF' }}>
+              <Link to="/signup" className={styles.signup_link}>
                 Sign up here!
               </Link>
             </Typography>
