@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import { ormCreateUser as _createUser, authenticateUser, isExistingUser, isExistingEmail, ormDeleteAccount } from '../model/user-orm.js';
-import { blacklistJwt, generateJwt } from '../model/jwt.js';
+import { blacklistJwt, generateJwt, decodeJwt } from '../model/jwt.js';
 
 export async function createUser(req, res) {
     try {
@@ -63,7 +63,7 @@ export async function logout(req, res) {
 
 export async function deleteAccount(req, res) {
     const { token } = req;
-    const { username } = req.body;
+    const { username } = decodeJwt(token);
     await blacklistJwt(token);
     res.clearCookie('token');
     if (await ormDeleteAccount(username)) {
