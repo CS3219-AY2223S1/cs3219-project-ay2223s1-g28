@@ -61,7 +61,7 @@ export default function ButtonAppBar() {
               <Menu
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: 'top',
+                  vertical: 'bottom',
                   horizontal: 'right',
                 }}
                 keepMounted
