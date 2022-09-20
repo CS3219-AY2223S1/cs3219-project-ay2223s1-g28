@@ -8,7 +8,7 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import IconTextField from '../inputs/IconTextField';
+import CustomTextField from '../inputs/CustomTextField';
 import styles from './SigninForm.module.css';
 
 import AlertContext from '../../context/alert-context';
@@ -82,8 +82,8 @@ function SigninForm() {
         spacing={6}
       >
         <Grid item xs={12}>
-          <IconTextField
-            icon={<AccountCircle color="primary" fontSize="large" />}
+          <CustomTextField
+            leftNode={<AccountCircle color="primary" fontSize="large" />}
             label="Email/Username"
             value={usernameValue}
             error={usernameHasError}
@@ -95,8 +95,8 @@ function SigninForm() {
           />
         </Grid>
         <Grid item xs={12}>
-          <IconTextField
-            icon={<HttpsOutlinedIcon color="primary" fontSize="large" />}
+          <CustomTextField
+            leftNode={<HttpsOutlinedIcon color="primary" fontSize="large" />}
             label="Password"
             type="password"
             value={passwordValue}
