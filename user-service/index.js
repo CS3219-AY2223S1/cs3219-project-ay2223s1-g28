@@ -27,7 +27,7 @@ const router = express.Router();
 router.get('/', (_, res) => res.send('Hello World from user-service'));
 router.post('/', createUser);
 router.post('/signin', signin);
-router.get('/logout', authenticateJwt, logout);
+router.post('/logout', authenticateJwt, logout);
 router.post('/delete', authenticateJwt, deleteAccount);
 router.get('/verify-jwt', authenticateJwt, (req, res) => {
   res.status(200).json({ message: 'Valid JWT, safe to redirect!' });

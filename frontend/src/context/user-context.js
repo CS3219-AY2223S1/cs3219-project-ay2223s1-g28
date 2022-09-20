@@ -63,7 +63,7 @@ export function UserContextProvider(props) {
     await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
-      .get(LOGOUT_ENDPOINT, { withCredentials: true })
+      .post(LOGOUT_ENDPOINT, {}, { withCredentials: true })
       .then((res) => {
         const isSignoutSuccess = res && res.status === STATUS_CODE_OK;
         setIsSignedIn(isSignoutSuccess);
