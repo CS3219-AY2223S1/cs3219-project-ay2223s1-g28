@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import {
   createUser,
+  updateAccount,
   deleteAccount,
   logout,
   signin,
@@ -29,6 +30,7 @@ router.get('/', (_, res) => res.send('Hello World from user-service'));
 router.post('/', createUser);
 router.post('/signin', signin);
 router.post('/logout', authenticateJwt, logout);
+router.post('/update', authenticateJwt, updateAccount);
 router.post('/delete', authenticateJwt, deleteAccount);
 router.get('/verify-jwt', authenticateJwt, acknowledgeJWTValidity);
 

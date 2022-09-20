@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { ormCreateUser as _createUser, authenticateUser, isExistingUser, isExistingEmail, ormDeleteAccount } from '../model/user-orm.js';
+import { ormCreateUser as _createUser, authenticateUser, isExistingUser, isExistingEmail, ormUpdateAccount as _updateAccount, ormDeleteAccount } from '../model/user-orm.js';
 import { blacklistJwt, generateJwt, decodeJwt } from '../model/jwt.js';
 
 export async function createUser(req, res) {
@@ -59,6 +59,28 @@ export async function logout(req, res) {
     await blacklistJwt(token);
     res.clearCookie('token');
     return res.status(200).json({ message: 'Logout successful.'})
+}
+
+export async function updateAccount(req, res) {
+    const { token } = req;
+    const { newUsername, newPassword } = req.body;
+    const { username } = decodeJwt(token);
+    const newProfile = {};
+
+    // Only add to the new profile to update to if the value exists
+    if (newUsername) {
+        newProfile.username = newUsername;
+    }
+
+    if (newPassword) {
+        newProfile.password = newPassword;
+    }
+
+    if (await _updateAccount(username, newProfile)) {
+        return res.status(200).json({ message: `Updated account successfully.` });
+    } else {
+        return res.status(409).json({ message: 'Account does not exist / update unsuccessful.' });
+    }
 }
 
 export async function deleteAccount(req, res) {

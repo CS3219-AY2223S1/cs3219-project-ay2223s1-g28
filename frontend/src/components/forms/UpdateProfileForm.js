@@ -1,3 +1,7 @@
+import { useContext } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -6,62 +10,147 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import OutlinedContainer from '../ui/OutlinedContainer';
 import CustomTextField from '../inputs/CustomTextField';
 
+import useInput from '../../hooks/use-input';
+
+import AlertContext from '../../context/alert-context';
+import UserContext from '../../context/user-context';
+
+import isValidUsername from '../../validators/username-validator';
+import isValidPassword from '../../validators/password-validator';
+
 import styles from './UpdateProfileForm.module.css';
 
 function UpdateProfileForm() {
+  const alertCtx = useContext(AlertContext);
+  const userCtx = useContext(UserContext);
+
+  const {
+    value: usernameValue,
+    isValid: usernameIsValid,
+    hasError: usernameHasError,
+    errorHelperText: usernameErrorHelperText,
+    valueChangeHandler: usernameChangeHandler,
+    inputBlurHandler: usernameBlurHandler,
+    reset: resetUsername,
+  } = useInput(isValidUsername);
+
+  const {
+    value: passwordValue,
+    isValid: passwordIsValid,
+    hasError: passwordHasError,
+    errorHelperText: passwordErrorHelperText,
+    valueChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    reset: resetPassword,
+  } = useInput(isValidPassword);
+
+  const navigate = useNavigate();
+
+  let formIsValid = false;
+
+  if (
+    (!usernameValue || usernameIsValid) &&
+    (!passwordValue || passwordIsValid)
+  ) {
+    // If the field is empty, assume it to be true since it will not update the profile
+    formIsValid = true;
+  }
+
+  if (usernameIsValid && passwordIsValid) {
+    formIsValid = true;
+  }
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+
+    if (!formIsValid) {
+      return;
+    }
+
+    userCtx.onUpdateAccount(
+      usernameValue,
+      passwordValue,
+      (updateSuccessMessage, err) => {
+        if (err || !updateSuccessMessage) {
+          alertCtx.onShow(err ? err.response.data.message : 'Update failed!');
+          return;
+        }
+
+        alertCtx.onShow(updateSuccessMessage, 'success');
+        navigate('/home');
+      }
+    );
+
+    resetUsername();
+    resetPassword();
+  };
+
   return (
-    <OutlinedContainer customStyle={{ width: '60%' }}>
-      <Grid container direction="row" justifyContent="space-between">
-        <Grid item xs={1}>
-          <PersonOutlineIcon color="primary" sx={{ fontSize: 80, mt: 1 }} />
+    <form onSubmit={submitHandler}>
+      <OutlinedContainer customStyle={{ width: '60%' }}>
+        <Grid container direction="row" justifyContent="space-between">
+          <Grid item xs={1}>
+            <PersonOutlineIcon color="primary" sx={{ fontSize: 80, mt: 1 }} />
+          </Grid>
+          <Grid
+            item
+            xs={8}
+            container
+            direction="row"
+            justifyContent="center"
+            rowGap={5}
+            sx={{ m: '50px 0' }}
+          >
+            <Grid item xs={12}>
+              <CustomTextField
+                leftNode={<Typography>Username:</Typography>}
+                value={usernameValue}
+                error={usernameHasError}
+                helperText={usernameHasError && usernameErrorHelperText}
+                onChange={usernameChangeHandler}
+                onBlur={usernameBlurHandler}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <CustomTextField
+                leftNode={<Typography>Password:</Typography>}
+                type="password"
+                value={passwordValue}
+                error={passwordHasError}
+                helperText={passwordHasError && passwordErrorHelperText}
+                onChange={passwordChangeHandler}
+                onBlur={passwordBlurHandler}
+                fullWidth
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                className={styles.update_profile_button}
+                variant="outlined"
+                size="large"
+                type="submit"
+              >
+                Update Profile
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid
+            item
+            xs={1}
+            container
+            direction="column-reverse"
+            alignItems="flex-end"
+          >
+            <Grid item>
+              <Typography textAlign="end" sx={{ mb: 1 }}>
+                PeerCard
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid
-          item
-          xs={8}
-          container
-          direction="row"
-          justifyContent="center"
-          rowGap={5}
-          sx={{ m: '50px 0' }}
-        >
-          <Grid item xs={12}>
-            <CustomTextField
-              leftNode={<Typography>Username:</Typography>}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <CustomTextField
-              leftNode={<Typography>Password:</Typography>}
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <Button
-              className={styles.update_profile_button}
-              variant="outlined"
-              size="large"
-              type="submit"
-            >
-              Update Profile
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          xs={1}
-          container
-          direction="column-reverse"
-          alignItems="flex-end"
-        >
-          <Grid item>
-            <Typography textAlign="end" sx={{ mb: 1 }}>
-              PeerCard
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    </OutlinedContainer>
+      </OutlinedContainer>
+    </form>
   );
 }
 

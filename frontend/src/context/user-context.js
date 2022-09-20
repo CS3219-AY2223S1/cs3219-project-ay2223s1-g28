@@ -11,6 +11,7 @@ const SIGNIN_ROUTE = '/signin';
 // using user service URL at the moment
 const JWT_VERIFICATION_ENDPOINT = '/verify-jwt';
 const LOGOUT_ENDPOINT = '/logout';
+const UPDATE_ACCOUNT_ENDPOINT = '/update';
 const DELETE_ACCOUNT_ENDPOINT = '/delete';
 
 const UserContext = createContext({
@@ -18,6 +19,7 @@ const UserContext = createContext({
   onVerifyToken: () => {},
   onSignout: () => {},
   onSignin: () => {},
+  onUpdateAccount: () => {},
   onDeleteAccount: () => {},
 });
 
@@ -65,14 +67,31 @@ export function UserContextProvider(props) {
     await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
-      .post(
-        URL_USER_SVC + LOGOUT_ENDPOINT,
-        {},
-        { withCredentials: true }
-      )
+      .post(URL_USER_SVC + LOGOUT_ENDPOINT, {}, { withCredentials: true })
       .then((res) => {
         const isSignoutSuccess = res && res.status === STATUS_CODE_OK;
         setIsSignedIn(isSignoutSuccess);
+        return res.data;
+      })
+      .then((data) => {
+        callback(data.message, null);
+      })
+      .catch((error) => {
+        setIsSignedIn(false);
+        callback(false, error);
+      });
+  };
+
+  const updateAccountHandler = async (newUsername, newPassword, callback) => {
+    await axios
+      // Must set "withCredentials" to true so the cookie stored on browser
+      // is sent to the server for checking
+      .post(
+        URL_USER_SVC + UPDATE_ACCOUNT_ENDPOINT,
+        { newUsername, newPassword },
+        { withCredentials: true }
+      )
+      .then((res) => {
         return res.data;
       })
       .then((data) => {
@@ -88,7 +107,11 @@ export function UserContextProvider(props) {
     await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
-      .post(URL_USER_SVC + DELETE_ACCOUNT_ENDPOINT, {}, { withCredentials: true })
+      .post(
+        URL_USER_SVC + DELETE_ACCOUNT_ENDPOINT,
+        {},
+        { withCredentials: true }
+      )
       .then((res) => {
         const isDeleteSuccess = res && res.status === STATUS_CODE_OK;
         setIsSignedIn(!isDeleteSuccess); // Sign user out if delete success, else stay
@@ -110,7 +133,8 @@ export function UserContextProvider(props) {
         onVerifyToken: verifyTokenHandler,
         onSignin: signinHandler,
         onSignout: signoutHandler,
-        onDeleteAccount: deleteAccountHandler
+        onUpdateAccount: updateAccountHandler,
+        onDeleteAccount: deleteAccountHandler,
       }}
     >
       {props.children}
