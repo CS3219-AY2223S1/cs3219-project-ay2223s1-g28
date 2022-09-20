@@ -36,7 +36,6 @@ export default function ButtonAppBar() {
   const signoutHandler = () => {
     userCtx.onSignout((message, err) => {
       if (err) {
-        console.log(err);
         return alertCtx.onShow(err.message);
       }
       alertCtx.onShow(message, 'success');
