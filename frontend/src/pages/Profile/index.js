@@ -57,11 +57,11 @@ function ProfilePage() {
         content={
           <Typography>Are you sure you want to delete this account?</Typography>
         }
-        primaryAction={{ text: 'Delete', onClick: deleteAccountHandler }}
-        secondaryAction={{
+        primaryAction={{
           text: 'No',
           onClick: toggleBackdropHandler,
         }}
+        secondaryAction={{ text: 'Delete', onClick: deleteAccountHandler }}
       />
     </Grid>
   );
