@@ -72,3 +72,7 @@ export async function deleteAccount(req, res) {
         return res.status(409).json({ message: 'Account does not exist / delete unsuccessful.' });
     }
 }
+
+export function acknowledgeJWTValidity(req, res) {
+    res.status(200).json({ message: 'Valid JWT!' });
+}

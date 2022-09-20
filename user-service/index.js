@@ -6,6 +6,7 @@ import {
   deleteAccount,
   logout,
   signin,
+  acknowledgeJWTValidity
 } from './controller/user-controller.js';
 import { authenticateJwt } from './model/jwt.js';
 
@@ -29,9 +30,7 @@ router.post('/', createUser);
 router.post('/signin', signin);
 router.post('/logout', authenticateJwt, logout);
 router.post('/delete', authenticateJwt, deleteAccount);
-router.get('/verify-jwt', authenticateJwt, (req, res) => {
-  res.status(200).json({ message: 'Valid JWT, safe to redirect!' });
-});
+router.get('/verify-jwt', authenticateJwt, acknowledgeJWTValidity);
 
 app.use('/api/user', router).all((_, res) => {
   res.setHeader('content-type', 'application/json');
