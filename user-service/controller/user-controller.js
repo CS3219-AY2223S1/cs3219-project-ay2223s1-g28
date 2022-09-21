@@ -76,11 +76,31 @@ export async function updateAccount(req, res) {
         newProfile.password = newPassword;
     }
 
-    if (await _updateAccount(username, newProfile)) {
-        return res.status(200).json({ message: `Updated account successfully.` });
-    } else {
-        return res.status(409).json({ message: 'Account does not exist / update unsuccessful.' });
+    // Directly return if newProfile is empty, no update
+    if (
+      newProfile && // null and undefined check
+      Object.keys(newProfile).length === 0 &&
+      Object.getPrototypeOf(newProfile) === Object.prototype
+    ) {
+      return res.status(200).json({
+        message: 'No update on your account since no input provided.',
+      });
     }
+
+    if (await _updateAccount(username, newProfile)) {
+      // Authenticate updated user
+      const updatedUser = await authenticateUser(newUsername, newPassword);
+      if (!updatedUser) {
+          return res.status(401).json({ message: 'User does not exist and/or wrong password.' });
+      }
+      // Create new JWT for updated profile
+      const token = generateJwt(updatedUser);
+      // Send cookie
+      res.cookie('token', token, { httpOnly: true });
+      return res.status(200).json({ message: 'Updated account successfully.' });
+    }
+
+    return res.status(409).json({ message: 'Account does not exist / update unsuccessful.' });
 }
 
 export async function deleteAccount(req, res) {
