@@ -4,19 +4,19 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import Typography from '@mui/material/Typography';
 
-import OutlinedContainer from '../ui/OutlinedContainer';
 import CustomTextField from '../inputs/CustomTextField';
+import OutlinedContainer from '../ui/OutlinedContainer';
 
 import useInput from '../../hooks/use-input';
 
 import AlertContext from '../../context/alert-context';
 import UserContext from '../../context/user-context';
 
-import isValidUsername from '../../validators/username-validator';
 import isValidPassword from '../../validators/password-validator';
+import isValidUsername from '../../validators/username-validator';
 
 import styles from './UpdateProfileForm.module.css';
 
@@ -53,10 +53,6 @@ function UpdateProfileForm() {
     (!passwordValue || passwordIsValid)
   ) {
     // If the field is empty, assume it to be true since it will not update the profile
-    formIsValid = true;
-  }
-
-  if (usernameIsValid && passwordIsValid) {
     formIsValid = true;
   }
 
