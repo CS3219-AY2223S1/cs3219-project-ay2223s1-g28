@@ -1,28 +1,41 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from 'react';
 
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from 'react-router-dom';
 
-import axios from "axios";
+import AlertContext from '../context/alert-context';
+import UserContext from '../context/user-context';
 
-import { STATUS_CODE_OK } from "../constants";
+function PrivateRoute() {
+  const alertCtx = useContext(AlertContext);
+  const userCtx = useContext(UserContext);
 
-function PrivateRoute(props) {
-  const [isAuthenticated, setAuthentication] = useState();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [checked, setChecked] = useState(false);
+
   useEffect(() => {
-    const res = axios
-      .get(props.path, { withCredentials: true })
-      .catch((error) => {
-        console.log("Error!");
-      });
-    if (res && res.status === STATUS_CODE_OK) {
-      setAuthentication(true);
-    } else {
-      setAuthentication(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Will run once when component first mounts
+    userCtx.onVerifyToken((isAuthSuccess, err) => {
+      if (err || !isAuthSuccess) {
+        alertCtx.onShow(
+          `${
+            err
+              ? err.response.data.message
+              : 'Invalid token, please signin again!'
+          }`
+        );
+      }
 
-  return !isAuthenticated ? <Navigate to="/signin" /> : <Outlet />;
+      setIsAuthenticated(isAuthSuccess);
+      setChecked(true);
+    });
+  }, [userCtx, alertCtx]);
+
+  if (checked) {
+    // Crucial step to make sure that we do not return anything
+    // before we get a response from server and set "isAuthenticated" state
+    // Else, it will navigate back to signin page even before
+    // "isAuthenticated" state is set to true
+    return isAuthenticated ? <Outlet /> : <Navigate to="/signin" />;
+  }
 }
 
 export default PrivateRoute;

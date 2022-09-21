@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 
-import IconTextField from './IconTextField';
+import CustomTextField from './CustomTextField';
 
-describe('IconTextField component', () => {
+describe('CustomTextField component', () => {
   it('renders correct label', () => {
     const label = "I am a text field label";
-    render(<IconTextField label={label}/>);
+    render(<CustomTextField label={label}/>);
 
     const labelRendered = screen.getByLabelText(label);
     expect(labelRendered).toBeInTheDocument();

@@ -6,13 +6,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ThemeWrapper from './components/ThemeWrapper';
 import { AlertContextProvider } from './context/alert-context';
+import { UserContextProvider } from './context/user-context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <ThemeWrapper>
     <AlertContextProvider>
-      <App />
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
     </AlertContextProvider>
   </ThemeWrapper>
 );

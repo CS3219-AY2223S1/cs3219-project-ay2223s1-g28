@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
@@ -9,22 +8,21 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import IconTextField from '../inputs/IconTextField';
+import CustomTextField from '../inputs/CustomTextField';
 import styles from './SigninForm.module.css';
 
 import AlertContext from '../../context/alert-context';
+import UserContext from '../../context/user-context';
 
 import useInput from '../../hooks/use-input';
 
 import isValidUsername from '../../validators/username-validator';
 import isValidPassword from '../../validators/password-validator';
 
-import { URL_USER_SVC } from '../../configs';
-import { STATUS_CODE_OK } from '../../constants';
-
-const SIGNIN_ROUTE = '/signin';
-
 function SigninForm() {
+  const alertCtx = useContext(AlertContext);
+  const userCtx = useContext(UserContext);
+
   const {
     value: usernameValue,
     isValid: usernameIsValid,
@@ -45,8 +43,6 @@ function SigninForm() {
     reset: resetPassword,
   } = useInput(isValidPassword);
 
-  const alertCtx = useContext(AlertContext);
-
   const navigate = useNavigate();
 
   let formIsValid = false;
@@ -62,18 +58,15 @@ function SigninForm() {
       return;
     }
 
-    const res = await axios
-      .post(URL_USER_SVC + SIGNIN_ROUTE, {
-        username: usernameValue,
-        password: passwordValue,
-      })
-      .catch((err) => {
-        alertCtx.onShow(err.response.data.message);
-      });
-    if (res && res.status === STATUS_CODE_OK) {
+    userCtx.onSignin(usernameValue, passwordValue, (isSigninSuccess, err) => {
+      if (err || !isSigninSuccess) {
+        alertCtx.onShow(err ? err.response.data.message : "Sign in failed!");
+        return;
+      }
+
       alertCtx.onShow('Login successfully', 'success');
       navigate('/home');
-    }
+    });
 
     resetUsername();
     resetPassword();
@@ -89,8 +82,8 @@ function SigninForm() {
         spacing={6}
       >
         <Grid item xs={12}>
-          <IconTextField
-            icon={<AccountCircle color="primary" fontSize="large" />}
+          <CustomTextField
+            leftNode={<AccountCircle color="primary" fontSize="large" />}
             label="Email/Username"
             value={usernameValue}
             error={usernameHasError}
@@ -102,8 +95,8 @@ function SigninForm() {
           />
         </Grid>
         <Grid item xs={12}>
-          <IconTextField
-            icon={<HttpsOutlinedIcon color="primary" fontSize="large" />}
+          <CustomTextField
+            leftNode={<HttpsOutlinedIcon color="primary" fontSize="large" />}
             label="Password"
             type="password"
             value={passwordValue}

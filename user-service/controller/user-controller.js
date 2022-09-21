@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
-import { ormCreateUser as _createUser, authenticateUser, isExistingUser, isExistingEmail, ormDeleteAccount } from '../model/user-orm.js';
-import { blacklistJwt, generateJwt } from '../model/jwt.js';
+import { ormCreateUser as _createUser, authenticateUser, isExistingUser, isExistingEmail, ormUpdateAccount as _updateAccount, ormDeleteAccount } from '../model/user-orm.js';
+import { blacklistJwt, generateJwt, decodeJwt } from '../model/jwt.js';
 
 export async function createUser(req, res) {
     try {
@@ -61,9 +61,51 @@ export async function logout(req, res) {
     return res.status(200).json({ message: 'Logout successful.'})
 }
 
+export async function updateAccount(req, res) {
+    const { token } = req;
+    const { newUsername, newPassword } = req.body;
+    const { username } = decodeJwt(token);
+    const newProfile = {};
+
+    // Only add to the new profile to update to if the value exists
+    if (newUsername) {
+        newProfile.username = newUsername;
+    }
+
+    if (newPassword) {
+        newProfile.password = newPassword;
+    }
+
+    // Directly return if newProfile is empty, no update
+    if (
+      newProfile && // null and undefined check
+      Object.keys(newProfile).length === 0 &&
+      Object.getPrototypeOf(newProfile) === Object.prototype
+    ) {
+      return res.status(200).json({
+        message: 'No update on your account since no input provided.',
+      });
+    }
+
+    if (await _updateAccount(username, newProfile)) {
+      // Authenticate updated user
+      const updatedUser = await authenticateUser(newUsername, newPassword);
+      if (!updatedUser) {
+          return res.status(401).json({ message: 'User does not exist and/or wrong password.' });
+      }
+      // Create new JWT for updated profile
+      const token = generateJwt(updatedUser);
+      // Send cookie
+      res.cookie('token', token, { httpOnly: true });
+      return res.status(200).json({ message: 'Updated account successfully.' });
+    }
+
+    return res.status(409).json({ message: 'Account does not exist / update unsuccessful.' });
+}
+
 export async function deleteAccount(req, res) {
     const { token } = req;
-    const { username } = req.body;
+    const { username } = decodeJwt(token);
     await blacklistJwt(token);
     res.clearCookie('token');
     if (await ormDeleteAccount(username)) {
@@ -71,4 +113,8 @@ export async function deleteAccount(req, res) {
     } else {
         return res.status(409).json({ message: 'Account does not exist / delete unsuccessful.' });
     }
+}
+
+export function acknowledgeJWTValidity(req, res) {
+    res.status(200).json({ message: 'Valid JWT!' });
 }
