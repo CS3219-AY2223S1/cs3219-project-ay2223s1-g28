@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-import { createUser, deleteAccountByUsername, getUserByUsername, getUserByEmail } from './repository.js';
+import { createUser, updateAccountByUsername, deleteAccountByUsername, getUserByUsername, getUserByEmail } from './repository.js';
 
 const saltRounds = 10;
 
@@ -46,6 +46,15 @@ export async function isExistingUser(username) {
 export async function isExistingEmail(email) {
     const user = await getUserByEmail(email.toLowerCase());
     return user ? true : false;
+}
+
+// Returns true upon successful update
+export async function ormUpdateAccount(username, newProfile) {
+  if (newProfile.password) {
+    newProfile.password = await bcrypt.hash(newProfile.password, saltRounds);
+  }
+  const res = await updateAccountByUsername(username, newProfile);
+  return res.ok === 1;
 }
 
 // Returns true upon successful deletion

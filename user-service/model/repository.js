@@ -25,6 +25,13 @@ export async function getUserByEmail(email) {
   return await UserModel.findOne({ email }).exec();
 }
 
+export async function updateAccountByUsername(username, newProfile) {
+  return await UserModel.findOneAndUpdate({ username }, newProfile, {
+    new: true,
+    rawResult: true, // Return the raw result from the MongoDB driver
+  });
+}
+
 export async function deleteAccountByUsername(username) {
   return await UserModel.deleteOne({ username });
 }

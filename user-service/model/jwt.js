@@ -53,3 +53,7 @@ export async function authenticateJwt(req, res, next) {
         next();
     })
 }
+
+export function decodeJwt(token) {
+    return jwt.decode(token);
+}

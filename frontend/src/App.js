@@ -3,15 +3,15 @@ import {
   Routes,
   Route,
   Navigate,
-} from "react-router-dom";
-import Box from "@mui/material/Box";
+} from 'react-router-dom';
+import Box from '@mui/material/Box';
 
-import Navbar from "./components/Navbar";
-import PrivateRoute from "./components/PrivateRoute.js";
-import HomePage from "./pages/Home";
-import RoomPage from "./pages/Room";
-import SignupPage from "./pages/Signup";
-import SigninPage from "./pages/Signin";
+import Navbar from './components/Navbar';
+import PrivateRoute from './components/PrivateRoute.js';
+import SignupPage from './pages/Signup';
+import SigninPage from './pages/Signin';
+import HomePage from './pages/Home';
+import ProfilePage from './pages/Profile';
 
 import AlertMessage from './components/ui/AlertMessage';
 
@@ -29,8 +29,9 @@ function App() {
             ></Route>
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/signin" element={<SigninPage />} />
-            <Route path="/home" element={<PrivateRoute />}>
+            <Route element={<PrivateRoute />}>
               <Route path="/home" element={<HomePage />} />
+              <Route path="/profile" element={<ProfilePage />} />
             </Route>
             <Route path="/room" element={<RoomPage />} />
           </Routes>
