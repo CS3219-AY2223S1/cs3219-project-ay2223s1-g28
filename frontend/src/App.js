@@ -12,6 +12,7 @@ import SignupPage from './pages/Signup';
 import SigninPage from './pages/Signin';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
+import RoomPage from './pages/Room';
 
 import AlertMessage from './components/ui/AlertMessage';
 

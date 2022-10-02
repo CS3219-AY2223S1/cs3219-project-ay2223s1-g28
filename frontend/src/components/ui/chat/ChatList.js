@@ -7,7 +7,7 @@ function ChatList(props) {
       {/*For each message objects, create the HTML view of the msg id, sender id and the message */}
       {props.chats.map((chat) => {
         return (
-          <li key={chat.id}>
+          <li key={chat.senderId}>
             <Chat text={chat.text} senderId={chat.senderId} />
           </li>
         );
