@@ -1,9 +1,9 @@
-import style from "./Question.module.css";
+import styles from "./Question.module.css";
 
 function Question(props) {
   return (
     <div>
-      <p className={style.question}>{props.question}</p>
+      <p className={styles.question}>{props.question}</p>
     </div>
   );
 }

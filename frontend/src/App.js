@@ -8,8 +8,8 @@ import Box from "@mui/material/Box";
 
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute.js";
-import Home from "./pages/Home";
-import Room from "./pages/Room";
+import HomePage from "./pages/Home";
+import RoomPage from "./pages/Room";
 import SignupPage from "./pages/Signup";
 import SigninPage from "./pages/Signin";
 
@@ -29,10 +29,10 @@ function App() {
             ></Route>
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/signin" element={<SigninPage />} />
-            <Route path="/home" element={<PrivateRoute path="/home" />}>
-              <Route path="/home" element={<Home />} />
+            <Route path="/home" element={<PrivateRoute />}>
+              <Route path="/home" element={<HomePage />} />
             </Route>
-            <Route path="/room" element={<Room />} />
+            <Route path="/room" element={<RoomPage />} />
           </Routes>
         </Box>
       </Router>

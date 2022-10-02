@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useState } from "react";
 
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 
 import ChatList from "./ChatList";
 import Title from "./Title";
-import style from "./ChatBlock.module.css";
+import styles from "./ChatBlock.module.css";
 
 const DUMMY_DATA = [
   {
@@ -25,14 +25,14 @@ const DUMMY_DATA = [
 function ChatBlock() {
   const[state] = useState({ chats: DUMMY_DATA });
   return (
-    <div className={style.chat_block}>
+    <div className={styles.chat_block}>
       <Title />
       <Divider orientation="Horizontal" />
       {/* sets a prop called messages in MessageList component */}
       <ChatList chats={state.chats} />
       <TextField
         placeholder="Chat here..."
-        className={style.chat_input}
+        className={styles.chat_input}
       ></TextField>
     </div>
   );

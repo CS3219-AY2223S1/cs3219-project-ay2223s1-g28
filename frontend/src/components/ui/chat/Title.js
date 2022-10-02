@@ -1,10 +1,8 @@
-import React from "react";
-
-import style from "./Title.module.css";
+import styles from "./Title.module.css";
 
 function Title() {
   return (
-    <div className={style.title}>
+    <div className={styles.title}>
       <h2>Chat app</h2>
     </div>
   );

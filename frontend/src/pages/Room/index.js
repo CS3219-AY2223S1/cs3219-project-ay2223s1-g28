@@ -6,7 +6,7 @@ import Editor from "react-monaco-editor";
 
 import ChatBlock from "../../components/ui/chat/ChatBlock";
 import QuestionBox from "../../components/ui/question/QuestionBox";
-import style from "./Room.module.css";
+import styles from "./Room.module.css";
 
 function RoomPage() {
   return (
@@ -24,7 +24,7 @@ function RoomPage() {
           </Typography>
         </Grid>
         <Grid xs={2} item justifyContent="flex-end">
-          <div className={style.leave_session_button}>
+          <div className={styles.leave_session_button}>
             <Button variant="outlined" color="error">
               <b>Leave Session</b>
             </Button>
@@ -43,16 +43,12 @@ function RoomPage() {
           </Grid>
           {/* Code Editor component */}
           <Grid item>
-            <div className={style.code_editor}>
+            <div className={styles.code_editor}>
               <Editor
                 height="50vh"
                 defaultLanguage="javascript"
                 defaultValue="Start your coding here..."
               />
-              <div className={style.code_editor_buttons}>
-                <Button variant="outlined">Run code</Button>
-                <Button variant="outlined">Submit</Button>
-              </div>
             </div>
           </Grid>
         </Grid>

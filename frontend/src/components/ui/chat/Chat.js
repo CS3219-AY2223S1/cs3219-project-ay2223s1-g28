@@ -1,14 +1,12 @@
-import React from "react";
-
-import style from "./Chat.module.css";
+import styles from "./Chat.module.css";
 
 function Chat(props) {
   return (
-    <div className={style.chat_container}>
-      <div className={style.chat_sender}>
+    <div className={styles.chat_container}>
+      <div className={styles.chat_sender}>
         <h4>{props.senderId}: </h4>
       </div>
-      <div className={style.chat_text}>{props.text}</div>
+      <div className={styles.chat_text}>{props.text}</div>
     </div>
   );
 }

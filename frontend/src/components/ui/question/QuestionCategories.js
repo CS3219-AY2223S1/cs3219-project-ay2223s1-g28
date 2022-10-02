@@ -1,12 +1,12 @@
 import Category from "./QuestionCategory";
-import style from "./QuestionCategories.module.css";
+import styles from "./QuestionCategories.module.css";
 
 function QuestionCategories(props) {
   return (
-    <ul className={style.categories}>
+    <ul className={styles.categories}>
       {props.categories.map((category) => {
         return (
-          <li key={category.id} className={style.category}>
+          <li key={category.id} className={styles.category}>
             <Category text={category.text} />
           </li>
         );
