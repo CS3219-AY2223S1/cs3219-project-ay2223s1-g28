@@ -12,6 +12,7 @@ import SignupPage from './pages/Signup';
 import SigninPage from './pages/Signin';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
+import RoomPage from './pages/Room';
 
 import AlertMessage from './components/ui/AlertMessage';
 
@@ -33,6 +34,7 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>
+            <Route path="/room" element={<RoomPage />} />
           </Routes>
         </Box>
       </Router>
