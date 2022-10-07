@@ -103,7 +103,7 @@ export async function getQuestionByDifficulty(req, res) {
   }
 }
 
-export async function _deleteQuestionById(req, res) {
+export async function deleteQuestionById(req, res) {
   try {
     const { _id } = req.body;
     if (_id) {
