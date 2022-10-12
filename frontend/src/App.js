@@ -13,6 +13,7 @@ import SigninPage from './pages/Signin';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
 import RoomPage from './pages/Room';
+import MatchPage from './pages/Match';
 
 import AlertMessage from './components/ui/AlertMessage';
 
@@ -33,6 +34,7 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/home" element={<HomePage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/match" element={<MatchPage />} />
             </Route>
             <Route path="/room" element={<RoomPage />} />
           </Routes>

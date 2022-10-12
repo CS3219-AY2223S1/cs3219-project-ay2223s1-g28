@@ -1,11 +1,14 @@
 import Button from "@mui/material/Button";
+import { useNavigate } from 'react-router-dom';
 
 import styles from "./DifficultButton.module.css";
 
 function DifficultyButton(props) {
+  const navigate = useNavigate();
+
   // Clicking on a Difficulty button
   const selectDifficulty = (e) => {
-    console.log(e.currentTarget.id);
+    navigate('/match', { state: { difficulty: e.currentTarget.id }})
   }
 
   // Logic for button color

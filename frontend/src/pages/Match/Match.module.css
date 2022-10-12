@@ -1,0 +1,23 @@
+.difficultyBox {
+  padding: 3px 20px;
+  border-radius: 10px;
+}
+
+.easy {
+  background-color: #a7c7c8;
+}
+
+.medium {
+  background-color: #ffce0c;
+}
+
+.hard {
+  background-color: #ffa2a2;
+}
+
+.spaceAround {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
