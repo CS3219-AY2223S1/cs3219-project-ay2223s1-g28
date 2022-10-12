@@ -1,14 +1,37 @@
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import { useEffect } from 'react';
 
-import Editor from "react-monaco-editor";
+import { useParams } from 'react-router-dom';
 
-import ChatBlock from "../../components/ui/chat/ChatBlock";
-import QuestionBox from "../../components/ui/question/QuestionBox";
-import styles from "./Room.module.css";
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
+import Editor from 'react-monaco-editor';
+
+import io from 'socket.io-client';
+
+import ChatBlock from '../../components/ui/chat/ChatBlock';
+import QuestionBox from '../../components/ui/question/QuestionBox';
+import styles from './Room.module.css';
+
+const communicationService = 'http://localhost:8080';
+const socket = io(communicationService);
 
 function RoomPage() {
+  // Todo: Use room id prop/state instead in the future
+  let { roomId } = useParams();
+
+  useEffect(() => {
+    socket.emit('join-room', roomId);
+    
+    // the listeners must be removed in the cleanup step,
+    // in order to prevent multiple event registrations
+    return () => {
+      socket.off('connect');
+      socket.off('join-room');
+    }
+  }, [roomId]);
+
   return (
     <div>
       <Grid container>
@@ -18,7 +41,7 @@ function RoomPage() {
             variant="h4"
             fontWeight="lighter"
             textAlign="center"
-            sx={{ mb: "40px" }}
+            sx={{ mb: '40px' }}
           >
             Your technical interview begins...
           </Typography>
@@ -39,7 +62,7 @@ function RoomPage() {
         <Grid xs={7} item container direction="column">
           {/* Chat component */}
           <Grid item>
-            <ChatBlock />
+            <ChatBlock socket={socket} roomId={roomId} />
           </Grid>
           {/* Code Editor component */}
           <Grid item>
