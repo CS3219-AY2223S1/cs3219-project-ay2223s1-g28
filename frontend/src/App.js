@@ -33,8 +33,9 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/home" element={<HomePage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              {/* Todo: Instead of using URL parameter, pass a room id prop */}
+              <Route path="/room/:roomId" element={<RoomPage />} />
             </Route>
-            <Route path="/room" element={<RoomPage />} />
           </Routes>
         </Box>
       </Router>
