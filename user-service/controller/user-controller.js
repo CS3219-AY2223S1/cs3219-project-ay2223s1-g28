@@ -116,5 +116,7 @@ export async function deleteAccount(req, res) {
 }
 
 export function acknowledgeJWTValidity(req, res) {
-    res.status(200).json({ message: 'Valid JWT!' });
+    const { token } = req;
+    const { username } = decodeJwt(token);
+    return res.status(200).json({ username, message: 'Valid JWT!' });
 }
