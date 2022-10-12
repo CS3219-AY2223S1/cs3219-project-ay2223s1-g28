@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Button from '@mui/material/Button';
@@ -8,14 +9,24 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import OutlinedContainer from '../../components/ui/OutlinedContainer';
-import styles from './Match.module.css';
 import Timer from './Timer';
+import styles from './Match.module.css';
+
+// Styling
+const DARKGREY = '#707070';
+const GREY = '#757d86';
+const PADDED_BTN = {
+  paddingLeft: 6,
+  paddingRight: 6,
+}
 
 function MatchPage() {
+  // Hooks
   const [isMatchFailed, setIsMatchFailed] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Handlers
   const handleCancel = () => {
     navigate('/home');
   };
@@ -23,9 +34,8 @@ function MatchPage() {
     setIsMatchFailed(false);
   }
 
-  const darkGrey = '#707070';
-  const grey = '#757d86';
-  let boxStyling = styles.difficulty_box;
+  // Styling
+  let boxStyling = styles.difficultyBox;
   switch (location.state?.difficulty) {
     case 'Easy':
       boxStyling += ' ' + styles.easy;
@@ -49,16 +59,16 @@ function MatchPage() {
           </div>
         </Grid>
 
-        <Grid item mt={2} className={styles.space_around}>
+        <Grid item mt={2} className={styles.spaceAround}>
           <PersonOutlineIcon color='primary' sx={{ fontSize: 80 }} />
           {isMatchFailed
             ? <CancelOutlinedIcon color='error' sx={{ fontSize: 55}} />
-            : <CircularProgress sx={{ color: darkGrey, margin: 1 }} />}
+            : <CircularProgress sx={{ color: DARKGREY, margin: 1 }} />}
           <PersonOutlineIcon color='primary' sx={{ fontSize: 80 }} />
         </Grid>
 
         <Grid item mt={2}>
-          <Typography variant='h6' textAlign='center' sx={{ color: grey, lineHeight: 1.3 }}>
+          <Typography variant='h6' textAlign='center' sx={{ color: GREY, lineHeight: 1.3 }}>
             {isMatchFailed
             ? <>Looks like no one is willing to<br />
                 take on your challenge yet.<br />
@@ -69,25 +79,25 @@ function MatchPage() {
         </Grid>
 
         <Grid item mt={5}>
-          <Typography variant='h6' display='inline' sx={{ color: darkGrey }}>
-            Elapsed time:{' '}
+          <Typography variant='h6' display='inline' sx={{ color: DARKGREY }}>
+            Time left:{' '}
           </Typography>
-          <Typography variant='h5' display='inline' sx={{ color: darkGrey }}>
+          <Typography variant='h5' display='inline' sx={{ color: DARKGREY }}>
             <Timer /> sec
           </Typography>
         </Grid>
 
-        <Grid item mt={10} className={styles.space_around}>
+        <Grid item mt={10} className={styles.spaceAround}>
           {isMatchFailed
           ? <>
-              <Button onClick={handleRetry} variant='outlined' size='large' sx={{ color: '#a7c7c8', paddingLeft: 6, paddingRight: 6 }}>
+              <Button onClick={handleRetry} variant='outlined' size='large' sx={{ color: '#a7c7c8', ...PADDED_BTN }}>
                 Retry
               </Button>
-              <Button onClick={handleCancel} variant='outlined' color='error' size='large' sx={{ paddingLeft: 6, paddingRight: 6 }}>
+              <Button onClick={handleCancel} variant='outlined' color='error' size='large' sx={PADDED_BTN}>
                 Cancel
               </Button>
             </>
-          : <Button onClick={handleCancel} variant='outlined' color='error' size='large' sx={{ paddingLeft: 6, paddingRight: 6 }}>
+          : <Button onClick={handleCancel} variant='outlined' color='error' size='large' sx={PADDED_BTN}>
               Cancel
             </Button>}
         </Grid>
