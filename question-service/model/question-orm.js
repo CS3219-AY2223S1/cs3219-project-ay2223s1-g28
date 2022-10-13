@@ -1,9 +1,20 @@
-import { createQuestion, getQuestionById, getQuestionByDifficulty, deleteQuestionById } from './repository';
+import { getAllQuestions, createQuestion, getQuestionById, getQuestionByDifficulty, deleteQuestionById } from './repository.js';
+
+// Get all interview question in the database
+export async function ormGetAllQuestions() {
+    try {
+        const question = await getAllQuestions();
+        return question;
+    } catch(err) {
+        console.log("ERROR: Could not get all questions");
+        return { err };
+    } 
+}
 
 // Creates new interview question in the database
-export async function ormCreateQuestion(_id, title, difficulty, content) {
+export async function ormCreateQuestion(title, difficulty, content) {
     try {
-        const newQuestion = await createQuestion({ _id, title, difficulty, content });
+        const newQuestion = await createQuestion({ title, difficulty, content });
         newQuestion.save();
         return true;
     } catch(err) {
@@ -19,7 +30,7 @@ export async function ormGetQuestionById(id) {
         const question = await getQuestionById(id);
         return question;
     } catch(err) {
-        console.log("ERROR: Could not get question by _id");
+        console.log("ERROR: Could not get question by id");
         return { err };
     } 
 }
@@ -42,7 +53,7 @@ export async function ormDeleteQuestionById(id) {
         const res = await deleteQuestionById(id);
         return res.deletedCount == 1;
     } catch(err) {
-        console.log("ERROR: Could not get question by difficulty");
+        console.log("ERROR: Could not delete question by id");
         return { err };
     }
 }

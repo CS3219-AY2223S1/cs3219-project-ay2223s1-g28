@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
 var Schema = mongoose.Schema
 let QuestionModelSchema = new Schema({
-    _id: {
-        type: Number,
-        required: true,
-        unique: true,
-    },
     title: {
         type: String,
         required: true,
@@ -13,11 +8,12 @@ let QuestionModelSchema = new Schema({
     },
     // Specified to be an array of string.
     // For each categories, place them in a bubble as shown in the roomPage.
-    // categories: [{
-    //     type: String,
-    // }],
+    categories: [{
+        type: String,
+    }],
     difficulty: {
         type: String,
+        required: true,
     },
     content: {
         type: String,

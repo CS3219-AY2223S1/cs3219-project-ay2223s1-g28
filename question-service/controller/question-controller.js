@@ -1,18 +1,41 @@
 import {
+  ormGetAllQuestions as _getAllQuestions,
   ormCreateQuestion as _createQuestion,
   ormGetQuestionById as _getQuestionById,
   ormGetQuestionByDifficulty as _getQuestionByDifficulty,
   ormDeleteQuestionById as _deleteQuestionById,
-} from "../model/question-orm";
+} from "../model/question-orm.js";
+
+export async function getAllQuestions(req, res) {
+  try {
+    // resp contains the question obtained from db
+    const resp = await _getAllQuestions();
+
+    // Error faced when getting all questions
+    if (resp.err) {
+      console.log(resp.err);
+      return res.status(400).json({ message: "Could not get all questions" });
+    } else {
+      console.log("SUCCESS: all questions obtained");
+      return res
+        .status(200)
+        .json(resp);
+    }
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ message: "Database failure when getting all questions" });
+  }
+}
 
 export async function createQuestion(req, res) {
   try {
     // Request body will contain these fields
-    const { _id, title, difficulty, content } = req.body;
+    const { title, difficulty, content } = req.body;
 
     // Check if all of these fields exists in the JSON document
-    if (_id && title && difficulty && content) {
-      const resp = await _createQuestion(_id, title, difficulty, content);
+    if (title && difficulty && content) {
+      const resp = await _createQuestion(title, difficulty, content);
 
       // Error faced when creating question
       if (resp.err) {
@@ -24,26 +47,21 @@ export async function createQuestion(req, res) {
         console.log("SUCCESS: new question created!");
         return res
           .status(201)
-          .json({ message: "Created new question successfully!" });
+          .json("Successfully created question!");
       }
     } else {
-      return res
-        .status(400)
-        .json({
-          message:
-            "One of these question fields (_id, title, difficulty, content) is missing!",
-        });
+      return res.status(400).json(resp);
     }
   } catch (err) {
     return res
       .status(500)
-      .json({ message: "Database failure when creating new user!" });
+      .json(err);
   }
 }
 
 export async function getQuestionById(req, res) {
   try {
-    const { _id } = req.body;
+    const _id = req.body;
     if (_id) {
       // resp contains the question obtained from db
       const resp = await _getQuestionById(_id);
@@ -58,12 +76,12 @@ export async function getQuestionById(req, res) {
         console.log("SUCCESS: question obtained by id!");
         return res
           .status(200)
-          .json({ message: "Question successfully obtained by id!" });
+          .json(resp);
       }
     } else {
-        return res
-          .status(400)
-          .json({ message: "One of these question fields (_id) is missing!" });
+      return res
+        .status(400)
+        .json({ message: "One of these question fields (_id) is missing!" });
     }
   } catch (err) {
     return res
@@ -74,7 +92,7 @@ export async function getQuestionById(req, res) {
 
 export async function getQuestionByDifficulty(req, res) {
   try {
-    const { difficulty } = req.body;
+    const difficulty = req.body;
     if (difficulty) {
       // resp contains the question obtained from db
       const resp = await _getQuestionByDifficulty(difficulty);
@@ -89,23 +107,27 @@ export async function getQuestionByDifficulty(req, res) {
         console.log("SUCCESS: question obtained by difficulty!");
         return res
           .status(200)
-          .json({ message: "Question successfully obtained by difficulty!" });
+          .json(resp);
       }
     } else {
-        return res
-          .status(400)
-          .json({ message: "One of these question fields (difficulty) is missing!" });
+      return res
+        .status(400)
+        .json({
+          message: "One of these question fields (difficulty) is missing!",
+        });
     }
   } catch (err) {
     return res
       .status(400)
-      .json({ message: "Database failure when getting question by difficulty!" });
+      .json({
+        message: "Database failure when getting question by difficulty!",
+      });
   }
 }
 
 export async function deleteQuestionById(req, res) {
   try {
-    const { _id } = req.body;
+    const _id = req.body;
     if (_id) {
       const resp = await _deleteQuestionById(_id);
 
@@ -119,12 +141,12 @@ export async function deleteQuestionById(req, res) {
         console.log("SUCCESS: question deleted by id!");
         return res
           .status(200)
-          .json({ message: "Question successfully deleted by id!" });
+          .json("Successfully deleted question!");
       }
     } else {
-        return res
-          .status(400)
-          .json({ message: "One of these question fields (id) is missing!" });
+      return res
+        .status(400)
+        .json({ message: "One of these question fields (id) is missing!" });
     }
   } catch (err) {
     return res
@@ -132,5 +154,3 @@ export async function deleteQuestionById(req, res) {
       .json({ message: "Database failure when deleting question by id!" });
   }
 }
-
-
