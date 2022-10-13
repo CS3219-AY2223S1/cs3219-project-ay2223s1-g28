@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import axios from 'axios';
 
 import Grid from "@mui/material/Grid";
 
@@ -7,6 +9,12 @@ import OutlinedContainer from "../OutlinedContainer";
 import QuestionCategories from "./QuestionCategories";
 import QuestionTitle from "./QuestionTitle";
 import Question from "./Question";
+
+/* 
+  Find out which difficulty user chose,
+  obtain a Question of that difficulty from
+  Question service and display it
+*/
 
 function QuestionBox() {
   const DUMMY_DATA = [
@@ -24,6 +32,27 @@ function QuestionBox() {
     question:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur est \naugue, sagittis nec mi et, finibus consequat ligula. Vivamus",
   });
+
+  useEffect(() => {
+    async function fetchData() {
+      await axios
+        .get("http://localhost:8002/api/question/Medium")
+        .then((res) => {
+          try {
+            console.log("Setting the data to array!");
+            setContacts([...res.data.data]);
+          } catch (err) {
+            console.log(
+              "Encountered error when fetching data from endpoint: " + err
+            );
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+    fetchData();
+  })
 
   return (
     <OutlinedContainer>

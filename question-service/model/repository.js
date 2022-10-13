@@ -22,14 +22,19 @@ export async function createQuestion(question) {
 }
 
 export async function getQuestionById(id) {
-  return await questionModel.findOne({ where: { id }});
+  return await questionModel.findOne({ _id: id });
 }
 
-export async function getQuestionByDifficulty(difficulty) {
-  var random = Math.floor(Math.random());
-  return await questionModel.findOne({ where: { difficulty }}).skip(random);
+export async function getQuestionByDifficulty(userDifficulty) {
+  // To randomly generate a number of skips
+  // so that a random question of a particular
+  // difficulty can be obtained
+
+  const numOfQns = await questionModel.find({ difficulty: userDifficulty }).count();
+  var random = Math.floor(Math.random() * numOfQns);
+  return await questionModel.findOne({ difficulty: userDifficulty }).skip(random);
 }
 
 export async function deleteQuestionById(id) {
-    return await questionModel.deleteOne({ id });
+    return await questionModel.deleteOne({ _id: id });
 }

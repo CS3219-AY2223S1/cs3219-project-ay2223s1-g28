@@ -61,7 +61,8 @@ export async function createQuestion(req, res) {
 
 export async function getQuestionById(req, res) {
   try {
-    const _id = req.body;
+    const _id = req.params.id;
+    console.log(_id);
     if (_id) {
       // resp contains the question obtained from db
       const resp = await _getQuestionById(_id);
@@ -92,7 +93,7 @@ export async function getQuestionById(req, res) {
 
 export async function getQuestionByDifficulty(req, res) {
   try {
-    const difficulty = req.body;
+    const difficulty = req.params.difficulty
     if (difficulty) {
       // resp contains the question obtained from db
       const resp = await _getQuestionByDifficulty(difficulty);
@@ -127,7 +128,7 @@ export async function getQuestionByDifficulty(req, res) {
 
 export async function deleteQuestionById(req, res) {
   try {
-    const _id = req.body;
+    const _id = req.params.id;
     if (_id) {
       const resp = await _deleteQuestionById(_id);
 
