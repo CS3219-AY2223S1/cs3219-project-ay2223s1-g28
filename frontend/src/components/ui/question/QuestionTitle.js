@@ -5,7 +5,6 @@ function QuestionTitle(props) {
     <Typography
       variant="h3"
       fontWeight="lighter"
-      textAlign="center"
       sx={{ mt: "20px" }}
       color="#3EA7A5"
     >

@@ -62,7 +62,6 @@ export async function createQuestion(req, res) {
 export async function getQuestionById(req, res) {
   try {
     const _id = req.params.id;
-    console.log(_id);
     if (_id) {
       // resp contains the question obtained from db
       const resp = await _getQuestionById(_id);
@@ -82,7 +81,7 @@ export async function getQuestionById(req, res) {
     } else {
       return res
         .status(400)
-        .json({ message: "One of these question fields (_id) is missing!" });
+        .json({ message: "One of these question fields (id) is missing!" });
     }
   } catch (err) {
     return res
