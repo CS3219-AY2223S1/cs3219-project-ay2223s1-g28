@@ -30,6 +30,6 @@ io.on('connection', (socket) => {
   });
 });
 
-httpServer.listen(8080, () =>
-  console.log('communication-service listening on port 8080')
+httpServer.listen(8002, () =>
+  console.log('communication-service listening on port 8002')
 );
