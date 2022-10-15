@@ -23,9 +23,8 @@ function ChatList({ chats }) {
     <ul className={styles.chat_list}>
       {/* For each chat object, create the HTML view of the msg id, sender id and the message */}
       {chats.map((chat) => {
-        let uniqueChatKey = uuidv4();
         return (
-          <li key={uniqueChatKey}>
+          <li key={uuidv4()}>
             <Chat senderUsername={chat.senderUsername} text={chat.text} />
           </li>
         );
