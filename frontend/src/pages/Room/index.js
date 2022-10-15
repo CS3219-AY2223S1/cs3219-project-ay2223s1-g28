@@ -20,7 +20,7 @@ const socket = io(URL_COMM_SVC);
 
 function RoomPage() {
   // Todo: Use room id prop/state instead in the future
-  let { roomId } = useParams();
+  const { roomId } = useParams();
 
   useEffect(() => {
     socket.emit('join-room', roomId);
