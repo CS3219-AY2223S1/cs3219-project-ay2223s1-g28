@@ -39,29 +39,26 @@ function ChatBlock({ socket, roomId }) {
   }, [socket]);
 
   const sendChatHandler = (event) => {
-    if (event.keyCode !== ENTER_KEY_CODE) {
-      // If the key pressed is not ENTER key, do not proceed to send the message
-      return;
-    }
+    if (event.keyCode === ENTER_KEY_CODE) {
+      event.preventDefault();
 
-    event.preventDefault();
+      if (!chatIsValid) {
+        resetChat();
+        return;
+      }
 
-    if (!chatIsValid) {
-      // If the message is empty, do not proceed to send the message
+      const senderUsername = userCtx.username;
+
+      socket.emit('send-chat', roomId, senderUsername, chatMessage);
+
+      setChats((chats) => [
+        ...chats,
+        { senderUsername: 'Me', text: chatMessage },
+      ]);
+
       resetChat();
-      return;
     }
-
-    const senderUsername = userCtx.username;
-
-    socket.emit('send-chat', roomId, senderUsername, chatMessage);
-
-    setChats((chats) => [
-      ...chats,
-      { senderUsername: 'Me', text: chatMessage },
-    ]);
-
-    resetChat();
+    // If the key pressed is not ENTER key, do not proceed to send the message
   };
 
   return (
