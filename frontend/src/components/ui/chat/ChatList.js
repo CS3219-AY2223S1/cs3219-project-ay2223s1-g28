@@ -17,7 +17,7 @@ const AlwaysScrollToBottom = () => {
 };
 
 function ChatList({ chats }) {
-  let lastChatMessage = chats[chats.length - 1];
+  const lastChatMessage = chats[chats.length - 1];
 
   return (
     <ul className={styles.chat_list}>
