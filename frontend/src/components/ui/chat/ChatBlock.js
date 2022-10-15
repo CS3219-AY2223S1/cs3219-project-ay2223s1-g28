@@ -1,7 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
 
-import TextField from '@mui/material/TextField';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import SendIcon from '@mui/icons-material/Send';
 
 import ChatList from './ChatList';
 import Title from './Title';
@@ -38,8 +41,8 @@ function ChatBlock({ socket, roomId }) {
     return () => socket.off('receive-chat');
   }, [socket]);
 
-  const sendChatHandler = (event) => {
-    if (event.keyCode === ENTER_KEY_CODE) {
+  const sendChatHandler = (event, isMouseClick = false) => {
+    if (event.keyCode === ENTER_KEY_CODE || isMouseClick) {
       event.preventDefault();
 
       if (!chatIsValid) {
@@ -66,13 +69,22 @@ function ChatBlock({ socket, roomId }) {
       <Title />
       <Divider orientation="horizontal" />
       <ChatList chats={chats} />
-      <TextField
+      <OutlinedInput
         placeholder="Chat here..."
         className={styles.chat_input}
         value={chatMessage}
         onChange={chatChangeHandler}
         onKeyDown={sendChatHandler}
-      ></TextField>
+        endAdornment={
+          chatMessage && (
+            <InputAdornment position="end">
+              <IconButton onClick={(e) => sendChatHandler(e, true)} edge="end">
+                <SendIcon color="primary" />
+              </IconButton>
+            </InputAdornment>
+          )
+        }
+      ></OutlinedInput>
     </div>
   );
 }
