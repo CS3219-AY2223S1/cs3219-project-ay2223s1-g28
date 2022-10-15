@@ -14,8 +14,9 @@ import ChatBlock from '../../components/ui/chat/ChatBlock';
 import QuestionBox from '../../components/ui/question/QuestionBox';
 import styles from './Room.module.css';
 
-const communicationService = 'http://localhost:8080';
-const socket = io(communicationService);
+import { URL_COMM_SVC } from '../../configs';
+
+const socket = io(URL_COMM_SVC);
 
 function RoomPage() {
   // Todo: Use room id prop/state instead in the future
