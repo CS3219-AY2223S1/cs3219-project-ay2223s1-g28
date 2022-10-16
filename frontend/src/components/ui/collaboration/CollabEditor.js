@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
+
 import io from 'socket.io-client';
+
 import CodeMirror from 'codemirror/lib/codemirror.js';
 import 'codemirror/lib/codemirror.css'
+import 'codemirror/keymap/sublime'
 import 'codemirror/theme/neo.css'
 import 'codemirror/mode/javascript/javascript'
-import 'codemirror/keymap/sublime'
+
 import { URL_COLLAB_SVC } from '../../../configs';
 
 function CollabEditor({ roomId }) {
