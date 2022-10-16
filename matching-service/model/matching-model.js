@@ -4,10 +4,6 @@ export function definePendingMatchModel(sequelize, DataTypes) {
       type: DataTypes.STRING,
       primaryKey: true
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     difficulty: {
       type: DataTypes.STRING,
       allowNull: false,
