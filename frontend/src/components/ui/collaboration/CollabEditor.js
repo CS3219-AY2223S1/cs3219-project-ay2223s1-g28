@@ -40,7 +40,7 @@ function CollabEditor({ roomId }) {
             socket.off('connect');
             socket.off('update-code');
         };
-    }, []);
+    }, [roomId]);
 
     return (
         <textarea id='codemirror' />
