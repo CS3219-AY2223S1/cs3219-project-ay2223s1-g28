@@ -82,7 +82,7 @@ function QuestionBox() {
                 <QuestionTitle title={title} />
               </Grid>
               <Grid item>
-                <Button className={difficultyButtonStyle(difficulty)}>{difficulty}</Button>
+                <Button className={difficultyButtonStyle(difficulty)} disabled>{difficulty}</Button>
               </Grid>
             </Grid>
             <GreenDivider orientation="Horizontal" />

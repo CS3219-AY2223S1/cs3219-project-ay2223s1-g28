@@ -31,11 +31,11 @@ export async function getAllQuestions(req, res) {
 export async function createQuestion(req, res) {
   try {
     // Request body will contain these fields
-    const { title, difficulty, content } = req.body;
+    const { title, difficulty, categories, content } = req.body;
 
     // Check if all of these fields exists in the JSON document
-    if (title && difficulty && content) {
-      const resp = await _createQuestion(title, difficulty, content);
+    if (title && difficulty && categories && content) {
+      const resp = await _createQuestion(title, difficulty, categories, content);
 
       // Error faced when creating question
       if (resp.err) {

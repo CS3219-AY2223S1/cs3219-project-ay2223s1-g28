@@ -12,9 +12,9 @@ export async function ormGetAllQuestions() {
 }
 
 // Creates new interview question in the database
-export async function ormCreateQuestion(title, difficulty, content) {
+export async function ormCreateQuestion(title, difficulty, categories, content) {
     try {
-        const newQuestion = await createQuestion({ title, difficulty, content });
+        const newQuestion = await createQuestion({ title, difficulty, categories, content });
         newQuestion.save();
         return true;
     } catch(err) {
