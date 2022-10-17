@@ -38,3 +38,4 @@ export async function getQuestionByDifficulty(userDifficulty) {
 export async function deleteQuestionById(id) {
     return await questionModel.deleteOne({ _id: id });
 }
+

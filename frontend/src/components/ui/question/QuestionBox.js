@@ -28,7 +28,7 @@ function QuestionBox() {
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get("http://localhost:8002/api/question/level/Hard") // 'Hard' is hardcoded for now
+        .get("http://localhost:8004/api/question/level/Hard") // 'Hard' is hardcoded for now
         .then((res) => {
           try {
             console.log(
