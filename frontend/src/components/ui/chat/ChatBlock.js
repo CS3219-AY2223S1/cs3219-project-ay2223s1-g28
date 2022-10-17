@@ -41,28 +41,31 @@ function ChatBlock({ socket, roomId }) {
     return () => socket.off('receive-chat');
   }, [socket]);
 
-  const sendChatHandler = (event, isMouseClick = false) => {
-    if (event.keyCode === ENTER_KEY_CODE || isMouseClick) {
-      event.preventDefault();
-
-      if (!chatIsValid) {
-        resetChat();
-        return;
-      }
-
-      const senderUsername = userCtx.username;
-
-      socket.emit('send-chat', roomId, senderUsername, chatMessage);
-
-      setChats((chats) => [
-        ...chats,
-        { senderUsername: 'Me', text: chatMessage },
-      ]);
-
+  const sendChatHandler = () => {
+    if (!chatIsValid) {
       resetChat();
+      return;
     }
-    // If the key pressed is not ENTER key, do not proceed to send the message
+
+    const senderUsername = userCtx.username;
+
+    socket.emit('send-chat', roomId, senderUsername, chatMessage);
+
+    setChats((chats) => [
+      ...chats,
+      { senderUsername: 'Me', text: chatMessage },
+    ]);
+
+    resetChat();
   };
+
+  const onKeyDownHandler = (event) => {
+    // Send the message only if the user press ENTER
+    if (event.keyCode === ENTER_KEY_CODE) {
+      event.preventDefault();
+      sendChatHandler();
+    }
+  }
 
   return (
     <div className={styles.chat_block}>
@@ -74,11 +77,11 @@ function ChatBlock({ socket, roomId }) {
         className={styles.chat_input}
         value={chatMessage}
         onChange={chatChangeHandler}
-        onKeyDown={sendChatHandler}
+        onKeyDown={onKeyDownHandler}
         endAdornment={
           chatMessage && (
             <InputAdornment position="end">
-              <IconButton onClick={(e) => sendChatHandler(e, true)} edge="end">
+              <IconButton onClick={sendChatHandler} edge="end">
                 <SendIcon color="primary" />
               </IconButton>
             </InputAdornment>
