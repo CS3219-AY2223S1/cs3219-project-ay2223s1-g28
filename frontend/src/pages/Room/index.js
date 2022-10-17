@@ -1,17 +1,14 @@
 import { useEffect } from 'react';
-
 import { useParams } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-
-import Editor from 'react-monaco-editor';
-
 import io from 'socket.io-client';
 
 import ChatBlock from '../../components/ui/chat/ChatBlock';
 import QuestionBox from '../../components/ui/question/QuestionBox';
+import CollabEditor from "../../components/ui/collaboration/CollabEditor";
 import styles from './Room.module.css';
 
 import { URL_COMM_SVC } from '../../configs';
@@ -35,7 +32,7 @@ function RoomPage() {
 
   return (
     <div>
-      <Grid container>
+      <Grid container>``
         <Grid xs={2} item></Grid>
         <Grid xs={8} item>
           <Typography
@@ -68,11 +65,7 @@ function RoomPage() {
           {/* Code Editor component */}
           <Grid item>
             <div className={styles.code_editor}>
-              <Editor
-                height="50vh"
-                defaultLanguage="javascript"
-                defaultValue="Start your coding here..."
-              />
+              <CollabEditor roomId={roomId} />
             </div>
           </Grid>
         </Grid>
