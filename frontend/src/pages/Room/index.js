@@ -1,14 +1,18 @@
+import { useParams } from 'react-router-dom';
+
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-import Editor from "react-monaco-editor";
-
 import ChatBlock from "../../components/ui/chat/ChatBlock";
 import QuestionBox from "../../components/ui/question/QuestionBox";
+import CollabEditor from "../../components/ui/collaboration/CollabEditor";
 import styles from "./Room.module.css";
 
 function RoomPage() {
+  // Todo: Use room id prop/state instead in the future
+  const { roomId } = useParams();
+
   return (
     <div>
       <Grid container>
@@ -44,11 +48,7 @@ function RoomPage() {
           {/* Code Editor component */}
           <Grid item>
             <div className={styles.code_editor}>
-              <Editor
-                height="50vh"
-                defaultLanguage="javascript"
-                defaultValue="Start your coding here..."
-              />
+              <CollabEditor roomId={roomId} />
             </div>
           </Grid>
         </Grid>
