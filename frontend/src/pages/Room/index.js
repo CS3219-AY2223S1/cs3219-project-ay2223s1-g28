@@ -39,7 +39,7 @@ function RoomPage() {
       socket.off('connect');
       socket.off('join-room');
     }
-  }, [roomId]);
+  }, [alertCtx, navigate, roomId]);
 
   return (
     <div>
