@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import io from 'socket.io-client';
 
 import { URL_MATCHING_SVC } from '../../configs';
+import AlertContext from '../../context/alert-context';
 import OutlinedContainer from '../../components/ui/OutlinedContainer';
 import styles from './Match.module.css';
 
@@ -28,6 +29,7 @@ function MatchPage() {
   // Hooks
   const location = useLocation();
   const navigate = useNavigate();
+  const alertCtx = useContext(AlertContext);
   // Difficulty
   const [difficulty, setDifficulty] = useState('');
   // Socket
@@ -41,10 +43,13 @@ function MatchPage() {
   // useEffect
   // Difficulty
   useEffect(() => {
-    if (location.state) {
-      setDifficulty(location.state?.difficulty);
+    if (location.state?.difficulty) {
+      setDifficulty(location.state.difficulty);
+    } else {
+      navigate('/home');
+      alertCtx.onShow('Please select a difficulty level!');
     }
-  }, [location.state]);
+  }, [location.state, alertCtx, navigate]);
   // Socket
   useEffect(() => {
     setSocket(io.connect(URL_MATCHING_SVC));
