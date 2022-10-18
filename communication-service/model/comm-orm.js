@@ -1,4 +1,4 @@
-import { createChat } from './repository.js';
+import { createChat, getChatByRoomIDAndIndex } from './repository.js';
 
 //need to separate orm functions from repository to decouple business logic from persistence
 export async function ormCreateChat(roomId, chatIndex, sender, receiver, text) {
@@ -16,4 +16,10 @@ export async function ormCreateChat(roomId, chatIndex, sender, receiver, text) {
 		console.log('ERROR: Could not create new chat');
 		return { err };
 	}
+}
+
+// Checks if chat exists in database
+export async function isExistingChat(roomId, chatIndex) {
+    const chat = await getChatByRoomIDAndIndex(roomId, chatIndex);
+    return chat ? true : false;
 }
