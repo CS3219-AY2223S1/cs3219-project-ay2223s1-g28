@@ -85,7 +85,7 @@ function QuestionBox() {
                 <Button className={difficultyButtonStyle(difficulty)} disabled>{difficulty}</Button>
               </Grid>
             </Grid>
-            <GreenDivider orientation="Horizontal" />
+            <GreenDivider orientation="horizontal" />
           </Grid>
           <Grid xs={12} item>
             {/*Question Categories*/}
