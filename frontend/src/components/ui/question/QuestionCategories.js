@@ -6,8 +6,8 @@ function QuestionCategories(props) {
     <ul className={styles.categories}>
       {props.categories.map((category) => {
         return (
-          <li key={category.text} className={styles.category}>
-            <Category text={category.text} />
+          <li key={category.id} className={styles.category}>
+            <Category text={category} />
           </li>
         );
       })}

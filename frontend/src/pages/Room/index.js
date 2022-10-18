@@ -65,7 +65,7 @@ function RoomPage() {
       </Grid>
       <Grid container spacing={4}>
         {/* Question component */}
-        <Grid xs={5} item>
+        <Grid xs={5} item container>
           <QuestionBox />
         </Grid>
         <Grid xs={7} item container direction="column">
