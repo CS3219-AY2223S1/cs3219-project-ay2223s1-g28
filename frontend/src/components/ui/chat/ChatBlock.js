@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 
+import axios from 'axios';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -10,36 +11,53 @@ import ChatList from './ChatList';
 import Title from './Title';
 import styles from './ChatBlock.module.css';
 
-import useInput from '../../../hooks/use-input';
-
+import AlertContext from '../../../context/alert-context';
 import UserContext from '../../../context/user-context';
-
+import useInput from '../../../hooks/use-input';
 import isValidChat from '../../../validators/chat-validator';
+
+import { URL_COMM_SVC_CREATE_CHAT } from '../../../configs';
 
 const ENTER_KEY_CODE = 13;
 
 function ChatBlock({ socket, roomId }) {
-  const userCtx = useContext(UserContext);
-  const [chats, setChats] = useState([]);
+  const alertCtx = useContext(AlertContext);
+	const userCtx = useContext(UserContext);
+	const [chats, setChats] = useState([]);
 
   const {
-    value: chatMessage,
-    isValid: chatIsValid,
-    valueChangeHandler: chatChangeHandler,
-    reset: resetChat,
-  } = useInput(isValidChat);
+		value: chatMessage,
+		isValid: chatIsValid,
+		valueChangeHandler: chatChangeHandler,
+		reset: resetChat,
+	} = useInput(isValidChat);
+
+  const myUsername = userCtx.username;
 
   useEffect(() => {
-    // Using useeffect hook to avoid rendering duplicate copies of chat received
-    // (Only render chat block component once after receive message)
-    socket.on('receive-chat', (senderUsername, chatMessage) => {
-      setChats((chats) => [...chats, { senderUsername, text: chatMessage }]);
-    });
+		// Using useeffect hook to avoid rendering duplicate copies of chat received
+		// (Only render chat block component once after receive message)
+		socket.on('receive-chat', (senderUsername, chatMessage) => {
+			// Insert chat only after the recipient receive the message
+			axios
+				.post(URL_COMM_SVC_CREATE_CHAT, {
+					roomId,
+					chatIndex: chats.length,
+					sender: senderUsername,
+					receiver: myUsername,
+					text: chatMessage,
+				})
+				.then(
+          // Update user UI only after the chat is added to database
+					setChats((chats) => [...chats, { senderUsername, text: chatMessage }])
+				)
+				.catch((err) => alertCtx.onShow(err.response.data.message));
+		});
 
-    // The listeners must be removed in the cleanup step,
-    // in order to prevent multiple event registrations.
-    return () => socket.off('receive-chat');
-  }, [socket]);
+		// The listeners must be removed in the cleanup step,
+		// in order to prevent multiple event registrations.
+		return () => socket.off('receive-chat');
+	}, [socket, roomId, alertCtx, myUsername, chats.length]);
 
   const sendChatHandler = () => {
     if (!chatIsValid) {
@@ -47,9 +65,7 @@ function ChatBlock({ socket, roomId }) {
       return;
     }
 
-    const senderUsername = userCtx.username;
-
-    socket.emit('send-chat', roomId, senderUsername, chatMessage);
+    socket.emit('send-chat', roomId, myUsername, chatMessage);
 
     setChats((chats) => [
       ...chats,
