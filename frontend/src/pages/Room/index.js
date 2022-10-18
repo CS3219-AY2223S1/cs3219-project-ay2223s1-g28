@@ -43,7 +43,7 @@ function RoomPage() {
 
   return (
     <div>
-      <Grid container>``
+      <Grid container>
         <Grid xs={2} item></Grid>
         <Grid xs={8} item>
           <Typography
