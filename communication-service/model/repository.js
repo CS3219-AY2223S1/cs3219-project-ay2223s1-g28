@@ -15,11 +15,10 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// Returns the queried chat, or null if not found
-export async function getChatByRoomIDAndIndex(rid, index) {
-	return await ChatModel.findOne({ rid, index }).exec();
-}
-
 export async function createChat(params) {
 	return new ChatModel(params);
+}
+
+export async function getChatsByRoomID(rid) {
+	return await ChatModel.find({ rid }).exec();
 }

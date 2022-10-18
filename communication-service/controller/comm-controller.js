@@ -1,6 +1,6 @@
 import {
 	ormCreateChat as _createChat,
-	isExistingChat,
+	ormGetChatLength as _getChatLength,
 } from '../model/comm-orm.js';
 
 export function handleJoinRoom(socket) {
@@ -23,30 +23,9 @@ export function handleChat(socket) {
 
 export async function createChat(req, res) {
 	try {
-		const { roomId, chatIndex, sender, receiver, text } = req.body;
-		if (roomId && chatIndex >= 0 && sender && receiver && text) {
-			if (await isExistingChat(roomId, chatIndex)) {
-				/*
-				  If one of the users modify the chat list in the frontend,
-				  for example, deleting some of the chats with JavaScript.
-
-				  This will cause the index of the next incoming message
-				  clashes with the existing one in the database.
-
-				  Then this error will be invoked the next time another
-				  user sends message.
-
-				  Refreshing page will load all the messages back and
-				  restore the correct indices.
-				*/
-				return res
-					.status(409)
-					.json({
-						message:
-							'Failed to receive message, please refresh your page!',
-					});
-			}
-
+		const { roomId, sender, receiver, text } = req.body;
+		if (roomId && sender && receiver && text) {
+			const chatIndex = await _getChatLength(roomId);
 			const resp = await _createChat(roomId, chatIndex, sender, receiver, text);
 
 			if (resp.err) {
@@ -58,8 +37,6 @@ export async function createChat(req, res) {
 			const missingField = `${
 				!roomId
 					? 'Room ID is'
-					: !chatIndex
-					? 'Chat index is'
 					: !sender
 					? 'Sender username is'
 					: !receiver
