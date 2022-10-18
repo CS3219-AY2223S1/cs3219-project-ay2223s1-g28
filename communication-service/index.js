@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import { createChat } from './controller/comm-controller.js';
+import { handleJoinRoom, handleChat, createChat } from './controller/comm-controller.js';
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -22,19 +22,8 @@ const io = new Server(httpServer, {
 });
 
 io.on('connection', (socket) => {
-  socket.on('join-room', (roomId) => {
-    socket.join(roomId);
-  });
-
-  socket.on('send-chat', (roomId, senderUsername, chatMessage) => {
-    if (roomId !== '') {
-      /*
-        When one client send a chat message, every other client(s) 
-        with the same roomId will receive the chat.
-      */
-      socket.to(roomId).emit('receive-chat', senderUsername, chatMessage);
-    }
-  });
+  handleJoinRoom(socket);
+  handleChat(socket);
 });
 
 const router = express.Router();
