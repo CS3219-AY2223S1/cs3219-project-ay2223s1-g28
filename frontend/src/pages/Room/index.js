@@ -75,8 +75,10 @@ function RoomPage() {
           </Grid>
           {/* Code Editor component */}
           <Grid item>
-            <div className={styles.code_editor}>
-              <CollabEditor roomId={roomId} />
+            <div className={styles.wrap}>
+              <div className={styles.code_editor}>
+                <CollabEditor roomId={roomId} />
+              </div>
             </div>
           </Grid>
         </Grid>

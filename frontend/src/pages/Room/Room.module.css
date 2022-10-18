@@ -5,4 +5,11 @@
   margin-bottom: 50px;
   border-radius: 6px;
   width: 95%;
+  overflow: hidden;
+  resize: none;
+}
+
+/* Prevent code editor from stretching the browser when long texts are entered */
+.wrap {
+  display: grid;
 }
