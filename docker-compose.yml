@@ -1,0 +1,79 @@
+version: "3.8"
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+    ports:
+      - 3000:3000
+    depends_on:
+      [user-service, matching-service, communication-service, collaboration-service, question-service]
+
+  user-service:
+    container_name: user-service
+    build:
+      context: ./user-service
+    ports:
+      - 8000:8000
+    depends_on:
+      [mongo-user, redis]
+
+  matching-service:
+    container_name: matching-service
+    build:
+      context: ./matching-service
+    ports:
+      - 8001:8001
+
+  communication-service:
+    container_name: communication-service
+    build:
+      context: ./communication-service
+    ports:
+      - 8002:8002
+
+  collaboration-service:
+    container_name: collaboration-service
+    build:
+      context: ./collaboration-service
+    ports:
+      - 8003:8003
+
+  question-service:
+    container_name: question-service
+    build:
+      context: ./question-service
+    ports:
+      - 8004:8004
+    depends_on:
+      - mongo-question
+
+  mongo-user:
+    container_name: mongo-user
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-user-volume:/data/db
+
+  mongo-question:
+    container_name: mongo-question
+    image: mongo
+    ports:
+      - 27018:27017
+    volumes:
+      - mongo-question-volume:/data/db
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-volume:/data
+
+volumes:
+  mongo-user-volume:
+  mongo-question-volume:
+  redis-volume:
