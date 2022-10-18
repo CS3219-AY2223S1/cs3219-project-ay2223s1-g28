@@ -1,17 +1,44 @@
-import Chat from "./Chat";
-import styles from "./ChatList.module.css";
+import { useRef, useEffect } from 'react';
 
-function ChatList(props) {
+import { v4 as uuidv4 } from 'uuid';
+
+import Chat from './Chat';
+import styles from './ChatList.module.css';
+
+const AlwaysScrollToBottom = () => {
+  const messageEndRef = useRef();
+  /*
+    false argument passed to scrollIntoView so that
+    the bottom of the element will be aligned to 
+    the bottom of the visible area of the scrollable ancestor
+  */
+  useEffect(() => messageEndRef.current.scrollIntoView(false));
+  return <div ref={messageEndRef} />;
+};
+
+function ChatList({ chats }) {
+  const lastChatMessage = chats[chats.length - 1];
+
   return (
     <ul className={styles.chat_list}>
-      {/*For each message objects, create the HTML view of the msg id, sender id and the message */}
-      {props.chats.map((chat) => {
+      {/* For each chat object, create the HTML view of the msg id, sender id and the message */}
+      {chats.map((chat) => {
         return (
-          <li key={chat.senderId}>
-            <Chat text={chat.text} senderId={chat.senderId} />
+          <li key={uuidv4()}>
+            <Chat senderUsername={chat.senderUsername} text={chat.text} />
           </li>
         );
       })}
+
+      {/* 
+        Dummy component used to scroll to the end of messages.
+        Scroll to the bottom only if it is my message to avoid
+        annoying scroll behavior every time receiving message 
+        from another party.
+      */}
+      {lastChatMessage && lastChatMessage.senderUsername === 'Me' && (
+        <AlwaysScrollToBottom />
+      )}
     </ul>
   );
 }

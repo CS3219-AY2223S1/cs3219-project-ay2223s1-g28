@@ -31,7 +31,7 @@ function QuestionBox() {
         <Grid xs={12} item>
           {/*Question Title*/}
           <QuestionTitle title={state.title} />
-          <GreenDivider orientation="Horizontal" />
+          <GreenDivider orientation="horizontal" />
         </Grid>
         <Grid item>
           {/*Question Categories*/}

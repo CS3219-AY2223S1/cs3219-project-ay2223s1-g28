@@ -1,17 +1,45 @@
-import { useParams } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import io from 'socket.io-client';
 
-import ChatBlock from "../../components/ui/chat/ChatBlock";
-import QuestionBox from "../../components/ui/question/QuestionBox";
+import AlertContext from '../../context/alert-context';
+import ChatBlock from '../../components/ui/chat/ChatBlock';
+import QuestionBox from '../../components/ui/question/QuestionBox';
 import CollabEditor from "../../components/ui/collaboration/CollabEditor";
-import styles from "./Room.module.css";
+import styles from './Room.module.css';
+
+import { URL_COMM_SVC } from '../../configs';
+
+const socket = io(URL_COMM_SVC);
 
 function RoomPage() {
-  // Todo: Use room id prop/state instead in the future
-  const { roomId } = useParams();
+  const alertCtx = useContext(AlertContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const roomId = location.state?.room;
+
+  useEffect(() => {
+    if (!roomId) {
+      // Prevent user from entering the path '/room' directly
+      navigate('/home');
+      alertCtx.onShow("Please select a difficulty level!");
+      return;
+    }
+
+    socket.emit('join-room', roomId);
+    
+    // the listeners must be removed in the cleanup step,
+    // in order to prevent multiple event registrations
+    return () => {
+      socket.off('connect');
+      socket.off('join-room');
+    }
+  }, [alertCtx, navigate, roomId]);
 
   return (
     <div>
@@ -22,7 +50,7 @@ function RoomPage() {
             variant="h4"
             fontWeight="lighter"
             textAlign="center"
-            sx={{ mb: "40px" }}
+            sx={{ mb: '40px' }}
           >
             Your technical interview begins...
           </Typography>
@@ -43,7 +71,7 @@ function RoomPage() {
         <Grid xs={7} item container direction="column">
           {/* Chat component */}
           <Grid item>
-            <ChatBlock />
+            <ChatBlock socket={socket} roomId={roomId} />
           </Grid>
           {/* Code Editor component */}
           <Grid item>
