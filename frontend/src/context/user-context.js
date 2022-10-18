@@ -15,6 +15,7 @@ const UPDATE_ACCOUNT_ENDPOINT = '/update';
 const DELETE_ACCOUNT_ENDPOINT = '/delete';
 
 const UserContext = createContext({
+  username: '',
   isSignedIn: false,
   onVerifyToken: () => {},
   onSignout: () => {},
@@ -24,6 +25,7 @@ const UserContext = createContext({
 });
 
 export function UserContextProvider(props) {
+  const [username, setUsername] = useState('');
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   const verifyTokenHandler = async (callback) => {
@@ -35,7 +37,9 @@ export function UserContextProvider(props) {
         const isAuthSuccess = res && res.status === STATUS_CODE_OK;
         setIsSignedIn(isAuthSuccess);
         callback(isAuthSuccess, null);
+        return res.data;
       })
+      .then((data) => setUsername(data.username))
       .catch((error) => {
         setIsSignedIn(false);
         callback(false, error);
@@ -56,6 +60,7 @@ export function UserContextProvider(props) {
         const isSigninSuccess = res && res.status === STATUS_CODE_OK;
 
         setIsSignedIn(isSigninSuccess);
+        setUsername(username);
         callback(isSigninSuccess, null);
       })
       .catch((err) => {
@@ -129,6 +134,7 @@ export function UserContextProvider(props) {
   return (
     <UserContext.Provider
       value={{
+        username,
         isSignedIn,
         onVerifyToken: verifyTokenHandler,
         onSignin: signinHandler,
