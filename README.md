@@ -23,4 +23,4 @@ This service is used to Create, Remove, Get the interview questions in the Room 
 2. Create a Cloud DB URL using Mongo Atlas.
 3. Enter the DB URL created as `DB_CLOUD_URI` in `.env` file.
 4. Install npm packages using `npm i`.
-5. Run User Service using `npm start`.
+5. Run Question Service using `npm start`.
