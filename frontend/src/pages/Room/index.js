@@ -17,7 +17,7 @@ import { URL_COMM_SVC } from '../../configs';
 import { URL_COLLAB_SVC } from '../../configs';
 
 const comm_socket = io(URL_COMM_SVC);
-const colab_socket = io(URL_COLLAB_SVC);
+const collab_socket = io(URL_COLLAB_SVC);
 
 function RoomPage() {
   const alertCtx = useContext(AlertContext);
@@ -37,7 +37,7 @@ function RoomPage() {
 
     // Join both communication and collaboration sockets to same room
     comm_socket.emit('join-room', roomId);
-    colab_socket.emit('join-room', roomId);
+    collab_socket.emit('join-room', roomId);
 
     const createSessionEndListener = (socket) => {
       socket.on('session-end', (message, severity) => {
@@ -48,21 +48,21 @@ function RoomPage() {
     };
 
     createSessionEndListener(comm_socket);
-    createSessionEndListener(colab_socket);
+    createSessionEndListener(collab_socket);
 
     // the listeners must be removed in the cleanup step,
     // in order to prevent multiple event registrations
     return () => {
       comm_socket.off('join-room');
       comm_socket.off('session-end');
-      colab_socket.off('join-room');
-      colab_socket.off('session-end');
+      collab_socket.off('join-room');
+      collab_socket.off('session-end');
     };
   }, [alertCtx, navigate, roomId]);
 
   const leaveSessionHandler = () => {
     comm_socket.emit('leave-session');
-    colab_socket.emit('leave-session');
+    collab_socket.emit('leave-session');
   };
 
   return (
@@ -105,7 +105,7 @@ function RoomPage() {
           <Grid item>
             <div className={styles.wrap}>
               <div className={styles.code_editor}>
-                <CollabEditor socket={colab_socket} roomId={roomId} />
+                <CollabEditor socket={collab_socket} roomId={roomId} />
               </div>
             </div>
           </Grid>
