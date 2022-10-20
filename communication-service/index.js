@@ -10,11 +10,13 @@ app.get('/', (req, res) => {
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000']
   },
 });
 
 io.on('connection', (socket) => {
+  console.log(`User connected: ${socket.id}`);
+
   socket.on('join-room', (roomId) => {
     socket.join(roomId);
   });
@@ -27,6 +29,19 @@ io.on('connection', (socket) => {
       */
       socket.to(roomId).emit('receive-chat', senderUsername, chatMessage);
     }
+  });
+
+  socket.on("leave-session", () => {
+    socket.rooms.forEach(room => {
+      if (room !== socket.id) {
+        // Emit to other sockets in the same room this socket had joined
+        socket.to(room).emit('session-end', 'Your peer had left the session.', 'warning');
+        io.socketsLeave(room);
+      } else {
+        // Emit back to the socket itself
+        socket.emit('session-end', 'You had left the session.', 'info');
+      }
+    });
   });
 });
 
