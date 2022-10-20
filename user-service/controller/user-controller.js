@@ -135,7 +135,8 @@ export async function authenticateJwt(req, res, next) {
 
     jwt.verify(token, process.env.JWT_SECRET_KEY, (error, user) => {
         if (error) {
-            return res.status(401).json({ message: 'Invalid token.' })
+            return res.status(401).json({ message: 'Invalid token.' });
+
         }
 
         req.token = token;
