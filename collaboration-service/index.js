@@ -26,18 +26,23 @@ io.on('connection', (socket) => {
     socket.to(roomId).emit('update-code', code);
   });
 
-  socket.on("leave-session", () => {
-    socket.rooms.forEach(room => {
-      if (room !== socket.id) {
-        // Emit to other sockets in the same room this socket had joined
-        socket.to(room).emit('session-end', 'Your peer had left the session.', 'warning');
-        io.socketsLeave(room);
-      } else {
-        // Emit back to the socket itself
-        socket.emit('session-end', 'You had left the session.', 'info');
-      }
+  const sessionEndEvents = ["leave-session", "disconnecting"];
+
+  for (const event of sessionEndEvents) {
+    socket.on(event, () => {
+      socket.rooms.forEach(room => {
+        if (room !== socket.id) {
+          // Emit to other sockets in the same room this socket had joined
+          socket.to(room).emit('session-end', 'Your peer had left the session.', 'warning');
+          io.socketsLeave(room);
+        } else {
+          // Emit back to the socket itself
+          socket.emit('session-end', 'You had left the session.', 'info');
+        }
+      });
     });
-  });
+  }
+
 });
 
 app.get('/', (req, res) => {

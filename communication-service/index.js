@@ -31,18 +31,23 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on("leave-session", () => {
-    socket.rooms.forEach(room => {
-      if (room !== socket.id) {
-        // Emit to other sockets in the same room this socket had joined
-        socket.to(room).emit('session-end', 'Your peer had left the session.', 'warning');
-        io.socketsLeave(room);
-      } else {
-        // Emit back to the socket itself
-        socket.emit('session-end', 'You had left the session.', 'info');
-      }
+  const sessionEndEvents = ["leave-session", "disconnecting"];
+
+  for (const event of sessionEndEvents) {
+    socket.on("leave-session", () => {
+      socket.rooms.forEach(room => {
+        if (room !== socket.id) {
+          // Emit to other sockets in the same room this socket had joined
+          socket.to(room).emit('session-end', 'Your peer had left the session.', 'warning');
+          io.socketsLeave(room);
+        } else {
+          // Emit back to the socket itself
+          socket.emit('session-end', 'You had left the session.', 'info');
+        }
+      });
     });
-  });
+  }
+
 });
 
 httpServer.listen(8002, () =>
