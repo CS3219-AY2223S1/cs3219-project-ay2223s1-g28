@@ -23,10 +23,10 @@ export function handleChat(socket) {
 
 export async function createChat(req, res) {
 	try {
-		const { roomId, sender, receiver, text } = req.body;
-		if (roomId && sender && receiver && text) {
+		const { roomId, sender, text } = req.body;
+		if (roomId && sender && text) {
 			const chatIndex = await _getChatLength(roomId);
-			const resp = await _createChat(roomId, chatIndex, sender, receiver, text);
+			const resp = await _createChat(roomId, chatIndex, sender, text);
 
 			if (resp.err) {
 				return res
@@ -39,8 +39,6 @@ export async function createChat(req, res) {
 					? 'Room ID is'
 					: !sender
 					? 'Sender username is'
-					: !receiver
-					? 'Receiver username is'
 					: !text
 					? 'Chat message is'
 					: 'Some chat fields are'

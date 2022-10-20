@@ -13,10 +13,6 @@ let ChatModelSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	receiver: {
-		type: String,
-		required: true,
-	},
 	text: {
 		type: String,
 		required: true,

@@ -43,7 +43,6 @@ function ChatBlock({ socket, roomId }) {
 				.post(URL_COMM_SVC_CREATE_CHAT, {
 					roomId,
 					sender: senderUsername,
-					receiver: myUsername,
 					text: chatMessage,
 				})
 				.then(
