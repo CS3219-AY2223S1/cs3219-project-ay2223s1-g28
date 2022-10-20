@@ -15,6 +15,8 @@ const io = new Server(httpServer, {
 });
 
 io.on('connection', (socket) => {
+  console.log(`User connected: ${socket.id}`);
+
   socket.on('join-room', (roomId) => {
     socket.join(roomId);
   });
@@ -28,6 +30,29 @@ io.on('connection', (socket) => {
       socket.to(roomId).emit('receive-chat', senderUsername, chatMessage);
     }
   });
+
+  // leave-session: when user clicks on "leave session" button
+  // disconnecting: when user closes tab/disconnects
+  // Note: "disconnecting" used insted of "disconnect" because in this event,
+  //        socket.rooms are not empty.
+  const sessionEndEvents = ['leave-session', 'disconnecting'];
+
+  for (const event of sessionEndEvents) {
+    socket.on('leave-session', () => {
+      socket.rooms.forEach((room) => {
+        if (room !== socket.id) {
+          // Emit to other sockets in the same room this socket had joined
+          socket
+            .to(room)
+            .emit('session-end', 'Your peer had left the session.', 'warning');
+          io.socketsLeave(room);
+        } else {
+          // Emit back to the socket itself
+          socket.emit('session-end', 'You had left the session.', 'info');
+        }
+      });
+    });
+  }
 });
 
 httpServer.listen(8002, () =>
