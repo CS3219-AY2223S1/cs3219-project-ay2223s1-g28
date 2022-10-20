@@ -35,14 +35,9 @@ export function handleMatch(socket) {
   });
 }
 
-export function handleCancelMatch(socket) {
-  socket.on('cancelMatch', async () => {
-    await _deletePendingMatchById(socket.id);
-  });
-}
-
 export function handleDisconnect(socket) {
-  socket.on('disconnect', () => {
+  socket.on('disconnect', async () => {
+    await _deletePendingMatchById(socket.id);
     console.log(`User disconnected: ${socket.id}`);
   });
 }

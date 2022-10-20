@@ -7,9 +7,10 @@ import {
   deleteAccount,
   logout,
   signin,
-  acknowledgeJWTValidity
+  acknowledgeJWTValidity,
+  authenticateJwt,
+
 } from './controller/user-controller.js';
-import { authenticateJwt } from './model/jwt.js';
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
