@@ -8,7 +8,8 @@ import {
   logout,
   signin,
   acknowledgeJWTValidity,
-  authenticateJwt
+  authenticateJwt,
+
 } from './controller/user-controller.js';
 
 const app = express();
