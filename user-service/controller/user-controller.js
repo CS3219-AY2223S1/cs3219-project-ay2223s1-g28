@@ -9,27 +9,26 @@ export async function createUser(req, res) {
         const { username, email, password } = req.body;
         if (username && email && password) {
             if (await isExistingUser(username)) {
-                return res.status(409).json({message: 'Existing username!'});
+                return res.status(409).json({ message: 'Existing username.' });
             }
 
             if (await isExistingEmail(email)) {
-                return res.status(409).json({message: 'Email has already been taken!'});
+                return res.status(409).json({ message: 'Email has already been taken.' });
             }
             
             const resp = await _createUser(username, email, password);
             console.log(resp);
             if (resp.err) {
-                return res.status(400).json({message: 'Could not create a new user!'});
+                return res.status(400).json({ message: 'Could not create a new user.' });
             } else {
                 console.log(`Created new user ${username} successfully!`)
-                return res.status(201).json({message: `Created new user ${username} successfully!`});
+                return res.status(201).json({ message: `Created new user ${username} successfully.` });
             }
         } else {
-            return res.status(400).json({ message: 'Username/Email/Password is/are missing!' });
-
+            return res.status(400).json({ message: 'Username/Email/Password is/are missing.' });
         }
     } catch (err) {
-        return res.status(500).json({message: 'Database failure when creating new user!'})
+        return res.status(500).json({ message: 'Database failure when creating new user.' })
     }
 }
 
@@ -60,7 +59,7 @@ export async function logout(req, res) {
     const { token } = req;
     await _blacklistJwt(token);
     res.clearCookie('token');
-    return res.status(200).json({ message: 'Logout successful.'})
+    return res.status(200).json({ message: 'Logout successful.' })
 }
 
 export async function updateAccount(req, res) {
@@ -120,7 +119,7 @@ export async function deleteAccount(req, res) {
 export function acknowledgeJWTValidity(req, res) {
     const { token } = req;
     const { username } = _decodeJwt(token);
-    return res.status(200).json({ username, message: 'Valid JWT!' });
+    return res.status(200).json({ username, message: 'Valid JWT.' });
 }
 
 export async function authenticateJwt(req, res, next) {
