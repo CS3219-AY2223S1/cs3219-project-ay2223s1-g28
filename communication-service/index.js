@@ -31,8 +31,10 @@ io.on('connection', (socket) => {
     }
   });
 
+  // leave-session: when user clicks on "leave session" button
+  // disconnecting: when user closes tab/disconnects
   const sessionEndEvents = ["leave-session", "disconnecting"];
-
+  
   for (const event of sessionEndEvents) {
     socket.on("leave-session", () => {
       socket.rooms.forEach(room => {
