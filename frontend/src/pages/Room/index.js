@@ -45,7 +45,7 @@ function RoomPage() {
         navigate('/home');
         alertCtx.onShow(message, severity);
       });
-    }
+    };
 
     createSessionEndListener(comm_socket);
     createSessionEndListener(colab_socket);

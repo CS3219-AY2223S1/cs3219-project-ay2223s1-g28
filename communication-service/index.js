@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ['http://localhost:3000']
+    origin: ['http://localhost:3000'],
   },
 });
 
@@ -33,14 +33,16 @@ io.on('connection', (socket) => {
 
   // leave-session: when user clicks on "leave session" button
   // disconnecting: when user closes tab/disconnects
-  const sessionEndEvents = ["leave-session", "disconnecting"];
-  
+  const sessionEndEvents = ['leave-session', 'disconnecting'];
+
   for (const event of sessionEndEvents) {
-    socket.on("leave-session", () => {
-      socket.rooms.forEach(room => {
+    socket.on('leave-session', () => {
+      socket.rooms.forEach((room) => {
         if (room !== socket.id) {
           // Emit to other sockets in the same room this socket had joined
-          socket.to(room).emit('session-end', 'Your peer had left the session.', 'warning');
+          socket
+            .to(room)
+            .emit('session-end', 'Your peer had left the session.', 'warning');
           io.socketsLeave(room);
         } else {
           // Emit back to the socket itself
@@ -49,7 +51,6 @@ io.on('connection', (socket) => {
       });
     });
   }
-
 });
 
 httpServer.listen(8002, () =>
