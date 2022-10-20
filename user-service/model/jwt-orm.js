@@ -5,7 +5,7 @@ const EXPIRATION = 86400; // 24hrs
 
 export function ormGenerateJwt(user) {
     const username = user.username;
-    return jwt.sign({'username': username}, process.env.JWT_SECRET_KEY, { expiresIn: EXPIRATION });
+    return jwt.sign({ 'username': username }, process.env.JWT_SECRET_KEY, { expiresIn: EXPIRATION });
 }
 
 export function ormDecodeJwt(token) {
