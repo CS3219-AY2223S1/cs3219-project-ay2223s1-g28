@@ -1,16 +1,12 @@
 import { useEffect } from 'react';
 
-import io from 'socket.io-client';
-
 import CodeMirror from 'codemirror/lib/codemirror.js';
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/keymap/sublime'
 import 'codemirror/theme/neo.css'
 import 'codemirror/mode/javascript/javascript'
 
-import { URL_COLLAB_SVC } from '../../../configs';
-
-function CollabEditor({ roomId }) {
+function CollabEditor({ socket, roomId }) {
     useEffect(() => {
         const editor = CodeMirror.fromTextArea(
             document.getElementById('codemirror'),
@@ -21,12 +17,6 @@ function CollabEditor({ roomId }) {
                 mode: 'javascript'
             }
         );
-
-        const socket = io(URL_COLLAB_SVC)
-
-        socket.on('connect', () => {
-            socket.emit('join-room', roomId);
-        });
 
         editor.on('change', (instance, changes) => {
             const { origin } = changes;
@@ -43,7 +33,7 @@ function CollabEditor({ roomId }) {
             socket.off('connect');
             socket.off('update-code');
         };
-    }, [roomId]);
+    }, [socket, roomId]);
 
     return (
         <textarea id='codemirror' />
