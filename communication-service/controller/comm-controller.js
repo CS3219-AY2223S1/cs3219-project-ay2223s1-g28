@@ -50,8 +50,8 @@ export function handleChat(io, socket) {
   socket.on('send-chat', async (roomId, senderUsername, chatMessage) => {
     if (roomId !== '') {
       /*
-			  When one client send a chat message, every other client(s) 
-			  with the same roomId will receive the chat.
+			When one client send a chat message, every other client(s) 
+			with the same roomId will receive the chat.
 		 	*/
       const resp = await createChat(roomId, senderUsername, chatMessage);
       const isSentSuccess = resp.success;
