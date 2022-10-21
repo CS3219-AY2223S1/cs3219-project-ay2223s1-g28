@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
 
 	handleJoinRoom(socket);
 	handleChat(io, socket);
-	handleSessionEnd(socket);
+	handleSessionEnd(io, socket);
 });
 
 const router = express.Router();

@@ -90,7 +90,7 @@ export async function readChats(req, res) {
 	}
 }
 
-export function handleSessionEnd(socket) {
+export function handleSessionEnd(io, socket) {
   // leave-session: when user clicks on "leave session" button
   // disconnecting: when user closes tab/disconnects
   // Note: "disconnecting" used insted of "disconnect" because in this event,
