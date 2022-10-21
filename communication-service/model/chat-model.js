@@ -5,10 +5,6 @@ let ChatModelSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	index: {
-		type: Number,
-		required: true,
-	},
 	sender: {
 		type: String,
 		required: true,
@@ -18,7 +14,5 @@ let ChatModelSchema = new Schema({
 		required: true,
 	},
 });
-
-ChatModelSchema.index({ rid: 1, index: 1 }, { unique: true });
 
 export default mongoose.model('ChatModel', ChatModelSchema);
