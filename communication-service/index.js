@@ -6,6 +6,7 @@ import {
 	handleJoinRoom,
 	handleChat,
 	readChats,
+	handleSessionEnd,
 } from './controller/comm-controller.js';
 
 const app = express();
@@ -25,33 +26,11 @@ const io = new Server(httpServer, {
 });
 
 io.on('connection', (socket) => {
-  console.log(`User connected: ${socket.id}`);
+	console.log(`User connected: ${socket.id}`);
 
 	handleJoinRoom(socket);
 	handleChat(io, socket);
-
-  // leave-session: when user clicks on "leave session" button
-  // disconnecting: when user closes tab/disconnects
-  // Note: "disconnecting" used insted of "disconnect" because in this event,
-  //        socket.rooms are not empty.
-  const sessionEndEvents = ['leave-session', 'disconnecting'];
-
-  for (const event of sessionEndEvents) {
-    socket.on(event, () => {
-      socket.rooms.forEach((room) => {
-        if (room !== socket.id) {
-          // Emit to other sockets in the same room this socket had joined
-          socket
-            .to(room)
-            .emit('session-end', 'Your peer had left the session.', 'warning');
-          io.socketsLeave(room);
-        } else {
-          // Emit back to the socket itself
-          socket.emit('session-end', 'You had left the session.', 'info');
-        }
-      });
-    });
-  }
+	handleSessionEnd(socket);
 });
 
 const router = express.Router();
