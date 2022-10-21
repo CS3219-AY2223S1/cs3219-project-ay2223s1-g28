@@ -1,6 +1,7 @@
 import {
   ormCreateChat as _createChat,
   ormGetChats as _getChats,
+  ormDeleteChats as _deleteChats,
 } from '../model/comm-orm.js';
 
 export function handleJoinRoom(socket) {
@@ -119,6 +120,7 @@ export function handleSessionEnd(io, socket) {
                   'warning'
                 );
 			        io.socketsLeave(room);
+              _deleteChats(room);
             }
           }, 5000);
         } else {

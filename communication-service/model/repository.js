@@ -22,3 +22,7 @@ export async function createChat(params) {
 export async function getChatsByRoomID(rid) {
 	return await ChatModel.find({ rid }).exec();
 }
+
+export async function deleteChatsByRoomID(rid) {
+	return await ChatModel.deleteMany({ rid }).exec();
+}

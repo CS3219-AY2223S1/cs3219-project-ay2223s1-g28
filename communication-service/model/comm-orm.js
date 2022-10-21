@@ -1,4 +1,4 @@
-import { createChat, getChatsByRoomID } from './repository.js';
+import { createChat, getChatsByRoomID, deleteChatsByRoomID } from './repository.js';
 
 //need to separate orm functions from repository to decouple business logic from persistence
 export async function ormCreateChat(roomId, sender, text) {
@@ -19,4 +19,8 @@ export async function ormCreateChat(roomId, sender, text) {
 export async function ormGetChats(roomId) {
 	const chats = await getChatsByRoomID(roomId);
 	return chats;
+}
+
+export async function ormDeleteChats(roomId) {
+	return await deleteChatsByRoomID(roomId);
 }
