@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 
 import axios from 'axios';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -16,7 +16,7 @@ import UserContext from '../../../context/user-context';
 import useInput from '../../../hooks/use-input';
 import isValidChat from '../../../validators/chat-validator';
 
-import { URL_COMM_SVC_CREATE_CHAT } from '../../../configs';
+import { URL_COMM_SVC_READ_CHAT } from '../../../configs';
 
 const ENTER_KEY_CODE = 13;
 
@@ -34,30 +34,71 @@ function ChatBlock({ socket, roomId }) {
 
 	const myUsername = userCtx.username;
 
-	useEffect(() => {
-		// Using useeffect hook to avoid rendering duplicate copies of chat received
-		// (Only render chat block component once after receive message)
-		socket.on('receive-chat', (senderUsername, chatMessage) => {
-			// Insert chat only after the recipient receive the message
-			axios
-				.post(URL_COMM_SVC_CREATE_CHAT, {
+	const processMyChat = useCallback(
+		/*
+		  Note: 
+		  Since useEffect references to this function, useCallback is used here 
+		  to prevent infinite loop by caching it. Any cached function will not
+		  change (re-rendered) unless its dependencies change.
+
+		  By using useCallback, it can improve performance too.
+		*/
+		(chat) => {
+			return chat.sender === myUsername ? { ...chat, sender: 'Me' } : chat;
+		},
+		[myUsername]
+	);
+
+	// Retrieve the chats for this room, if any
+	const getChats = useCallback(async () => {
+		/*
+		  Note: 
+		  Since useEffect references to this function, useCallback is used here 
+		  to prevent infinite loop by caching it. Any cached function will not
+		  change (re-rendered) unless its dependencies change.
+
+		  By using useCallback, it can improve performance too.
+		*/
+		const response = await axios
+			.get(URL_COMM_SVC_READ_CHAT, {
+				params: {
 					roomId,
-					sender: senderUsername,
-					text: chatMessage,
-				})
-				.then(
-					// Update user UI only after the chat is added to database
-					setChats((chats) => [...chats, { senderUsername, text: chatMessage }])
-				)
-				.catch((err) => {
-					alertCtx.onShow(err.response.data.message);
-				});
+				},
+			})
+			.catch((err) => {
+				alertCtx.onShow(err.response.data.message);
+			});
+		const chatsRetrieved = await response.data.chats.map((chat) =>
+			processMyChat(chat)
+		);
+		setChats(chatsRetrieved);
+	}, [alertCtx, roomId, processMyChat]);
+
+	useEffect(() => {
+		// Retrieve chats when user refreshes page
+		getChats();
+
+		// Using useEffect hook to avoid rendering duplicate copies of chat received
+		// (Only render chat block component once after receive message successfully)
+		socket.on('receive-chat', (isSentSuccess, feedback, sender, chatSent) => {
+			isSentSuccess && setChats((chats) => [...chats, processMyChat(chatSent)]);
+			// Inform sender message sending failed
+			sender === myUsername &&
+				alertCtx.onShow(feedback, isSentSuccess ? 'success' : 'error');
 		});
 
 		// The listeners must be removed in the cleanup step,
 		// in order to prevent multiple event registrations.
 		return () => socket.off('receive-chat');
-	}, [socket, roomId, alertCtx, myUsername, chats.length]);
+	}, [
+		socket,
+		roomId,
+		alertCtx,
+		myUsername,
+		chats.length,
+		getChats,
+		processMyChat,
+	]);
 
 	const sendChatHandler = () => {
 		if (!chatIsValid) {
@@ -66,11 +107,6 @@ function ChatBlock({ socket, roomId }) {
 		}
 
 		socket.emit('send-chat', roomId, myUsername, chatMessage);
-
-		setChats((chats) => [
-			...chats,
-			{ senderUsername: 'Me', text: chatMessage },
-		]);
 
 		resetChat();
 	};
