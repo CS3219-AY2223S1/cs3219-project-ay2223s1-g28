@@ -1,24 +1,22 @@
 import { createChat, getChatsByRoomID } from './repository.js';
 
 //need to separate orm functions from repository to decouple business logic from persistence
-export async function ormCreateChat(roomId, chatIndex, sender, text) {
+export async function ormCreateChat(roomId, sender, text) {
 	try {
 		const newChat = await createChat({
 			rid: roomId,
-			index: chatIndex,
 			sender,
 			text,
 		});
-		newChat.save();
-		return true;
+
+		return await newChat.save();
 	} catch (err) {
 		console.log('ERROR: Could not create new chat');
 		return { err };
 	}
 }
 
-// Checks if chat exists in database
-export async function ormGetChatLength(roomId) {
+export async function ormGetChats(roomId) {
 	const chats = await getChatsByRoomID(roomId);
-	return chats.length;
+	return chats;
 }
