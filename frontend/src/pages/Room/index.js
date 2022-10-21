@@ -86,7 +86,7 @@ function RoomPage() {
               color="error"
               onClick={() => setOpenBackdrop(true)}
             >
-              <b>Leave Session</b>
+              <b>Finish</b>
             </Button>
           </div>
         </Grid>
