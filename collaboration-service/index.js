@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
           setTimeout(function () {
             if (
               event === sessionEndEvents[0] ||
-              // If after 5 seconds, the room is still less than 2 people,
+              // If after 10 seconds, the room is still less than 2 people,
               // we can assume that the user had closed the tab.
               // Otherwise, the user just refreshed the page
               !io.sockets.adapter.rooms.get(room) ||
@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
                 );
               io.socketsLeave(room);
             }
-          }, 5000);
+          }, 10000);
         } else {
           // Emit back to the socket itself
           socket.emit('session-end', 'You have left the session.', 'info');
