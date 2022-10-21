@@ -59,6 +59,8 @@ function QuestionBox(props) {
         });
     }
     fetchData();
+    // To disable the lint warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionNumber]);
 
   function difficultyButtonStyle(difficulty) {
