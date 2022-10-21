@@ -58,6 +58,7 @@ function MatchPage() {
     if (socket) {
       socket.on('matchSuccess', (room) => {
         setRoom(room);
+        console.log("This is the room number: " + room);
       });
       socket.on('matchFail', () => {
         setIsMatchFailed(true);
@@ -75,7 +76,7 @@ function MatchPage() {
   }, [difficulty, socket])
   useEffect(() => {
     if (room && navigate) {
-      room && navigate('/room', { state: { room } });
+      room && navigate('/room', { state: { room: room, difficulty: difficulty } });
     }
   }, [room, navigate]);
   // Timer

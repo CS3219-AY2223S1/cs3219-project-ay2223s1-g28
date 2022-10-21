@@ -11,7 +11,7 @@ import QuestionCategories from "./QuestionCategories";
 import QuestionTitle from "./QuestionTitle";
 import Question from "./Question";
 
-import styles from './QuestionBox.module.css'
+import styles from "./QuestionBox.module.css";
 
 /* 
   Find out which difficulty user chose,
@@ -19,16 +19,30 @@ import styles from './QuestionBox.module.css'
   Question service and display it
 */
 
-function QuestionBox() {
+function QuestionBox(props) {
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState([]);
   const [content, setContent] = useState("");
   const [difficulty, setDifficulty] = useState("");
+  const [roomId, setRoomId] = useState("");
+  const [questionNumber, setQuestionNumber] = useState();
 
   useEffect(() => {
     async function fetchData() {
+      setDifficulty(props.difficulty);
+      setRoomId(props.roomId);
+
+      // Encoded roomId
+      var questionEncoding = encode(roomId);
+      setQuestionNumber(questionEncoding);
+
       await axios
-        .get("http://localhost:8004/api/question/level/Hard") // 'Hard' is hardcoded for now
+        .get(
+          "http://localhost:8004/api/question/level/" +
+            difficulty +
+            "/" +
+            questionNumber
+        )
         .then((res) => {
           try {
             console.log(
@@ -37,7 +51,6 @@ function QuestionBox() {
             setTitle(res.data.title);
             setCategories(res.data.categories);
             setContent(res.data.content);
-            setDifficulty("Hard") // 'Hard' is hardcoded for now
           } catch (err) {
             console.log(
               "Encountered error when fetching data from endpoint: " + err
@@ -46,7 +59,7 @@ function QuestionBox() {
         });
     }
     fetchData();
-  }, []);
+  }, [questionNumber]);
 
   function difficultyButtonStyle(difficulty) {
     switch (difficulty) {
@@ -60,6 +73,18 @@ function QuestionBox() {
         break;
     }
   }
+
+  // Encodes the roomId into an integer so that the same interview quetion can be
+  // retrieved for the pair of users in the same room.
+  function encode(string) {
+    var number = "";
+    var length = string.length;
+    for (var i = 0; i < length; i++)
+      number += string.charCodeAt(i).toString(16);
+    return parseInt(number);
+  }
+  // [This function encodes a string into an integer]
+  // (Adapted from https://stackoverflow.com/questions/14346829/is-there-a-way-to-convert-a-string-to-a-base-10-number-for-encryption)
 
   return (
     <OutlinedContainer justifyContent="center">
@@ -82,7 +107,9 @@ function QuestionBox() {
                 <QuestionTitle title={title} />
               </Grid>
               <Grid item>
-                <Button className={difficultyButtonStyle(difficulty)} disabled>{difficulty}</Button>
+                <Button className={difficultyButtonStyle(difficulty)} disabled>
+                  {difficulty}
+                </Button>
               </Grid>
             </Grid>
             <GreenDivider orientation="horizontal" />

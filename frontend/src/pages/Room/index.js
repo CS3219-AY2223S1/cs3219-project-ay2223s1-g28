@@ -26,6 +26,7 @@ function RoomPage() {
   const navigate = useNavigate();
 
   const roomId = location.state?.room;
+  const difficulty = location.state?.difficulty;
 
   useEffect(() => {
     if (!roomId) {
@@ -94,7 +95,7 @@ function RoomPage() {
       <Grid container spacing={4}>
         {/* Question component */}
         <Grid xs={5} item container>
-          <QuestionBox />
+          <QuestionBox difficulty={difficulty} roomId={roomId} />
         </Grid>
         <Grid xs={7} item container direction="column">
           {/* Chat component */}
