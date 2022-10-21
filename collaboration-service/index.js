@@ -50,15 +50,15 @@ io.on('connection', (socket) => {
                 .to(room)
                 .emit(
                   'session-end',
-                  'Your peer had left the session.',
+                  'Your peer has left the session.',
                   'warning'
                 );
-			        io.socketsLeave(room);
+              io.socketsLeave(room);
             }
           }, 5000);
         } else {
           // Emit back to the socket itself
-          socket.emit('session-end', 'You had left the session.', 'info');
+          socket.emit('session-end', 'You have left the session.', 'info');
         }
       });
     });
