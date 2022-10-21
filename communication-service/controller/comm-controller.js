@@ -104,7 +104,7 @@ export function handleSessionEnd(io, socket) {
           setTimeout(function () {
             if (
               event === sessionEndEvents[0] ||
-              // If after 4 seconds, the room is still less than 2 people,
+              // If after 5 seconds, the room is still less than 2 people,
               // we can assume that the user had closed the tab.
               // Otherwise, the user just refreshed the page
               !io.sockets.adapter.rooms.get(room) ||
@@ -118,9 +118,9 @@ export function handleSessionEnd(io, socket) {
                   'Your peer had left the session.',
                   'warning'
                 );
-			  io.socketsLeave(room);
+			        io.socketsLeave(room);
             }
-          }, 4000);
+          }, 5000);
         } else {
           // Emit back to the socket itself
           socket.emit('session-end', 'You had left the session.', 'info');
