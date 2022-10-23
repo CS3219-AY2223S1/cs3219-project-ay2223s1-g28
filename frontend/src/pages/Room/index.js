@@ -13,10 +13,10 @@ import QuestionBox from '../../components/ui/question/QuestionBox';
 import CollabEditor from '../../components/ui/collaboration/CollabEditor';
 import styles from './Room.module.css';
 
-import { URL_COMM_SVC } from '../../configs';
+import { URL_COMM_SVC_CONNECT } from '../../configs';
 import { URL_COLLAB_SVC } from '../../configs';
 
-const comm_socket = io(URL_COMM_SVC);
+const comm_socket = io(URL_COMM_SVC_CONNECT);
 const collab_socket = io(URL_COLLAB_SVC);
 
 function RoomPage() {
@@ -25,7 +25,7 @@ function RoomPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const roomId = location.state?.room;
+	const roomId = location.state?.room;
 
   useEffect(() => {
     if (!roomId) {
@@ -86,7 +86,7 @@ function RoomPage() {
               color="error"
               onClick={() => setOpenBackdrop(true)}
             >
-              <b>Leave Session</b>
+              <b>Finish</b>
             </Button>
           </div>
         </Grid>

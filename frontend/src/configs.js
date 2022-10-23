@@ -4,8 +4,14 @@ const URI_COMM_SVC = process.env.URI_COMM_SVC || 'http://localhost:8002';
 const URI_COLLAB_SVC = process.env.URI_COLLAB_SVC || 'http://localhost:8003';
 
 const PREFIX_USER_SVC = '/api/user';
+const PREFIX_COMM_SVC = '/api/chat';
 
 export const URL_USER_SVC = URI_USER_SVC + PREFIX_USER_SVC;
 export const URL_MATCHING_SVC = URI_MATCHING_SVC;
-export const URL_COMM_SVC = URI_COMM_SVC;
+export const URL_COMM_SVC = URI_COMM_SVC + PREFIX_COMM_SVC;
 export const URL_COLLAB_SVC = URI_COLLAB_SVC;
+
+const PREFIX_COMM_SVC_READ_CHAT = '/read';
+
+export const URL_COMM_SVC_CONNECT = URI_COMM_SVC;
+export const URL_COMM_SVC_READ_CHAT = URL_COMM_SVC + PREFIX_COMM_SVC_READ_CHAT;
