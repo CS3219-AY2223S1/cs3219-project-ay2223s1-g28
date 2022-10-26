@@ -2,17 +2,10 @@ import { createContext, useState } from 'react';
 
 import axios from 'axios';
 
-import { URL_USER_SVC } from '../configs';
+import { 
+  URL_USER_SVC_SIGNIN, URL_USER_SVC_JWT_VERIFICATION, URL_USER_SVC_LOGOUT, URL_USER_SVC_UPDATE, URL_USER_SVC_DELETE 
+} from '../configs';
 import { STATUS_CODE_OK } from '../constants';
-
-const SIGNIN_ROUTE = '/signin';
-// Note:
-// Change to NGINX URL to check for JWT validity in the future,
-// using user service URL at the moment
-const JWT_VERIFICATION_ENDPOINT = '/verify-jwt';
-const LOGOUT_ENDPOINT = '/logout';
-const UPDATE_ACCOUNT_ENDPOINT = '/update';
-const DELETE_ACCOUNT_ENDPOINT = '/delete';
 
 const UserContext = createContext({
   username: '',
@@ -32,7 +25,7 @@ export function UserContextProvider(props) {
     await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
-      .get(URL_USER_SVC + JWT_VERIFICATION_ENDPOINT, { withCredentials: true })
+      .get(URL_USER_SVC_JWT_VERIFICATION, { withCredentials: true })
       .then((res) => {
         const isAuthSuccess = res && res.status === STATUS_CODE_OK;
         setIsSignedIn(isAuthSuccess);
@@ -49,7 +42,7 @@ export function UserContextProvider(props) {
   const signinHandler = async (username, password, callback) => {
     await axios
       .post(
-        URL_USER_SVC + SIGNIN_ROUTE,
+        URL_USER_SVC_SIGNIN,
         {
           username,
           password,
@@ -72,7 +65,7 @@ export function UserContextProvider(props) {
     await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
-      .post(URL_USER_SVC + LOGOUT_ENDPOINT, {}, { withCredentials: true })
+      .post(URL_USER_SVC_LOGOUT, {}, { withCredentials: true })
       .then((res) => {
         const isSignoutSuccess = res && res.status === STATUS_CODE_OK;
         setIsSignedIn(isSignoutSuccess);
@@ -92,7 +85,7 @@ export function UserContextProvider(props) {
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
       .post(
-        URL_USER_SVC + UPDATE_ACCOUNT_ENDPOINT,
+        URL_USER_SVC_UPDATE,
         { newUsername, newPassword },
         { withCredentials: true }
       )
@@ -113,7 +106,7 @@ export function UserContextProvider(props) {
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
       .post(
-        URL_USER_SVC + DELETE_ACCOUNT_ENDPOINT,
+        URL_USER_SVC_DELETE,
         {},
         { withCredentials: true }
       )

@@ -28,7 +28,7 @@ const router = express.Router();
 
 // Controller will contain all the User-defined Routes
 router.get('/', (_, res) => res.send('Hello World from user-service'));
-router.post('/', createUser);
+router.post('/signup', createUser);
 router.post('/signin', signin);
 router.post('/logout', authenticateJwt, logout);
 router.post('/update', authenticateJwt, updateAccount);
