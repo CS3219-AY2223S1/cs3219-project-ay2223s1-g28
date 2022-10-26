@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 
 import io from 'socket.io-client';
 
-import { URL_MATCHING_SVC } from '../../configs';
+import { URL_MATCHING_SVC_CONNECT } from '../../configs';
 import AlertContext from '../../context/alert-context';
 import OutlinedContainer from '../../components/ui/OutlinedContainer';
 import styles from './Match.module.css';
@@ -31,29 +31,25 @@ function MatchPage() {
   const navigate = useNavigate();
   const alertCtx = useContext(AlertContext);
   // Difficulty
-  const [difficulty, setDifficulty] = useState('');
+  const difficulty = location.state?.difficulty;
   // Socket
-  const [socket, setSocket] = useState(null);
+  const socket = io(URL_MATCHING_SVC_CONNECT, {
+    path: '/api/matching-service/socket',
+  });
   const [room, setRoom] = useState('');
   const [isMatchFailed, setIsMatchFailed] = useState(false);
   // Timer
   const [counter, setCounter] = useState(DURATION);
   const [timerEnd, setTimerEnd] = useState(false);
 
-  // useEffect
   // Difficulty
   useEffect(() => {
-    if (location.state?.difficulty) {
-      setDifficulty(location.state.difficulty);
-    } else {
+    if (!difficulty) {
       navigate('/home');
       alertCtx.onShow('Please select a difficulty level!');
     }
-  }, [location.state, alertCtx, navigate]);
+  }, [difficulty, alertCtx, navigate]);
   // Socket
-  useEffect(() => {
-    setSocket(io.connect(URL_MATCHING_SVC));
-  }, [])
   useEffect(() => {
     if (socket) {
       socket.on('matchSuccess', (room) => {

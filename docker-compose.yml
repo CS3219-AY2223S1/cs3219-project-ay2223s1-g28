@@ -19,6 +19,22 @@ services:
     depends_on:
       [mongo-user, redis]
 
+  mongo-user:
+    container_name: mongo-user
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-user-volume:/data/db
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-volume:/data
+
   matching-service:
     container_name: matching-service
     build:
@@ -59,14 +75,6 @@ services:
     depends_on:
       - mongo-question
 
-  mongo-user:
-    container_name: mongo-user
-    image: mongo
-    ports:
-      - 27017:27017
-    volumes:
-      - mongo-user-volume:/data/db
-
   mongo-question:
     container_name: mongo-question
     image: mongo
@@ -75,13 +83,15 @@ services:
     volumes:
       - mongo-question-volume:/data/db
 
-  redis:
-    container_name: redis
-    image: redis
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
     ports:
-      - 6379:6379
-    volumes:
-      - redis-volume:/data
+      - 8080:8080
+    restart: always
+    depends_on:
+      [frontend, user-service, matching-service, communication-service, collaboration-service, question-service]
 
 volumes:
   mongo-user-volume:
