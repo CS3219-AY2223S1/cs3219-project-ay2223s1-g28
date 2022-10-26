@@ -1,5 +1,5 @@
 import { 
-  createPendingMatch, getPendingMatchById, getPendingMatchByDifficulty, deletePendingMatchById,
+  createPendingMatch, getPendingMatchById, getPendingMatch, deletePendingMatchById,
 } from './repository.js';
 
 export async function ormCreatePendingMatch(pendingMatch) {
@@ -10,8 +10,8 @@ export async function ormGetPendingMatchById(id) {
   return await getPendingMatchById(id);
 }
 
-export async function ormGetPendingMatchByDifficulty(difficulty) {
-  return await getPendingMatchByDifficulty(difficulty);
+export async function ormGetPendingMatch(difficulty, username) {
+  return await getPendingMatch(difficulty, username);
 }
 
 export async function ormDeletePendingMatchById(id) {

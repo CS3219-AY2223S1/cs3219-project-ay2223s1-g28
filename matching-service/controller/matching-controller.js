@@ -1,7 +1,7 @@
 import { 
   ormCreatePendingMatch as _createPendingMatch,
   ormGetPendingMatchById as _getPendingMatchById,
-  ormGetPendingMatchByDifficulty as _getPendingMatchByDifficulty,
+  ormGetPendingMatch as _getPendingMatch,
   ormDeletePendingMatchById as _deletePendingMatchById,
  } from '../model/matching-orm.js';
 
@@ -10,7 +10,7 @@ const MATCHING_TIME = 30000 // 30s
 export function handleMatch(socket) {
   socket.on('match', async (newMatch) => {
     // Check if there is already a pending match of same difficulty
-    const pendingMatch = await _getPendingMatchByDifficulty(newMatch.difficulty);
+    const pendingMatch = await _getPendingMatch(newMatch.difficulty, newMatch.username);
     if (pendingMatch == null) {
       // If there is no pending match, create a pending match
       const newPendingMatch = await _createPendingMatch({ id: socket.id, ...newMatch });

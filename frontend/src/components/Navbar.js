@@ -16,9 +16,9 @@ import AlertContext from '../context/alert-context';
 import UserContext from '../context/user-context';
 
 export default function ButtonAppBar() {
-  let alertCtx = useContext(AlertContext);
-  let userCtx = useContext(UserContext);
-  let isSignedIn = userCtx.isSignedIn;
+  const alertCtx = useContext(AlertContext);
+  const userCtx = useContext(UserContext);
+  const isSignedIn = userCtx.isSignedIn;
 
   const navigate = useNavigate();
 
@@ -46,37 +46,41 @@ export default function ButtonAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" elevation={0}>
+      <AppBar position='static' elevation={0}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: "white" }}>
+          <Typography variant='h6' component='div' sx={{ flexGrow: 1, color: 'white', paddingRight: 3 }}>
             PeerPrep
           </Typography>
-          {!isSignedIn && <Button color="secondary" size="large" component={Link} to="/signin">Sign in</Button>}
-          {!isSignedIn && <Button color="secondary" size="large" component={Link} to="signup">Sign up</Button>}
-          {isSignedIn && (
-            <div>
-              <IconButton size="large" onClick={handleMenu} color="secondary">
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={profilePageNavigateHandler}>Profile</MenuItem>
-                <MenuItem onClick={signoutHandler}>Logout</MenuItem>
-              </Menu>
-            </div>
-          )}
+          {isSignedIn
+            ? <>
+                <Typography variant='subtitle1' color='secondary'>
+                  {userCtx.username}
+                </Typography>
+                <IconButton size='large' onClick={handleMenu} color='secondary'>
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={profilePageNavigateHandler}>Profile</MenuItem>
+                  <MenuItem onClick={signoutHandler}>Logout</MenuItem>
+                </Menu>
+              </>
+            : <>
+                <Button color='secondary' size='large' component={Link} to='/signin'>Sign in</Button>
+                <Button color='secondary' size='large' component={Link} to='/signup'>Sign up</Button>
+              </>}
         </Toolbar>
       </AppBar>
     </Box>
