@@ -32,6 +32,16 @@ services:
       context: ./communication-service
     ports:
       - 8002:8002
+    depends_on:
+      - mongo-comm
+
+  mongo-comm:
+    container_name: mongo-comm
+    image: mongo
+    ports:
+      - 27019:27017
+    volumes:
+      - mongo-comm-volume:/data/db
 
   collaboration-service:
     container_name: collaboration-service
@@ -75,5 +85,6 @@ services:
 
 volumes:
   mongo-user-volume:
+  mongo-comm-volume:
   mongo-question-volume:
   redis-volume:
