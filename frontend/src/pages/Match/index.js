@@ -12,6 +12,7 @@ import io from 'socket.io-client';
 
 import { URL_MATCHING_SVC_CONNECT } from '../../configs';
 import AlertContext from '../../context/alert-context';
+import UserContext from '../../context/user-context';
 import OutlinedContainer from '../../components/ui/OutlinedContainer';
 import styles from './Match.module.css';
 
@@ -30,6 +31,7 @@ function MatchPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const alertCtx = useContext(AlertContext);
+  const userCtx = useContext(UserContext);
   // Difficulty
   const difficulty = location.state?.difficulty;
   // Socket
@@ -65,10 +67,13 @@ function MatchPage() {
     }
   }, [socket]);
   useEffect(() => {
-    if (difficulty && socket) {
-      socket.emit('match', { difficulty });
+    if (difficulty && socket && userCtx.username) {
+      socket.emit('match', {
+        difficulty,
+        username: userCtx.username,
+      });
     }
-  }, [difficulty, socket])
+  }, [difficulty, socket, userCtx]);
   useEffect(() => {
     if (room && navigate) {
       room && navigate('/room', { state: { room } });
