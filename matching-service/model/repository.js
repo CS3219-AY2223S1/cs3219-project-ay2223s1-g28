@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import { Sequelize, DataTypes, Op } from 'sequelize';
 
 import { definePendingMatchModel } from './matching-model.js';
 
@@ -24,8 +24,15 @@ export async function getPendingMatchById(id) {
   return await PendingMatchModel.findOne({ where: { id }});
 }
 
-export async function getPendingMatchByDifficulty(difficulty) {
-  return await PendingMatchModel.findOne({ where: { difficulty }});
+export async function getPendingMatch(difficulty, username) {
+  return await PendingMatchModel.findOne({
+    where: {
+      difficulty,
+      username: {
+        [Op.ne]: username,
+      },
+    },
+  });
 }
 
 export async function deletePendingMatchById(id) {
