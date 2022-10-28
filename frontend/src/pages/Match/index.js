@@ -58,7 +58,6 @@ function MatchPage() {
     if (socket) {
       socket.on('matchSuccess', (room) => {
         setRoom(room);
-        console.log("This is the room number: " + room);
       });
       socket.on('matchFail', () => {
         setIsMatchFailed(true);

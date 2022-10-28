@@ -13,25 +13,17 @@ import Question from "./Question";
 
 import styles from "./QuestionBox.module.css";
 
-/* 
-  Find out which difficulty user chose,
-  obtain a Question of that difficulty from
-  Question service and display it
-*/
-
-function QuestionBox(props) {
+// Find out which difficulty user chose,
+// obtain a Question of that difficulty from
+// Question service and display it
+function QuestionBox({ difficulty, roomId }) {
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState([]);
   const [content, setContent] = useState("");
-  const [difficulty, setDifficulty] = useState("");
-  const [roomId, setRoomId] = useState("");
   const [questionNumber, setQuestionNumber] = useState();
 
   useEffect(() => {
     async function fetchData() {
-      setDifficulty(props.difficulty);
-      setRoomId(props.roomId);
-
       // Encoded roomId
       var questionEncoding = encode(roomId);
       setQuestionNumber(questionEncoding);
@@ -45,9 +37,6 @@ function QuestionBox(props) {
         )
         .then((res) => {
           try {
-            console.log(
-              "Setting the variables with data from question service!"
-            );
             setTitle(res.data.title);
             setCategories(res.data.categories);
             setContent(res.data.content);
@@ -59,9 +48,7 @@ function QuestionBox(props) {
         });
     }
     fetchData();
-    // To disable the lint warning
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questionNumber]);
+  }, [title, categories, content, difficulty, roomId, questionNumber]);
 
   function difficultyButtonStyle(difficulty) {
     switch (difficulty) {
@@ -76,13 +63,15 @@ function QuestionBox(props) {
     }
   }
 
-  // Encodes the roomId into an integer so that the same interview quetion can be
-  // retrieved for the pair of users in the same room.
   function encode(string) {
     var number = "";
     var length = string.length;
-    for (var i = 0; i < length; i++)
+
+    // Encode the roomId into an integer so that the same interview question can be
+    // retrieved for the pair of users in the same room.
+    for (var i = 0; i < length; i++) {
       number += string.charCodeAt(i).toString(16);
+    }
     return parseInt(number);
   }
   // [This function encodes a string into an integer]
