@@ -44,7 +44,7 @@ function QuestionBox({ difficulty, roomId }) {
         });
     }
     fetchData();
-  }, [questionNumber]);
+  }, [questionNumber, difficulty, roomId]);
 
   function difficultyButtonStyle(difficulty) {
     switch (difficulty) {

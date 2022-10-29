@@ -82,7 +82,7 @@ function MatchPage() {
     if (room && navigate) {
       room && navigate('/room', { state: { room, difficulty } });
     }
-  }, [room, navigate]);
+  }, [room, navigate, difficulty]);
   // Timer
   useEffect(() => {
     if (counter > 0) {
