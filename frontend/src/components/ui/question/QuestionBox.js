@@ -11,6 +11,7 @@ import QuestionCategories from "./QuestionCategories";
 import QuestionTitle from "./QuestionTitle";
 import Question from "./Question";
 
+import { URL_QUES_SVC } from "../../../configs";
 import styles from "./QuestionBox.module.css";
 
 // Find out which difficulty user chose,
@@ -29,12 +30,7 @@ function QuestionBox({ difficulty, roomId }) {
       setQuestionNumber(questionEncoding);
 
       await axios
-        .get(
-          "http://localhost:8004/api/question/level/" +
-            difficulty +
-            "/" +
-            questionNumber
-        )
+        .get(URL_QUES_SVC + "/level/" + difficulty + "/" + questionNumber)
         .then((res) => {
           try {
             setTitle(res.data.title);
@@ -48,7 +44,7 @@ function QuestionBox({ difficulty, roomId }) {
         });
     }
     fetchData();
-  }, [title, categories, content, difficulty, roomId, questionNumber]);
+  }, [questionNumber]);
 
   function difficultyButtonStyle(difficulty) {
     switch (difficulty) {
@@ -95,23 +91,42 @@ function QuestionBox({ difficulty, roomId }) {
             {/*Question Title*/}
             <Grid container direction="column">
               <Grid item>
-                <QuestionTitle title={title} />
+              {difficulty ? (
+                  <QuestionTitle title={title} />
+                ) : (
+                  <p>Unable to retrieve the title of the question!</p>
+                )}
               </Grid>
               <Grid item>
-                <Button className={difficultyButtonStyle(difficulty)} disabled>
-                  {difficulty}
-                </Button>
+                {difficulty ? (
+                  <Button
+                    className={difficultyButtonStyle(difficulty)}
+                    disabled
+                  >
+                    {difficulty}
+                  </Button>
+                ) : (
+                  <p>Difficulty level not selected!</p>
+                )}
               </Grid>
             </Grid>
             <GreenDivider orientation="horizontal" />
           </Grid>
           <Grid xs={12} item>
             {/*Question Categories*/}
-            <QuestionCategories categories={categories} />
+            {categories ? (
+              <QuestionCategories categories={categories} />
+            ) : (
+              <p>Unable to retrieve the categories of the question!</p>
+            )}
           </Grid>
           <Grid xs={12} item>
             {/*Coding question*/}
-            <Question question={content} />
+            {content ? (
+              <Question question={content} />
+            ) : (
+              <p>Unable to retrieve the content of the question!</p>
+            )}
           </Grid>
         </Grid>
       </Grid>

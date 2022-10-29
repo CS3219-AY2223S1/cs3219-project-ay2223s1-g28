@@ -80,9 +80,9 @@ function MatchPage() {
   }, [difficulty, socket, userCtx]);
   useEffect(() => {
     if (room && navigate) {
-      room && navigate('/room', { state: { room: room, difficulty: difficulty } });
+      room && navigate('/room', { state: { room, difficulty } });
     }
-  }, [room, navigate, difficulty]);
+  }, [room, navigate]);
   // Timer
   useEffect(() => {
     if (counter > 0) {
