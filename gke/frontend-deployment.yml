@@ -21,7 +21,7 @@ spec:
       # Container details
       containers:
         - name: frontend-deployment
-          image: gcr.io/cs3219-g28-peerprep/frontend:1.0
+          image: gcr.io/cs3219-g28-peerprep/frontend:latest
           ports:
             - name: frontend-http
               containerPort: 3000
