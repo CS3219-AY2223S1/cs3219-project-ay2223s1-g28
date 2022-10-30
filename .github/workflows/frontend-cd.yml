@@ -7,8 +7,6 @@ on:
       - frontend/**
   pull_request:
     branches: [ "main" ]
-    paths:
-      - frontend/**
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
