@@ -3,8 +3,6 @@ name: Deploy PeerPrep frontend to GKE
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - frontend/**
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
