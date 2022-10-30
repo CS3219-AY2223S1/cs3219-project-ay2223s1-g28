@@ -3,12 +3,12 @@ name: Deploy PeerPrep frontend to GKE
 on:
   push:
     branches:
-    - main
+      - main
     paths:
       - frontend/**
   pull_request:
     branches:
-    - main
+      - main
     paths:
       - frontend/**
 
