@@ -82,6 +82,6 @@ jobs:
         run: |-
           cd $IMAGE
           ./kustomize edit set image gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA
-          ./kustomize build ./$IMAGE | kubectl apply -f -
+          ./kustomize build . | kubectl apply -f -
           kubectl rollout status deployment/$DEPLOYMENT_NAME
           kubectl get services -o wide
