@@ -1,8 +1,8 @@
-name: Deploy PeerPrep frontend to GKE
+name: Continuous Deployment for Frontend
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "deployment-test" ]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
