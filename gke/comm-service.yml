@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # Define the Service name
+  name: comm-service
+  labels:
+    app: comm
+spec:
+  # Scans for Pods that match its selector
+  selector:
+    app: comm
+  # Exposes the Service on a cluster-internal IP. 
+  # Hence, this Service is only reachable from within the cluster. 
+  type: ClusterIP
+  ports:
+    - name: comm-http
+      port: 8002
+      protocol: TCP
+      targetPort: comm-http
