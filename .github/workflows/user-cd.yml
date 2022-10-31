@@ -18,7 +18,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./gke/"$IMAGE"
+        working-directory: ./gke/${IMAGE}
 
     # Add "id-token" with the intended permissions.
     permissions:
