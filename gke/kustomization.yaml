@@ -5,3 +5,13 @@ resources:
 - ./frontend-deployment.yml
 - ./frontend-service.yml
 - ./frontend-ingress.yml
+- ./user-deployment.yml
+- ./user-service.yml
+- ./matching-deployment.yml
+- ./matching-service.yml
+- ./comm-deployment.yml
+- ./comm-service.yml
+- ./collab-deployment.yml
+- ./collab-service.yml
+- ./question-deployment.yml
+- ./question-service.yml
