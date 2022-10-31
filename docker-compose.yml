@@ -6,7 +6,7 @@ services:
     build:
       context: ./frontend
     ports:
-      - 3000:3000
+      - 3000:80
     depends_on:
       [user-service, matching-service, communication-service, collaboration-service, question-service]
 
