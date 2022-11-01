@@ -1,5 +1,12 @@
 .update_profile_button {
-    padding: 8px 75px !important;
-    font-size: 24px !important;
+    padding: 8px 30px !important;
+    font-size: 16px !important;
     font-weight: lighter !important;
+}
+
+@media only screen and (min-width: 600px) {
+    .update_profile_button {
+        padding: 8px 75px !important;
+        font-size: 24px !important;
+    }
 }
