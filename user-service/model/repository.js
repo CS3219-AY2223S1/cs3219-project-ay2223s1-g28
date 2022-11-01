@@ -30,7 +30,7 @@ export async function getUserByEmail(email) {
 export async function updateAccountByUsername(username, newProfile) {
   return await UserModel.findOneAndUpdate({ username }, newProfile, {
     new: true,
-    rawResult: true, // Return the raw result from the MongoDB driver
+    returnDocument: "after" // return updated user object
   });
 }
 
