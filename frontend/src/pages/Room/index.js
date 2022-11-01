@@ -13,13 +13,16 @@ import QuestionBox from '../../components/ui/question/QuestionBox';
 import CollabEditor from '../../components/ui/collaboration/CollabEditor';
 import styles from './Room.module.css';
 
-import { URL_COMM_SVC_CONNECT, URL_COLLAB_SVC_CONNECT } from '../../configs';
+import { 
+  URL_COMM_SVC_SOCKET, PATH_COMM_SVC_SOCKET, 
+  URL_COLLAB_SVC_SOCKET, PATH_COLLAB_SVC_SOCKET,
+} from '../../configs';
 
-const comm_socket = io(URL_COMM_SVC_CONNECT, {
-  path: '/api/communication-service/socket',
+const comm_socket = io(URL_COMM_SVC_SOCKET, {
+  path: PATH_COMM_SVC_SOCKET,
 });
-const collab_socket = io(URL_COLLAB_SVC_CONNECT, {
-  path: '/api/collaboration-service/socket',
+const collab_socket = io(URL_COLLAB_SVC_SOCKET, {
+  path: PATH_COLLAB_SVC_SOCKET,
 });
 
 function RoomPage() {

@@ -83,10 +83,10 @@ services:
     volumes:
       - mongo-question-volume:/data/db
 
-  nginx:
-    container_name: nginx
+  gateway:
+    container_name: gateway
     build:
-      context: ./nginx
+      context: ./gateway
     ports:
       - 8080:8080
     restart: always

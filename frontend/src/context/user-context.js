@@ -3,7 +3,11 @@ import { createContext, useState } from 'react';
 import axios from 'axios';
 
 import { 
-  URL_USER_SVC_SIGNIN, URL_USER_SVC_JWT_VERIFICATION, URL_USER_SVC_LOGOUT, URL_USER_SVC_UPDATE, URL_USER_SVC_DELETE 
+  URL_USER_SVC_SIGNIN, 
+  URL_USER_SVC_JWT_VERIFICATION, 
+  URL_USER_SVC_LOGOUT, 
+  URL_USER_SVC_UPDATE, 
+  URL_USER_SVC_DELETE,
 } from '../configs';
 import { STATUS_CODE_OK } from '../constants';
 

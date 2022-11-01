@@ -1,7 +1,8 @@
-// Reverse proxy
+/////////////// Reverse Proxy ///////////////
 const URI_SVC = process.env.URI_SVC || 'http://localhost:8080';
 
-// User service
+/////////////// User Service ///////////////
+// API
 const PREFIX_USER_SVC = '/api/user-service';
 const URL_USER_SVC = URI_SVC + PREFIX_USER_SVC;
 
@@ -20,15 +21,29 @@ export const URL_USER_SVC_LOGOUT = URL_USER_SVC + PREFIX_USER_SVC_LOGOUT;
 export const URL_USER_SVC_UPDATE = URL_USER_SVC + PREFIX_USER_SVC_UPDATE;
 export const URL_USER_SVC_DELETE = URL_USER_SVC + PREFIX_USER_SVC_DELETE;
 
-// Matching service
-export const URL_MATCHING_SVC_CONNECT = URI_SVC; // Socket
+/////////////// Matching Service ///////////////
+// Socket
+export const URL_MATCHING_SVC_SOCKET = URI_SVC; 
+export const PATH_MATCHING_SVC_SOCKET = '/api/matching-service/socket';
 
-// Communication service
+/////////////// Communication Service ///////////////
+// Socket
+export const URL_COMM_SVC_SOCKET = URI_SVC; 
+export const PATH_COMM_SVC_SOCKET = '/api/communication-service/socket';
+
+// API
 const PREFIX_COMM_SVC = '/api/communication-service';
 const URL_COMM_SVC = URI_SVC + PREFIX_COMM_SVC;
+
 const PREFIX_COMM_SVC_READ_CHAT = '/read';
 export const URL_COMM_SVC_READ_CHAT = URL_COMM_SVC + PREFIX_COMM_SVC_READ_CHAT;
-export const URL_COMM_SVC_CONNECT = URI_SVC; // Socket
 
-// Collaboration service
-export const URL_COLLAB_SVC_CONNECT = URI_SVC; // Socket
+/////////////// Collaboration Service ///////////////
+// Socket
+export const URL_COLLAB_SVC_SOCKET = URI_SVC;
+export const PATH_COLLAB_SVC_SOCKET = '/api/collaboration-service/socket';
+
+/////////////// Question Service ///////////////
+// API
+const PREFIX_QUESTION_SVC = '/api/question-service';
+const URL_QUESTION_SVC = URI_SVC + PREFIX_QUESTION_SVC;
