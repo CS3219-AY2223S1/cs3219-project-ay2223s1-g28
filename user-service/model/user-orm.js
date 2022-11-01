@@ -54,7 +54,12 @@ export async function ormUpdateAccount(username, newProfile) {
     newProfile.password = await bcrypt.hash(newProfile.password, saltRounds);
   }
   const updatedUser = await updateAccountByUsername(username, newProfile);
-  return updatedUser;
+  
+  // Check if the updated user is indeed updated
+  const usernameIsUpdated = !newProfile.username || (updatedUser.username === newProfile.username);
+  const passwordIsUpdated = !newProfile.password || (updatedUser.password === newProfile.password);
+
+  return usernameIsUpdated && passwordIsUpdated ? updatedUser : null;
 }
 
 // Returns true upon successful deletion
