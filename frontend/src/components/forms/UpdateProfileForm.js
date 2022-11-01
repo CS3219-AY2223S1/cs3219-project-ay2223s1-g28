@@ -83,14 +83,18 @@ function UpdateProfileForm() {
 
   return (
     <form onSubmit={submitHandler}>
-      <OutlinedContainer customStyle={{ width: '60%' }}>
+      <OutlinedContainer
+        customStyle={{ width: '75vw', maxWidth: '800px !important' }}
+      >
         <Grid container direction="row" justifyContent="space-between">
           <Grid item xs={1}>
             <PersonOutlineIcon color="primary" sx={{ fontSize: 80, mt: 1 }} />
           </Grid>
           <Grid
             item
-            xs={8}
+            xs={12}
+            md={9}
+            lg={8}
             container
             direction="row"
             justifyContent="center"
@@ -133,7 +137,8 @@ function UpdateProfileForm() {
           </Grid>
           <Grid
             item
-            xs={1}
+            xs={0}
+            md={1}
             container
             direction="column-reverse"
             alignItems="flex-end"
