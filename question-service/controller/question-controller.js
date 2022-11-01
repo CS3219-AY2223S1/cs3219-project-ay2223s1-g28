@@ -92,10 +92,10 @@ export async function getQuestionById(req, res) {
 
 export async function getQuestionByDifficulty(req, res) {
   try {
-    const difficulty = req.params.difficulty
-    if (difficulty) {
+    const { difficulty, questionNumber } = req.params;
+    if (difficulty && questionNumber) {
       // resp contains the question obtained from db
-      const resp = await _getQuestionByDifficulty(difficulty);
+      const resp = await _getQuestionByDifficulty(difficulty, questionNumber);
 
       // Error faced when getting question
       if (resp.err) {

@@ -1,8 +1,8 @@
 import styles from "./Question.module.css";
 
-function Question(props) {
+function Question({question}) {
   function convertStringtoHtml() {
-    return { __html: props.question };
+    return { __html: question };
   }
 
   return (
