@@ -1,16 +1,19 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import OutlinedContainer from '../../components/ui/OutlinedContainer';
 import SigninForm from '../../components/forms/SigninForm';
 import GreenDivider from '../../components/ui/GreenDivider';
 
 function SigninPage() {
+  const isMobileView = useMediaQuery('(min-width:600px)');
+
   return (
     <OutlinedContainer>
       <Grid
         container
-        direction="row"
+        direction={isMobileView ? 'row' : 'column'}
         justifyContent="space-evenly"
         alignItems="center"
       >
