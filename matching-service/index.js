@@ -16,6 +16,7 @@ const io = new Server(httpServer, {
   cors: {
     origin: 'http://localhost:3000',
   },
+  path: '/api/matching-service/socket',
 });
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);

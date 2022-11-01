@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 
 import io from 'socket.io-client';
 
-import { URL_MATCHING_SVC } from '../../configs';
+import { URL_MATCHING_SVC_SOCKET, PATH_MATCHING_SVC_SOCKET } from '../../configs';
 import AlertContext from '../../context/alert-context';
 import UserContext from '../../context/user-context';
 import OutlinedContainer from '../../components/ui/OutlinedContainer';
@@ -26,63 +26,68 @@ const PADDED_BTN = {
 // Timer
 const DURATION = 30; 
 
+// Socket
+const socket = io(URL_MATCHING_SVC_SOCKET, {
+  path: PATH_MATCHING_SVC_SOCKET,
+});
+
 function MatchPage() {
   // Hooks
   const location = useLocation();
   const navigate = useNavigate();
   const alertCtx = useContext(AlertContext);
   const userCtx = useContext(UserContext);
-  // Difficulty
-  const [difficulty, setDifficulty] = useState('');
+  const difficulty = location.state?.difficulty;
+
   // Socket
-  const [socket, setSocket] = useState(null);
   const [room, setRoom] = useState('');
   const [isMatchFailed, setIsMatchFailed] = useState(false);
+
   // Timer
   const [counter, setCounter] = useState(DURATION);
   const [timerEnd, setTimerEnd] = useState(false);
 
-  // useEffect
-  // Difficulty
+  // Check if there is a difficulty selected
   useEffect(() => {
-    if (location.state?.difficulty) {
-      setDifficulty(location.state.difficulty);
-    } else {
+    if (!difficulty) {
       navigate('/home');
       alertCtx.onShow('Please select a difficulty level!');
     }
-  }, [location.state, alertCtx, navigate]);
-  // Socket
+  }, [difficulty, navigate, alertCtx]);
+
+  // Register socket listeners
   useEffect(() => {
-    setSocket(io.connect(URL_MATCHING_SVC));
+    socket.on('matchSuccess', (room) => {
+      setRoom(room);
+    });
+    socket.on('matchFail', () => {
+      setIsMatchFailed(true);
+    });
+    socket.on('disconnect', () => {
+      setIsMatchFailed(true);
+    });
+
+    // Disconnect when unmount
+    return () => socket.disconnect();
   }, []);
+
+  // Emit match event
   useEffect(() => {
-    if (socket) {
-      socket.on('matchSuccess', (room) => {
-        setRoom(room);
-      });
-      socket.on('matchFail', () => {
-        setIsMatchFailed(true);
-      });
-      socket.on('disconnect', () => {
-        setIsMatchFailed(true);
-      });
-      return () => socket.disconnect();
-    }
-  }, [socket]);
-  useEffect(() => {
-    if (difficulty && socket && userCtx.username) {
+    if (difficulty && userCtx.username) {
       socket.emit('match', {
         difficulty,
         username: userCtx.username,
       });
     }
-  }, [difficulty, socket, userCtx]);
+  }, [difficulty, userCtx]);
+
+  // Navigate to room page upon successful match
   useEffect(() => {
-    if (room && navigate) {
+    if (room && difficulty) {
       room && navigate('/room', { state: { room, difficulty } });
     }
-  }, [room, navigate, difficulty]);
+  }, [room, difficulty, navigate]);
+
   // Timer
   useEffect(() => {
     if (counter > 0) {
