@@ -72,7 +72,7 @@ export function UserContextProvider(props) {
       .post(URL_USER_SVC_LOGOUT, {}, { withCredentials: true })
       .then((res) => {
         const isSignoutSuccess = res && res.status === STATUS_CODE_OK;
-        setIsSignedIn(isSignoutSuccess);
+        setIsSignedIn(!isSignoutSuccess);
         return res.data;
       })
       .then((data) => {
