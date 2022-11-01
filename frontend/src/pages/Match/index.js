@@ -26,6 +26,11 @@ const PADDED_BTN = {
 // Timer
 const DURATION = 30; 
 
+// Socket
+const socket = io(URL_MATCHING_SVC_SOCKET, {
+  path: PATH_MATCHING_SVC_SOCKET,
+});
+
 function MatchPage() {
   // Hooks
   const location = useLocation();
@@ -35,9 +40,6 @@ function MatchPage() {
   const difficulty = location.state?.difficulty;
 
   // Socket
-  const socket = io(URL_MATCHING_SVC_SOCKET, {
-    path: PATH_MATCHING_SVC_SOCKET,
-  });
   const [room, setRoom] = useState('');
   const [isMatchFailed, setIsMatchFailed] = useState(false);
 
@@ -45,14 +47,16 @@ function MatchPage() {
   const [counter, setCounter] = useState(DURATION);
   const [timerEnd, setTimerEnd] = useState(false);
 
+  // Check if there is a difficulty selected
   useEffect(() => {
-    // Check if there is a difficulty selected
     if (!difficulty) {
       navigate('/home');
       alertCtx.onShow('Please select a difficulty level!');
     }
+  }, [difficulty, navigate, alertCtx]);
 
-    // Register socket listeners
+  // Register socket listeners
+  useEffect(() => {
     socket.on('matchSuccess', (room) => {
       setRoom(room);
     });
@@ -63,24 +67,26 @@ function MatchPage() {
       setIsMatchFailed(true);
     });
 
-    // Emit match event
+    // Disconnect when unmount
+    return () => socket.disconnect();
+  }, []);
+
+  // Emit match event
+  useEffect(() => {
     if (difficulty && userCtx.username) {
       socket.emit('match', {
         difficulty,
         username: userCtx.username,
       });
     }
-    
-    // Disconnect from socket when unmount
-    return () => socket.disconnect();
-  }, []);
+  }, [difficulty, userCtx]);
 
   // Navigate to room page upon successful match
   useEffect(() => {
     if (room && difficulty) {
       room && navigate('/room', { state: { room, difficulty } });
     }
-  }, [room]);
+  }, [room, difficulty, navigate]);
 
   // Timer
   useEffect(() => {
