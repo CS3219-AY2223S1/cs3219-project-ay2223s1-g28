@@ -126,7 +126,7 @@ function MatchPage() {
   }
 
   return (
-    <OutlinedContainer customStyle={{ width: '450px' }}>
+    <OutlinedContainer customStyle={{ width: '75vw', maxWidth: '500px !important' }}>
       <Grid container direction='column' alignItems='center' padding={3}>
         <Grid item>
           <div className={boxStyling}>
