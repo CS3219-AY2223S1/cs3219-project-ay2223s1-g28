@@ -26,7 +26,7 @@ router.get("/", getAllQuestions);
 router.post("/", createQuestion);
 router.get("/:id", getQuestionById);
 router.delete("/:id", deleteQuestionById);
-router.get("/level/:difficulty", getQuestionByDifficulty);
+router.get("/level/:difficulty/:questionNumber", getQuestionByDifficulty);
 
 // To disable checking by cors on using the same port
 app.use("/api/question", router).all((_, res) => {

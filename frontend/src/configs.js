@@ -45,5 +45,5 @@ export const PATH_COLLAB_SVC_SOCKET = '/api/collaboration-service/socket';
 
 /////////////// Question Service ///////////////
 // API
-const PREFIX_QUESTION_SVC = '/api/question-service';
-const URL_QUESTION_SVC = URI_SVC + PREFIX_QUESTION_SVC;
+const PREFIX_QUES_SVC = '/api/question-service';
+const URL_QUES_SVC = URI_SVC + PREFIX_QUES_SVC;

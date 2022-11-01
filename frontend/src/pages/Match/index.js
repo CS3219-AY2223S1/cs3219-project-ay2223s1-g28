@@ -77,8 +77,8 @@ function MatchPage() {
 
   // Navigate to room page upon successful match
   useEffect(() => {
-    if (room) {
-      room && navigate('/room', { state: { room } });
+    if (room && difficulty) {
+      room && navigate('/room', { state: { room, difficulty } });
     }
   }, [room]);
 
