@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 
-function QuestionTitle(props) {
+function QuestionTitle({title}) {
   return (
     <Typography
       variant="h3"
@@ -8,7 +8,7 @@ function QuestionTitle(props) {
       sx={{ mt: "20px" }}
       color="#3EA7A5"
     >
-      {props.title}
+      {title}
     </Typography>
   );
 }

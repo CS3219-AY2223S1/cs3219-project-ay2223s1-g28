@@ -1,9 +1,9 @@
 import styles from "./QuestionCategory.module.css";
 
-function QuestionCategory(props) {
+function QuestionCategory({text}) {
   return (
     <div className={styles.category_bubble}>
-      <p className={styles.category_text}>{props.text}</p>
+      <p className={styles.category_text}>{text}</p>
     </div>
   );
 }

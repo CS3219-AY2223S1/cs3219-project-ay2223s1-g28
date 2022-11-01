@@ -1,20 +1,20 @@
-import { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import io from 'socket.io-client';
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import io from "socket.io-client";
 
-import AlertContext from '../../context/alert-context';
-import ChatBlock from '../../components/ui/chat/ChatBlock';
-import CustomBackDrop from '../../components/ui/CustomBackdrop';
-import QuestionBox from '../../components/ui/question/QuestionBox';
-import CollabEditor from '../../components/ui/collaboration/CollabEditor';
-import styles from './Room.module.css';
+import AlertContext from "../../context/alert-context";
+import ChatBlock from "../../components/ui/chat/ChatBlock";
+import CustomBackDrop from "../../components/ui/CustomBackdrop";
+import QuestionBox from "../../components/ui/question/QuestionBox";
+import CollabEditor from "../../components/ui/collaboration/CollabEditor";
+import styles from "./Room.module.css";
 
-import { URL_COMM_SVC_CONNECT } from '../../configs';
-import { URL_COLLAB_SVC } from '../../configs';
+import { URL_COMM_SVC_CONNECT } from "../../configs";
+import { URL_COLLAB_SVC } from "../../configs";
 
 const comm_socket = io(URL_COMM_SVC_CONNECT);
 const collab_socket = io(URL_COLLAB_SVC);
@@ -25,24 +25,25 @@ function RoomPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-	const roomId = location.state?.room;
+  const roomId = location.state?.room;
+  const difficulty = location.state?.difficulty;
 
   useEffect(() => {
     if (!roomId) {
       // Prevent user from entering the path '/room' directly
-      navigate('/home');
-      alertCtx.onShow('Please select a difficulty level!');
+      navigate("/home");
+      alertCtx.onShow("Please select a difficulty level!");
       return;
     }
 
     // Join both communication and collaboration sockets to same room
-    comm_socket.emit('join-room', roomId);
-    collab_socket.emit('join-room', roomId);
+    comm_socket.emit("join-room", roomId);
+    collab_socket.emit("join-room", roomId);
 
     const createSessionEndListener = (socket) => {
-      socket.on('session-end', (message, severity) => {
+      socket.on("session-end", (message, severity) => {
         // Room leaving is handled by respective server
-        navigate('/home');
+        navigate("/home");
         alertCtx.onShow(message, severity);
       });
     };
@@ -53,16 +54,16 @@ function RoomPage() {
     // the listeners must be removed in the cleanup step,
     // in order to prevent multiple event registrations
     return () => {
-      comm_socket.off('join-room');
-      comm_socket.off('session-end');
-      collab_socket.off('join-room');
-      collab_socket.off('session-end');
+      comm_socket.off("join-room");
+      comm_socket.off("session-end");
+      collab_socket.off("join-room");
+      collab_socket.off("session-end");
     };
   }, [alertCtx, navigate, roomId]);
 
   const leaveSessionHandler = () => {
-    comm_socket.emit('leave-session');
-    collab_socket.emit('leave-session');
+    comm_socket.emit("leave-session");
+    collab_socket.emit("leave-session");
   };
 
   return (
@@ -74,7 +75,7 @@ function RoomPage() {
             variant="h4"
             fontWeight="lighter"
             textAlign="center"
-            sx={{ mb: '40px' }}
+            sx={{ mb: "40px" }}
           >
             Your technical interview begins...
           </Typography>
@@ -94,7 +95,14 @@ function RoomPage() {
       <Grid container spacing={4}>
         {/* Question component */}
         <Grid xs={5} item container>
-          <QuestionBox />
+          {difficulty ? (
+            <QuestionBox difficulty={difficulty} roomId={roomId} />
+          ) : (
+            <p>
+              You have not successfully selected your difficulty, <br /> please return
+              to home page and try again!
+            </p>
+          )}
         </Grid>
         <Grid xs={7} item container direction="column">
           {/* Chat component */}
@@ -116,11 +124,11 @@ function RoomPage() {
         onClick={() => setOpenBackdrop(false)}
         content="Are you sure you want to leave the 'interview'?"
         primaryAction={{
-          text: 'No',
+          text: "No",
           onClick: () => setOpenBackdrop(false),
         }}
         secondaryAction={{
-          text: 'Yes',
+          text: "Yes",
           onClick: leaveSessionHandler,
         }}
       />

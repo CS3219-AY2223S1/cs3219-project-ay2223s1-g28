@@ -27,13 +27,13 @@ export async function getQuestionById(id) {
   return await questionModel.findOne({ _id: id });
 }
 
-export async function getQuestionByDifficulty(userDifficulty) {
-  // To randomly generate a number of skips
+export async function getQuestionByDifficulty(userDifficulty, questionNumber) {
+  // questionNumber is the randomly generated integer used
   // so that a random question of a particular
   // difficulty can be obtained
 
   const numOfQns = await questionModel.find({ difficulty: userDifficulty }).count();
-  var random = Math.floor(Math.random() * numOfQns);
+  var random = questionNumber % numOfQns;
   return await questionModel.findOne({ difficulty: userDifficulty }).skip(random);
 }
 

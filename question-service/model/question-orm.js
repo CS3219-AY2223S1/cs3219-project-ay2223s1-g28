@@ -36,10 +36,9 @@ export async function ormGetQuestionById(id) {
 }
 
 // Get interview question in the database by difficulty
-export async function ormGetQuestionByDifficulty(difficulty) {
+export async function ormGetQuestionByDifficulty(difficulty, questionNumber) {
     try {
-        // question is the question document with difficulty
-        const question = await getQuestionByDifficulty(difficulty);
+        const question = await getQuestionByDifficulty(difficulty, questionNumber);
         return question;
     } catch(err) {
         console.log("ERROR: Could not get question by difficulty");

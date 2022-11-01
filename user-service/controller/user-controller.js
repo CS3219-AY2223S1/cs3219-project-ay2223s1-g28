@@ -51,6 +51,7 @@ export async function signin(req, res) {
             return res.status(400).json({ message: 'Missing username and/or password.' });
         }
     } catch (err) {
+        console.log(err);
         return res.status(500).json({ message: 'Server error when signing in user.' });
     }
 }
