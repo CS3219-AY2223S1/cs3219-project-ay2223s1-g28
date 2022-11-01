@@ -88,12 +88,9 @@ export async function updateAccount(req, res) {
       });
     }
 
-    if (await _updateAccount(username, newProfile)) {
-      // Authenticate updated user
-      const updatedUser = await authenticateUser(newUsername, newPassword);
-      if (!updatedUser) {
-          return res.status(401).json({ message: 'User does not exist and/or wrong password.' });
-      }
+    const updatedUser = await _updateAccount(username, newProfile);
+
+    if (updatedUser) {
       // Create new JWT for updated profile
       const token = _generateJwt(updatedUser);
       // Send cookie

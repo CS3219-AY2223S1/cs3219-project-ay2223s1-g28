@@ -48,13 +48,13 @@ export async function isExistingEmail(email) {
     return user ? true : false;
 }
 
-// Returns true upon successful update
+// Returns updated user object upon successful update, or null if update fails
 export async function ormUpdateAccount(username, newProfile) {
   if (newProfile.password) {
     newProfile.password = await bcrypt.hash(newProfile.password, saltRounds);
   }
-  const res = await updateAccountByUsername(username, newProfile);
-  return res.ok === 1;
+  const updatedUser = await updateAccountByUsername(username, newProfile);
+  return updatedUser;
 }
 
 // Returns true upon successful deletion
