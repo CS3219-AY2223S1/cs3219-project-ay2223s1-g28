@@ -75,7 +75,6 @@ function SigninForm() {
   return (
     <form onSubmit={submitHandler}>
       <Grid
-        className={styles.signin_form}
         container
         justifyContent="center"
         alignItems="center"
