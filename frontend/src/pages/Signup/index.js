@@ -7,7 +7,9 @@ import SignupForm from '../../components/forms/SignupForm';
 
 function SignupPage() {
   return (
-    <OutlinedContainer customStyle={{width: '40%'}}>
+    <OutlinedContainer
+      customStyle={{ width: '75vw', maxWidth: '500px !important' }}
+    >
       <Grid
         container
         direction="column"
