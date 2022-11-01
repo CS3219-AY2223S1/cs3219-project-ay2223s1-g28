@@ -17,7 +17,7 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      [mongo-user, redis]
+      [mongo-user, redis-user]
 
   mongo-user:
     container_name: mongo-user
@@ -27,13 +27,13 @@ services:
     volumes:
       - mongo-user-volume:/data/db
 
-  redis:
-    container_name: redis
+  redis-user:
+    container_name: redis-user
     image: redis
     ports:
       - 6379:6379
     volumes:
-      - redis-volume:/data
+      - redis-user-volume:/data
 
   matching-service:
     container_name: matching-service
@@ -65,6 +65,16 @@ services:
       context: ./collaboration-service
     ports:
       - 8003:8003
+    depends_on:
+      - redis-collab
+
+  redis-collab:
+    container_name: redis-collab
+    image: redis
+    ports:
+      - 6380:6379
+    volumes:
+      - redis-collab-volume:/data
 
   question-service:
     container_name: question-service
@@ -97,4 +107,5 @@ volumes:
   mongo-user-volume:
   mongo-comm-volume:
   mongo-question-volume:
-  redis-volume:
+  redis-user-volume:
+  redis-collab-volume:
