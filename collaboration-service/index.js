@@ -3,6 +3,8 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
+import { ormGetCode as _getCode, ormSetCode as _setCode } from './model/collaboration-orm.js';
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -18,12 +20,17 @@ const io = new Server(httpServer, {
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
-  socket.on('join-room', (roomId) => {
+  socket.on('join-room', async (roomId) => {
     socket.join(roomId);
+
+    // load existing code if users refresh page
+    const existingCode = await _getCode(roomId);
+    socket.emit('update-code', existingCode);
   });
 
-  socket.on('code-changed', (roomId, code) => {
+  socket.on('code-changed', async (roomId, code) => {
     socket.to(roomId).emit('update-code', code);
+    await _setCode(roomId, code);
   });
 
   // leave-session: when user clicks on "leave session" button
