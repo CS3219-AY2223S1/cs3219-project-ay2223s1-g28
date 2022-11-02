@@ -24,7 +24,7 @@ spec:
           image: gcr.io/cs3219-g28-peerprep/frontend:latest
           ports:
             - name: frontend-http
-              containerPort: 80
+              containerPort: 3000
           resources:
             limits:
               cpu: 40m
