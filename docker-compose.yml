@@ -18,6 +18,10 @@ services:
       - 8000:8000
     depends_on:
       [mongo-user, redis-user]
+    volumes:
+      - ./user-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
 
   mongo-user:
     container_name: mongo-user
@@ -41,6 +45,10 @@ services:
       context: ./matching-service
     ports:
       - 8001:8001
+    volumes:
+      - ./matching-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
 
   communication-service:
     container_name: communication-service
@@ -50,6 +58,10 @@ services:
       - 8002:8002
     depends_on:
       - mongo-comm
+    volumes:
+      - ./communication-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
 
   mongo-comm:
     container_name: mongo-comm
@@ -67,6 +79,10 @@ services:
       - 8003:8003
     depends_on:
       - redis-collab
+    volumes:
+      - ./collaboration-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
 
   redis-collab:
     container_name: redis-collab
@@ -84,6 +100,10 @@ services:
       - 8004:8004
     depends_on:
       - mongo-question
+    volumes:
+      - ./question-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
 
   mongo-question:
     container_name: mongo-question
