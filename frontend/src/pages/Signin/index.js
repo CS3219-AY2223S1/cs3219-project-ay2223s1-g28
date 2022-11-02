@@ -7,13 +7,13 @@ import SigninForm from '../../components/forms/SigninForm';
 import GreenDivider from '../../components/ui/GreenDivider';
 
 function SigninPage() {
-  const isMobileView = useMediaQuery('(min-width:900px)');
+  const isMobileView = useMediaQuery('(max-width:900px)');
 
   return (
     <OutlinedContainer>
       <Grid
         container
-        direction={isMobileView ? 'row' : 'column'}
+        direction={isMobileView ? 'column' : 'row'}
         justifyContent="space-evenly"
         alignItems="center"
         gap={5}
