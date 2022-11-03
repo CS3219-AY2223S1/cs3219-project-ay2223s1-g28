@@ -11,6 +11,8 @@ services:
       - /app/node_modules
     ports:
       - 3000:3000
+    environment:
+       - WATCHPACK_POLLING=true
     depends_on:
       [user-service, matching-service, communication-service, collaboration-service, question-service]
 
