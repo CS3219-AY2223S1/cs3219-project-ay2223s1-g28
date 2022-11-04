@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { createServer } from 'http';
@@ -21,7 +22,7 @@ app.get('/', (req, res) => {
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
 	cors: {
-		origin: ['http://localhost:3000'],
+		origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
 	},
 	path: '/api/communication-service/socket',
 });
