@@ -38,7 +38,7 @@ router.get('/verify-jwt', authenticateJwt, acknowledgeJWTValidity);
 
 app.use('/api/user', router).all((_, res) => {
   res.setHeader('content-type', 'application/json');
-  res.setHeader('Access-Control-Allow-Origin', process.env.ENV === 'PROD'? process.env.URI_SVC : 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000');
 });
 
 app.listen(8000, () => console.log('user-service listening on port 8000'));
