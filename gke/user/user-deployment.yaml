@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Define the Deployment name
+  name: user-deployment
+  labels:
+    app: user
+spec:
+  # Specify the number of desired Pods
+  replicas: 1
+  # Define how the Deployment finds which Pods to manage
+  selector:
+    matchLabels:
+      app: user
+  # Define template for Pods
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      # Container details
+      containers:
+        - name: user-deployment
+          image: gcr.io/cs3219-g28-peerprep/user:latest
+          ports:
+            - name: user-http
+              containerPort: 8000
+          resources:
+            limits:
+              cpu: 40m
+              memory: 100Mi
