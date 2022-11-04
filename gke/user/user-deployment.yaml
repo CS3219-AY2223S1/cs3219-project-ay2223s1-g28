@@ -2,33 +2,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   # Define the Deployment name
-  name: frontend-deployment
+  name: user-deployment
   labels:
-    app: frontend
+    app: user
 spec:
   # Specify the number of desired Pods
-  replicas: 2
+  replicas: 1
   # Define how the Deployment finds which Pods to manage
   selector:
     matchLabels:
-      app: frontend
+      app: user
   # Define template for Pods
   template:
     metadata:
       labels:
-        app: frontend
+        app: user
     spec:
       # Container details
       containers:
-        - name: frontend-deployment
-          image: gcr.io/cs3219-g28-peerprep/frontend:latest
+        - name: user-deployment
+          image: gcr.io/cs3219-g28-peerprep/user:latest
           ports:
-            - name: frontend-http
-              containerPort: 3000
+            - name: user-http
+              containerPort: 8000
           resources:
             limits:
               cpu: 40m
-              memory: 150Mi
-          env:
-            - name: ENV
-              value: PROD
+              memory: 100Mi

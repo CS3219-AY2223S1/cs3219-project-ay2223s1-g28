@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Define the Deployment name
+  name: question-deployment
+  labels:
+    app: question
+spec:
+  # Specify the number of desired Pods
+  replicas: 1
+  # Define how the Deployment finds which Pods to manage
+  selector:
+    matchLabels:
+      app: question
+  # Define template for Pods
+  template:
+    metadata:
+      labels:
+        app: question
+    spec:
+      # Container details
+      containers:
+        - name: question-deployment
+          image: gcr.io/cs3219-g28-peerprep/question:latest
+          ports:
+            - name: question-http
+              containerPort: 8004
+          resources:
+            limits:
+              cpu: 40m
+              memory: 150Mi
