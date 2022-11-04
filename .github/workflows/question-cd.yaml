@@ -12,7 +12,7 @@ env:
   IMAGE: question
   # secrets
   FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-  DB_CLOUD_URI: ${{ secrets.COMM_DB_CLOUD_URI}}
+  DB_CLOUD_URI: ${{ secrets.QUESTION_DB_CLOUD_URI}}
 
 jobs:
   setup-build-publish-deploy:
