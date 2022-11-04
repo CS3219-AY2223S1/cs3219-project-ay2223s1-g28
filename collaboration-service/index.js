@@ -15,7 +15,7 @@ app.options('*', cors());
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.ENV === 'PROD'? process.env.URI_SVC : 'http://localhost:3000',
+    origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
   },
   path: '/api/collaboration-service/socket',
 });
