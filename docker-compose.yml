@@ -5,8 +5,12 @@ services:
     container_name: frontend
     build:
       context: ./frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     ports:
-      - 3000:80
+      - 3000:3000
     depends_on:
       [user-service, matching-service, communication-service, collaboration-service, question-service]
 
@@ -17,37 +21,11 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      [mongo-user, redis]
-
-  matching-service:
-    container_name: matching-service
-    build:
-      context: ./matching-service
-    ports:
-      - 8001:8001
-
-  communication-service:
-    container_name: communication-service
-    build:
-      context: ./communication-service
-    ports:
-      - 8002:8002
-
-  collaboration-service:
-    container_name: collaboration-service
-    build:
-      context: ./collaboration-service
-    ports:
-      - 8003:8003
-
-  question-service:
-    container_name: question-service
-    build:
-      context: ./question-service
-    ports:
-      - 8004:8004
-    depends_on:
-      - mongo-question
+      [mongo-user, redis-user]
+    volumes:
+      - ./user-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
 
   mongo-user:
     container_name: mongo-user
@@ -57,6 +35,80 @@ services:
     volumes:
       - mongo-user-volume:/data/db
 
+  redis-user:
+    container_name: redis-user
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-user-volume:/data
+
+  matching-service:
+    container_name: matching-service
+    build:
+      context: ./matching-service
+    ports:
+      - 8001:8001
+    volumes:
+      - ./matching-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
+  communication-service:
+    container_name: communication-service
+    build:
+      context: ./communication-service
+    ports:
+      - 8002:8002
+    depends_on:
+      - mongo-comm
+    volumes:
+      - ./communication-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
+  mongo-comm:
+    container_name: mongo-comm
+    image: mongo
+    ports:
+      - 27019:27017
+    volumes:
+      - mongo-comm-volume:/data/db
+
+  collaboration-service:
+    container_name: collaboration-service
+    build:
+      context: ./collaboration-service
+    ports:
+      - 8003:8003
+    depends_on:
+      - redis-collab
+    volumes:
+      - ./collaboration-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
+  redis-collab:
+    container_name: redis-collab
+    image: redis
+    ports:
+      - 6380:6379
+    volumes:
+      - redis-collab-volume:/data
+
+  question-service:
+    container_name: question-service
+    build:
+      context: ./question-service
+    ports:
+      - 8004:8004
+    depends_on:
+      - mongo-question
+    volumes:
+      - ./question-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
   mongo-question:
     container_name: mongo-question
     image: mongo
@@ -65,15 +117,19 @@ services:
     volumes:
       - mongo-question-volume:/data/db
 
-  redis:
-    container_name: redis
-    image: redis
+  gateway:
+    container_name: gateway
+    build:
+      context: ./gateway
     ports:
-      - 6379:6379
-    volumes:
-      - redis-volume:/data
+      - 8080:8080
+    restart: always
+    depends_on:
+      [frontend, user-service, matching-service, communication-service, collaboration-service, question-service]
 
 volumes:
   mongo-user-volume:
+  mongo-comm-volume:
   mongo-question-volume:
-  redis-volume:
+  redis-user-volume:
+  redis-collab-volume:

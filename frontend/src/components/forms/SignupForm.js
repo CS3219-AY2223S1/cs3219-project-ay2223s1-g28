@@ -18,7 +18,7 @@ import isValidUsername from '../../validators/username-validator';
 import isValidEmail from '../../validators/email-validator';
 import isValidPassword from '../../validators/password-validator';
 
-import { URL_USER_SVC } from '../../configs';
+import { URL_USER_SVC_SIGNUP } from '../../configs';
 import { STATUS_CODE_CREATED } from '../../constants';
 
 function SignupForm() {
@@ -88,7 +88,7 @@ function SignupForm() {
     }
 
     const res = await axios
-      .post(URL_USER_SVC, {
+      .post(URL_USER_SVC_SIGNUP, {
         username: usernameValue,
         email: emailValue,
         password: passwordValue,
