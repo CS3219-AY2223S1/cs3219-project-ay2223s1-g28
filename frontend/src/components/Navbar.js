@@ -48,7 +48,12 @@ export default function ButtonAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static' elevation={0}>
         <Toolbar>
-          <Typography variant='h6' component='div' sx={{ flexGrow: 1, color: 'white', paddingRight: 3 }}>
+          <Typography
+            variant='h6'
+            component={Link}
+            to="/home"
+            sx={{ flexGrow: 1, color: 'white', paddingRight: 3, textDecoration: "none" }}
+          >
             PeerPrep
           </Typography>
           {isSignedIn
