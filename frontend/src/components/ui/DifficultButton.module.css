@@ -1,9 +1,15 @@
 .btn {
-    padding: 8px 75px !important;
+    padding: 8px 30px !important;
     font-size: 24px !important;
     font-weight: lighter !important;
-    margin-right: 20px !important;
+    margin: 20px !important;
 }
+
+@media only screen and (min-width: 600px) {
+    .btn {
+        padding: 8px 75px !important;
+    }
+  }
 
 .btn_easy {
     border-color: #A7C7C8 !important;

@@ -1,27 +1,18 @@
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
-import OutlinedContainer from "../../components/ui/OutlinedContainer";
-import DifficultyButtonGroup from "../../components/ui/DifficultyButtonGroup";
+import OutlinedContainer from '../../components/ui/OutlinedContainer';
+import DifficultyButtonGroup from '../../components/ui/DifficultyButtonGroup';
 
 function HomePage() {
   return (
     <Grid container>
-      <Grid
-        container
-        direction="column"
-        item
-        xs={12}
-        md={12}
-        lg={4}
-        alignItems="center"
-      >
+      <Grid container item lg={4} alignItems="center" justifyContent="center">
         <Grid item>
           <Typography
             variant="h2"
             fontWeight="lighter"
             textAlign="center"
-            sx={{ mt: "32px" }}
             color="#3EA7A5"
           >
             Welcome to PeerPrep
@@ -32,24 +23,21 @@ function HomePage() {
             variant="h5"
             fontWeight="lighter"
             textAlign="center"
-            sx={{ mt: "32px" }}
             color="#A7C7C8"
           >
-            Your one stop <br />
-            solution to acing your <br />
-            technical interviews
+            Your one stop solution to acing your technical interviews
           </Typography>
         </Grid>
-        <Grid item>
+        <Grid item textAlign="center">
           <img
-            src={require("../../assets/home_media.svg").default}
+            src={require('../../assets/home_media.svg').default}
             alt="Code"
             height="90%"
             width="90%"
           />
         </Grid>
       </Grid>
-      <Grid item xs container>
+      <Grid item container lg={8}>
         <OutlinedContainer>
           <Grid
             container
@@ -62,7 +50,7 @@ function HomePage() {
                 variant="h3"
                 fontWeight="lighter"
                 textAlign="center"
-                sx={{ mt: "32px" }}
+                sx={{ mt: '3vw' }}
                 color="#3EA7A5"
               >
                 Question Difficulty
@@ -71,13 +59,13 @@ function HomePage() {
                 variant="h5"
                 fontWeight="lighter"
                 textAlign="center"
-                sx={{ mt: "150px" }}
+                sx={{ mt: '10vw' }}
                 color="#A7C7C8"
               >
-                Start by choosing <br />a{" "}
+                Start by choosing <br />a{' '}
                 <Typography variant="h4" component="span" fontWeight="bold">
                   difficulty
-                </Typography>{" "}
+                </Typography>{' '}
                 level for <br />
                 your coding question.
                 <br />
@@ -87,7 +75,7 @@ function HomePage() {
                 item
                 justifyContent="center"
                 alignItems="center"
-                sx={{ mt: "130px" }}
+                sx={{ mt: '10vw' }}
               >
                 <DifficultyButtonGroup />
               </Grid>

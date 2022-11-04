@@ -112,74 +112,63 @@ function SignupForm() {
       <Grid
         className={styles.signup_form}
         container
+        direction="column"
         justifyContent="center"
-        alignItems="space-evenly"
+        alignItems="center"
         rowGap={5}
       >
-        <Grid item xs={8}>
-          <TextField
-            label="Username"
-            variant="filled"
-            value={usernameValue}
-            error={usernameHasError}
-            helperText={usernameHasError && usernameErrorHelperText}
-            onChange={usernameChangeHandler}
-            onBlur={usernameBlurHandler}
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            label="Email"
-            variant="filled"
-            value={emailValue}
-            error={emailHasError}
-            helperText={emailHasError && emailErrorHelperText}
-            onChange={emailChangeHandler}
-            onBlur={emailBlurHandler}
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <PasswordTextField
-            label="Password"
-            type="password"
-            value={passwordValue}
-            error={passwordHasError}
-            helperText={passwordHasError && passwordErrorHelperText}
-            onChange={passwordChangeHandler}
-            onBlur={passwordBlurHandler}
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <PasswordTextField
-            label="Confirm Password"
-            type="password"
-            value={confirmPasswordValue}
-            error={confirmPasswordHasError}
-            helperText={
-              confirmPasswordHasError && confirmPasswordErrorHelperText
-            }
-            onChange={confirmPasswordChangeHandler}
-            onBlur={confirmPasswordBlurHandler}
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item>
-          <Button
-            className={styles.signup_button}
-            variant="outlined"
-            size="large"
-            type="submit"
-          >
-            Sign up
-          </Button>
-        </Grid>
+        <TextField
+          label="Username"
+          variant="filled"
+          value={usernameValue}
+          error={usernameHasError}
+          helperText={usernameHasError && usernameErrorHelperText}
+          onChange={usernameChangeHandler}
+          onBlur={usernameBlurHandler}
+          fullWidth
+          required
+        />
+        <TextField
+          label="Email"
+          variant="filled"
+          value={emailValue}
+          error={emailHasError}
+          helperText={emailHasError && emailErrorHelperText}
+          onChange={emailChangeHandler}
+          onBlur={emailBlurHandler}
+          fullWidth
+          required
+        />
+        <PasswordTextField
+          label="Password"
+          type="password"
+          value={passwordValue}
+          error={passwordHasError}
+          helperText={passwordHasError && passwordErrorHelperText}
+          onChange={passwordChangeHandler}
+          onBlur={passwordBlurHandler}
+          fullWidth
+          required
+        />
+        <PasswordTextField
+          label="Confirm Password"
+          type="password"
+          value={confirmPasswordValue}
+          error={confirmPasswordHasError}
+          helperText={confirmPasswordHasError && confirmPasswordErrorHelperText}
+          onChange={confirmPasswordChangeHandler}
+          onBlur={confirmPasswordBlurHandler}
+          fullWidth
+          required
+        />
+        <Button
+          className={styles.signup_button}
+          variant="outlined"
+          size="large"
+          type="submit"
+        >
+          Sign up
+        </Button>
       </Grid>
     </form>
   );

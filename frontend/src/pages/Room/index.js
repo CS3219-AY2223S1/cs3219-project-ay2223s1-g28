@@ -100,7 +100,7 @@ function RoomPage() {
       </Grid>
       <Grid container spacing={4}>
         {/* Question component */}
-        <Grid xs={5} item container>
+        <Grid xs={12} md={5} item container>
           {difficulty ? (
             <QuestionBox difficulty={difficulty} roomId={roomId} />
           ) : (
@@ -110,7 +110,7 @@ function RoomPage() {
             </p>
           )}
         </Grid>
-        <Grid xs={7} item container direction="column">
+        <Grid xs={12} md={7} item container direction="column">
           {/* Chat component */}
           <Grid item>
             <ChatBlock socket={comm_socket} roomId={roomId} />

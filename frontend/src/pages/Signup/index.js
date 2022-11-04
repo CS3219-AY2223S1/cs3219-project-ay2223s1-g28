@@ -5,9 +5,11 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import OutlinedContainer from '../../components/ui/OutlinedContainer';
 import SignupForm from '../../components/forms/SignupForm';
 
-function index() {
+function SignupPage() {
   return (
-    <OutlinedContainer customStyle={{width: '40%'}}>
+    <OutlinedContainer
+      customStyle={{ width: '75vw', maxWidth: '500px !important' }}
+    >
       <Grid
         container
         direction="column"
@@ -26,4 +28,4 @@ function index() {
   );
 }
 
-export default index;
+export default SignupPage;
