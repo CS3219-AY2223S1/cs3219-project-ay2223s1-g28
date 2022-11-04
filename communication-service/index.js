@@ -13,7 +13,11 @@ import {
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors()); // config cors so that front-end can use
+app.use(
+  cors({
+    origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000'
+  })
+); // config cors so that front-end can use
 app.options('*', cors());
 app.get('/', (req, res) => {
 	res.send('Hello World from communication service');

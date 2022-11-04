@@ -32,7 +32,7 @@ router.get("/level/:difficulty/:questionNumber", getQuestionByDifficulty);
 // To disable checking by cors on using the same port
 app.use("/api/question", router).all((_, res) => {
   res.setHeader("content-type", "application/json");
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", process.env.ENV === "PROD"? process.env.FRONTEND_URL : "http://localhost:3000");
 });
 
 app.listen(8004, () => console.log("question-service listening on port 8004"));
