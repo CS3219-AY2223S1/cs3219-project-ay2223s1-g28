@@ -1,15 +1,7 @@
-# Specify a base image
-FROM node:alpine 
-
-# Create working directory and copy the app before running npm install as the artifactory
-# credentials can be inside .npmrc
+FROM node:16-alpine
 WORKDIR /app
-COPY . . 
-
-RUN npm install -g nodemon
+COPY package*.json ./
 RUN npm install
-
-# Export port
-EXPOSE 3000 
-
-CMD nodemon
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]
