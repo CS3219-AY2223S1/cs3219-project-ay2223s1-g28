@@ -29,3 +29,26 @@ spec:
             limits:
               cpu: 50m
               memory: 200Mi
+          env:
+            - name: ENV
+              value: "PROD"
+            - name: FRONTEND_URL
+              valueFrom:
+                secretKeyRef:
+                  name: collab-secrets
+                  key: FRONTEND_URL
+            - name: REDIS_CLOUD_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: collab-secrets
+                  key: REDIS_CLOUD_HOST
+            - name: REDIS_CLOUD_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: collab-secrets
+                  key: REDIS_CLOUD_PORT
+            - name: REDIS_CLOUD_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: collab-secrets
+                  key: REDIS_CLOUD_PASSWORD

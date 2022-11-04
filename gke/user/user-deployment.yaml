@@ -29,3 +29,36 @@ spec:
             limits:
               cpu: 40m
               memory: 100Mi
+          env:
+            - name: ENV
+              value: "PROD"
+            - name: FRONTEND_URL
+              valueFrom:
+                secretKeyRef:
+                  name: user-secrets
+                  key: FRONTEND_URL
+            - name: DB_CLOUD_URI
+              valueFrom:
+                secretKeyRef:
+                  name: user-secrets
+                  key: DB_CLOUD_URI
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-secrets
+                  key: JWT_SECRET_KEY
+            - name: REDIS_CLOUD_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: user-secrets
+                  key: REDIS_CLOUD_HOST
+            - name: REDIS_CLOUD_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: user-secrets
+                  key: REDIS_CLOUD_PORT
+            - name: REDIS_CLOUD_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-secrets
+                  key: REDIS_CLOUD_PASSWORD

@@ -10,6 +10,13 @@ env:
   GKE_ZONE: asia-southeast1
   DEPLOYMENT_NAME: user-deployment
   IMAGE: user
+  # secrets
+  FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+  DB_CLOUD_URI: ${{ secrets.USER_DB_CLOUD_URI }}
+  JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+  REDIS_CLOUD_HOST: ${{ secrets.REDIS_CLOUD_HOST }}
+  REDIS_CLOUD_PORT: ${{ secrets.REDIS_CLOUD_PORT }}
+  REDIS_CLOUD_PASSWORD: ${{ secrets.REDIS_CLOUD_PASSWORD }}
 
 jobs:
   setup-build-publish-deploy:
@@ -76,6 +83,17 @@ jobs:
           cd $IMAGE
           curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
           chmod u+x ./kustomize
+
+      # Create Kubernetes Secrets
+      - name: Create Secrets
+        run: |-
+          kubectl create secret generic user-secrets \
+            --from-literal=FRONTEND_URL="$FRONTEND_URL" \
+            --from-literal=DB_CLOUD_URI="$DB_CLOUD_URI" \
+            --from-literal=JWT_SECRET_KEY="$JWT_SECRET_KEY" \
+            --from-literal=REDIS_CLOUD_HOST="$REDIS_CLOUD_HOST" \
+            --from-literal=REDIS_CLOUD_PORT="$REDIS_CLOUD_PORT" \
+            --from-literal=REDIS_CLOUD_PASSWORD="$REDIS_CLOUD_PASSWORD"
 
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
