@@ -10,6 +10,9 @@ env:
   GKE_ZONE: asia-southeast1
   DEPLOYMENT_NAME: question-deployment
   IMAGE: question
+  # secrets
+  FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+  DB_CLOUD_URI: ${{ secrets.COMM_DB_CLOUD_URI}}
 
 jobs:
   setup-build-publish-deploy:
@@ -76,6 +79,13 @@ jobs:
           cd $IMAGE
           curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
           chmod u+x ./kustomize
+      
+      # Create Kubernetes Secrets
+      - name: Create Secrets
+        run: |-
+          kubectl create secret generic question-secrets \
+            --from-literal=FRONTEND_URL="$FRONTEND_URL" \
+            --from-literal=DB_CLOUD_URI="$DB_CLOUD_URI"
 
       # Deploy the Docker image to the GKE cluster
       - name: Deploy

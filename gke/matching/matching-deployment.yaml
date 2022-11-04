@@ -29,3 +29,11 @@ spec:
             limits:
               cpu: 50m
               memory: 150Mi
+          env:
+            - name: ENV
+              value: "PROD"
+            - name: FRONTEND_URL
+              valueFrom:
+                secretKeyRef:
+                  name: matching-secrets
+                  key: FRONTEND_URL
