@@ -20,6 +20,7 @@ app.use(
 ); // config cors so that front-end can use
 app.options('*', cors());
 app.get('/', (req, res) => {
+	res.setHeader('Access-Control-Allow-Origin', process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000');
 	res.send('Hello World from communication service');
 });
 
@@ -46,7 +47,7 @@ router.get('/read', readChats);
 
 app.use('/api/chat', router).all((_, res) => {
 	res.setHeader('content-type', 'application/json');
-	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+	res.setHeader('Access-Control-Allow-Origin', process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000');
 });
 
 httpServer.listen(8002, () =>
