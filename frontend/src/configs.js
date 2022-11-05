@@ -1,5 +1,5 @@
 /////////////// Reverse Proxy ///////////////
-const URI_SVC = process.env.REACT_APP_URI_SVC;
+const URI_SVC = "http://34.117.54.65";
 
 /////////////// User Service ///////////////
 // API
