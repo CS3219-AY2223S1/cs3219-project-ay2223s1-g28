@@ -17,7 +17,10 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
-  cors()
+  cors({
+    origin: "http://34.95.95.160",
+    credentials: true,
+  })
 ); // config cors so that front-end can use
 app.options('*', cors());
 app.use(cookieParser());
