@@ -31,7 +31,7 @@ spec:
               memory: 200Mi
           env:
             - name: ENV
-              value: "PROD"
+              value: PROD
             - name: FRONTEND_URL
               valueFrom:
                 secretKeyRef:
