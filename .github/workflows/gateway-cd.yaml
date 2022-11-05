@@ -8,7 +8,7 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: cs3219-g28-peerprep-cluster
   GKE_ZONE: asia-southeast1
-  DEPLOYMENT_NAME: frontend-deployment
+  DEPLOYMENT_NAME: gateway-deployment
   IMAGE: gateway
 
 jobs:
