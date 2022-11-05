@@ -36,4 +36,9 @@ router.post('/update', authenticateJwt, updateAccount);
 router.post('/delete', authenticateJwt, deleteAccount);
 router.get('/verify-jwt', authenticateJwt, acknowledgeJWTValidity);
 
+app.use('/api/user', router).all((_, res) => {
+  res.setHeader('content-type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', "http://34.95.95.160");
+});
+
 app.listen(8000, () => console.log('user-service listening on port 8000'));
