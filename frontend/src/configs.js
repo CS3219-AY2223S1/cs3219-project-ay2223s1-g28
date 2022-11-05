@@ -1,5 +1,5 @@
 /////////////// Reverse Proxy ///////////////
-const URI_SVC = process.env.REACT_APP_URI_SVC || 'http://localhost:8080';
+const URI_SVC = process.env.REACT_APP_URI_SVC;
 
 /////////////// User Service ///////////////
 // API
