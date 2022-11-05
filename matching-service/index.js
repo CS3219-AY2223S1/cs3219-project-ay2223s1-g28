@@ -27,6 +27,7 @@ io.on('connection', (socket) => {
 });
 
 app.get('/', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000');
   res.send('Hello World from matching-service');
 });
 
