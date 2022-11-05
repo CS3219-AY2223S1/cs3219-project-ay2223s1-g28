@@ -9,19 +9,11 @@ import { handleDisconnect, handleMatch } from './controller/matching-controller.
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(
-  cors({
-    origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
-    credentials: true
-  })
-); // config cors so that front-end can use
+app.use(cors()); // config cors so that front-end can use
 app.options('*', cors());
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-  cors: {
-    origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
-  },
   path: '/api/matching-service/socket',
 });
 io.on('connection', (socket) => {
