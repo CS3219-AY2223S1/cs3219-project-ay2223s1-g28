@@ -11,7 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000'
+    origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
+    credentials: true
   })
 ); // config cors so that front-end can use
 app.options('*', cors());
