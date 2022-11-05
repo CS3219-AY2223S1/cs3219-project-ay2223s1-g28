@@ -13,10 +13,8 @@ services:
       - /app/node_modules
     ports:
       - 3000:3000
-    environment:
-       - WATCHPACK_POLLING=true
     depends_on:
-      [user-service, matching-service, communication-service, collaboration-service, question-service]
+      [user-service, matching-service, communication-service, collaboration-service, question-service, auth-service]
 
   user-service:
     container_name: user-service
@@ -27,7 +25,7 @@ services:
     environment:
       - WATCHPACK_POLLING=true
     depends_on:
-      [mongo-user, redis-user]
+      - mongo-user
     volumes:
       - ./user-service:/usr/src/app
       - /usr/src/app/node_modules
@@ -41,13 +39,13 @@ services:
     volumes:
       - mongo-user-volume:/data/db
 
-  redis-user:
-    container_name: redis-user
+  redis-auth:
+    container_name: redis-auth
     image: redis
     ports:
       - 6379:6379
     volumes:
-      - redis-user-volume:/data
+      - redis-auth-volume:/data
 
   matching-service:
     container_name: matching-service
@@ -129,6 +127,19 @@ services:
     volumes:
       - mongo-question-volume:/data/db
 
+  auth-service:
+    container_name: auth-service
+    build:
+      context: ./auth-service
+    ports:
+      - 8005:8005
+    depends_on:
+      [mongo-user, redis-auth]
+    volumes:
+      - ./auth-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
   gateway:
     container_name: gateway
     build:
@@ -137,11 +148,11 @@ services:
       - 8080:8080
     restart: always
     depends_on:
-      [frontend, user-service, matching-service, communication-service, collaboration-service, question-service]
+      [frontend, user-service, matching-service, communication-service, collaboration-service, question-service, auth-service]
 
 volumes:
   mongo-user-volume:
   mongo-comm-volume:
   mongo-question-volume:
-  redis-user-volume:
+  redis-auth-volume:
   redis-collab-volume:
