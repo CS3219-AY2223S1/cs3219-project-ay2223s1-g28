@@ -9,11 +9,11 @@ import { ormGetCode as _getCode, ormSetCode as _setCode } from './model/collabor
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors(
+app.use(
   cors({
     origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000'
   })
-)); // config cors so that front-end can use
+); // config cors so that front-end can use
 app.options('*', cors());
 
 const httpServer = createServer(app);
