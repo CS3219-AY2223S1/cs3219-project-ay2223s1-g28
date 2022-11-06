@@ -30,7 +30,8 @@ function QuestionBox({ difficulty, roomId }) {
       setQuestionNumber(questionEncoding);
 
       await axios
-        .get(URL_QUES_SVC + "/level/" + difficulty + "/" + questionNumber)
+        .get(URL_QUES_SVC + "/level/" + difficulty + "/" + questionNumber,
+          { withCredentials: true })
         .then((res) => {
           try {
             setTitle(res.data.title);
