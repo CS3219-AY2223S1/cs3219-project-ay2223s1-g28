@@ -7,7 +7,7 @@ import {
 
 const MATCHING_TIME = 30000 // 30s
 
-export function handleMatch(socket) {
+export const handleMatch = (socket) => {
   socket.on('match', async (newMatch) => {
     // Check if there is already a pending match of same difficulty
     const pendingMatch = await _getPendingMatch(newMatch.difficulty, newMatch.username);
@@ -33,11 +33,17 @@ export function handleMatch(socket) {
       socket.emit('matchSuccess', pendingMatch.id);
     }
   });
-}
+};
 
-export function handleDisconnect(socket) {
+export const handleCancelMatch = (socket) => {
+  socket.on('cancelMatch', async () => {
+    await _deletePendingMatchById(socket.id);
+  });
+};
+
+export const handleDisconnect = (socket) => {
   socket.on('disconnect', async () => {
     await _deletePendingMatchById(socket.id);
     console.log(`User disconnected: ${socket.id}`);
   });
-}
+};

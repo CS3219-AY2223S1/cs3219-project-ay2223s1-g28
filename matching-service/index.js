@@ -3,7 +3,7 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-import { handleDisconnect, handleMatch } from './controller/matching-controller.js';
+import { handleMatch, handleCancelMatch, handleDisconnect } from './controller/matching-controller.js';
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
@@ -22,6 +22,7 @@ io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
   handleMatch(socket);
+  handleCancelMatch(socket);
   handleDisconnect(socket);
 });
 
