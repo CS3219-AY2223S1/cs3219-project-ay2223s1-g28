@@ -14,14 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors()); // config cors so that front-end can use
 app.options('*', cors());
-app.get('/', (req, res) => {
-	res.send('Hello World from communication service');
-});
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
 	cors: {
 		origin: ['http://localhost:3000'],
+		credentials: true,
 	},
 	path: '/api/communication-service/socket',
 });
