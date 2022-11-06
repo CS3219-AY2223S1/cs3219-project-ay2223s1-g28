@@ -1,5 +1,6 @@
 # build environment
 FROM node:16-alpine as build
+ENV NODE_ENV=production
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .

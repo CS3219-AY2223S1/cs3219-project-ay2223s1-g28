@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Define the Deployment name
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  # Specify the number of desired Pods
+  replicas: 2
+  # Define how the Deployment finds which Pods to manage
+  selector:
+    matchLabels:
+      app: frontend
+  # Define template for Pods
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      # Container details
+      containers:
+        - name: frontend-deployment
+          image: gcr.io/cs3219-g28-peerprep/frontend:latest
+          ports:
+            - name: frontend-http
+              containerPort: 3000
+          resources:
+            limits:
+              cpu: 40m
+              memory: 150Mi
+          env:
+            - name: REACT_APP_URI_SVC
+              valueFrom:
+                secretKeyRef:
+                  name: frontend-secrets
+                  key: REACT_APP_URI_SVC
