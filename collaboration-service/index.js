@@ -70,6 +70,10 @@ io.on('connection', (socket) => {
       });
     });
   }
+
+  socket.on('disconnect', (reason) => {
+    console.log('Client disconnected due to ' + reason);
+});
 });
 
 app.get('/', (req, res) => {
