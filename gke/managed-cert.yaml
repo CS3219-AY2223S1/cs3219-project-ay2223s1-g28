@@ -5,3 +5,4 @@ metadata:
 spec:
   domains:
     - peerprepprograms.com
+    - backend.peerprepprograms.com
