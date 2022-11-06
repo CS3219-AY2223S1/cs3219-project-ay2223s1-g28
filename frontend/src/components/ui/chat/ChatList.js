@@ -5,12 +5,10 @@ import styles from './ChatList.module.css';
 
 const AlwaysScrollToBottom = () => {
 	const messageEndRef = useRef();
-	/*
-    false argument passed to scrollIntoView so that
-    the bottom of the element will be aligned to 
-    the bottom of the visible area of the scrollable ancestor
-  */
-	useEffect(() => messageEndRef.current.scrollIntoView(false));
+	// false argument passed to scrollIntoView so that
+	// the bottom of the element will be aligned to
+	// the bottom of the visible area of the scrollable ancestor
+	useEffect(() => messageEndRef.current.scrollIntoView(false), []);
 	return <div ref={messageEndRef} />;
 };
 
