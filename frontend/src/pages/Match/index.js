@@ -96,7 +96,7 @@ function MatchPage() {
 
   // Handlers
   const handleCancel = () => {
-    socket.disconnect();
+    socket.emit('cancelMatch', { id: socket.id });
     navigate('/home');
   };
   const handleRetry = () => {
