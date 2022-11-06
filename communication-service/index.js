@@ -31,6 +31,10 @@ io.on('connection', (socket) => {
 	handleJoinRoom(socket);
 	handleChat(io, socket);
 	handleSessionEnd(io, socket);
+
+	socket.on('disconnect', (reason) => {
+        console.log('Client disconnected due to ' + reason);
+    });
 });
 
 const router = express.Router();
