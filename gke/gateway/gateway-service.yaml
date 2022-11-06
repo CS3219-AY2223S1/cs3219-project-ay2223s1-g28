@@ -11,7 +11,7 @@ spec:
     app: gateway
   # Exposes the Service on a cluster-internal IP. 
   # Hence, this Service is only reachable from within the cluster. 
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: gateway-http
       port: 8080
