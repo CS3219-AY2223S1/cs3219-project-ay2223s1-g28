@@ -24,6 +24,7 @@ const comm_socket = io(URL_COMM_SVC_SOCKET, {
 });
 const collab_socket = io(URL_COLLAB_SVC_SOCKET, {
   path: PATH_COLLAB_SVC_SOCKET,
+  withCredentials: true,
 });
 
 function RoomPage() {
