@@ -1,6 +1,12 @@
 # build environment
 FROM node:16-alpine as build
+
+# build time argument
+ARG URI_SVC
+# Image environment variables
 ENV NODE_ENV=production
+ENV REACT_APP_URI_SVC=$URI_SVC
+
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .

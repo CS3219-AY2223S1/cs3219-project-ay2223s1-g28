@@ -66,6 +66,7 @@ jobs:
             --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" \
             --build-arg GITHUB_SHA="$GITHUB_SHA" \
             --build-arg GITHUB_REF="$GITHUB_REF" \
+            --build-arg URI_SVC="$REACT_APP_URI_SVC"
 
       # Push the Docker image to Google Container Registry
       - name: Publish
@@ -78,17 +79,6 @@ jobs:
           cd $IMAGE
           curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
           chmod u+x ./kustomize
-
-      # Delete Kubernetes Secrets created previously
-      - name: Delete Secrets
-        run: |-
-          kubectl delete secret frontend-secrets
-
-      # Create Kubernetes Secrets
-      - name: Create secrets
-        run: |-
-          kubectl create secret generic frontend-secrets \
-            --from-literal=REACT_APP_URI_SVC="$REACT_APP_URI_SVC"
 
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
