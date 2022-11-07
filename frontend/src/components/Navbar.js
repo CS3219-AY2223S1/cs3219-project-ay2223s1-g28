@@ -75,19 +75,12 @@ function NavBar({ setNavBarHeight }) {
 
   return (
     <Box ref={navBarRef} sx={{ flexGrow: 1 }}>
-      <AppBar position="static" elevation={0}>
+      <AppBar
+        position="static"
+        elevation={0}
+        sx={{ backgroundColor: 'transparent' }}
+      >
         <Toolbar>
-          {/* <Typography
-            variant="h6"
-            onClick={homePageNavigateHandler}
-            sx={{
-              flexGrow: 1,
-              color: 'white',
-              paddingRight: 3,
-              textDecoration: 'none',
-              cursor: 'pointer',
-            }}
-          /> */}
           <div
             onClick={homePageNavigateHandler}
             style={{
@@ -130,20 +123,10 @@ function NavBar({ setNavBarHeight }) {
             </>
           ) : (
             <>
-              <Button
-                color="secondary"
-                size="large"
-                component={Link}
-                to="/signin"
-              >
+              <Button size="large" component={Link} to="/signin">
                 Sign in
               </Button>
-              <Button
-                color="secondary"
-                size="large"
-                component={Link}
-                to="/signup"
-              >
+              <Button size="large" component={Link} to="/signup">
                 Sign up
               </Button>
             </>
