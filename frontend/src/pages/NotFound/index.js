@@ -4,8 +4,8 @@ import Typography from '@mui/material/Typography';
 
 import BigButton from '../../components/inputs/BigButton';
 import TextWithBackgroundImage from '../../components/ui/TextWithBackgroundImage';
+import CenterContainer from '../../components/layout/CenterContainer';
 import NotFoundTextImage from '../../assets/404textbg.svg';
-import styles from './NotFound.module.css';
 
 const NOTFOUND_HEADER_STYLE = {
   fontWeight: 'bolder',
@@ -23,7 +23,7 @@ function NotFoundPage() {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
+    <CenterContainer>
       <TextWithBackgroundImage
         text="404"
         imageURL={NotFoundTextImage}
@@ -39,7 +39,7 @@ function NotFoundPage() {
       >
         Back to home
       </BigButton>
-    </div>
+    </CenterContainer>
   );
 }
 
