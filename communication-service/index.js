@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+
 import {
 	handleJoinRoom,
 	handleChat,
@@ -12,21 +13,19 @@ import {
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(
-	cors({
-		origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
-	})
-); // config cors so that front-end can use
-app.get('/', (req, res) => {
-	res.send('Hello World from communication service');
-});
+app.use(cors({
+	origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
+	credentials: true,
+}));
 
+// Socket
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
 	cors: {
 		origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
+		credentials: true,
 	},
-	path: '/api/communication-service/socket',
+	path: '/api/comm-service/socket',
 });
 
 io.on('connection', (socket) => {
@@ -41,15 +40,17 @@ io.on('connection', (socket) => {
     });
 });
 
+// Routes
 const router = express.Router();
-// Controller will contain all the User-defined Routes
-router.get('/', (_, res) => res.send('Hello World from comm-service'));
+
+router.get('/', (_, res) => res.send('Hello World from communication-service'));
 router.get('/read', readChats);
 
 app.use('/api/chat', router).all((_, res) => {
 	res.setHeader('content-type', 'application/json');
 });
 
-httpServer.listen(8002, () =>
-	console.log('communication-service listening on port 8002')
-);
+const PORT = 8002;
+httpServer.listen(PORT, () => {
+	console.log(`comm-service listening on port ${PORT}`);
+});
