@@ -17,12 +17,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:3000'],
-    credentials: true,
+    origin: process.env.ENV == 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
+    credentials: true
   })
 ); // config cors so that front-end can use
-app.options('*', cors());
 app.use(cookieParser());
+app.options('*', cors());
 
 const router = express.Router();
 
@@ -37,7 +37,6 @@ router.get('/verify-jwt', authenticateJwt, acknowledgeJWTValidity);
 
 app.use('/api/user', router).all((_, res) => {
   res.setHeader('content-type', 'application/json');
-  res.setHeader('Access-Control-Allow-Origin', '*');
 });
 
 app.listen(8000, () => console.log('user-service listening on port 8000'));

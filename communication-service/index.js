@@ -12,8 +12,11 @@ import {
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors()); // config cors so that front-end can use
-app.options('*', cors());
+app.use(
+	cors({
+		origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
+	})
+); // config cors so that front-end can use
 app.get('/', (req, res) => {
 	res.send('Hello World from communication service');
 });
@@ -21,7 +24,7 @@ app.get('/', (req, res) => {
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
 	cors: {
-		origin: ['http://localhost:3000'],
+		origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
 	},
 	path: '/api/communication-service/socket',
 });
@@ -32,6 +35,10 @@ io.on('connection', (socket) => {
 	handleJoinRoom(socket);
 	handleChat(io, socket);
 	handleSessionEnd(io, socket);
+
+	socket.on('disconnect', (reason) => {
+        console.log('Client disconnected due to ' + reason);
+    });
 });
 
 const router = express.Router();
@@ -41,7 +48,6 @@ router.get('/read', readChats);
 
 app.use('/api/chat', router).all((_, res) => {
 	res.setHeader('content-type', 'application/json');
-	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 });
 
 httpServer.listen(8002, () =>

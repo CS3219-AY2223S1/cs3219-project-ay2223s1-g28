@@ -45,7 +45,7 @@ export async function signin(req, res) {
             // Create JWT
             const token = _generateJwt(signedInUser);
             // Send cookie
-            res.cookie('token', token, { httpOnly: true });
+            res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true });
             return res.status(200).json({ token });
         } else {
             return res.status(400).json({ message: 'Missing username and/or password.' });

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Define the Deployment name
+  name: comm-deployment
+  labels:
+    app: comm
+spec:
+  # Specify the number of desired Pods
+  replicas: 1
+  # Define how the Deployment finds which Pods to manage
+  selector:
+    matchLabels:
+      app: comm
+  # Define template for Pods
+  template:
+    metadata:
+      labels:
+        app: comm
+    spec:
+      # Container details
+      containers:
+        - name: comm-deployment
+          image: gcr.io/cs3219-g28-peerprep/comm:latest
+          ports:
+            - name: comm-http
+              containerPort: 8002
+          resources:
+            limits:
+              cpu: 50m
+              memory: 200Mi
+          env:
+            - name: ENV
+              value: PROD
+            - name: FRONTEND_URL
+              valueFrom:
+                secretKeyRef:
+                  name: comm-secrets
+                  key: FRONTEND_URL
+            - name: DB_CLOUD_URI
+              valueFrom:
+                secretKeyRef:
+                  name: comm-secrets
+                  key: DB_CLOUD_URI

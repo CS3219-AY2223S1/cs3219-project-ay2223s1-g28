@@ -13,10 +13,8 @@ services:
       - /app/node_modules
     ports:
       - 3000:3000
-    environment:
-       - WATCHPACK_POLLING=true
     depends_on:
-      [user-service, matching-service, communication-service, collaboration-service, question-service]
+      [user-service, matching-service, comm-service, collab-service, question-service]
 
   user-service:
     container_name: user-service
@@ -62,7 +60,7 @@ services:
       - /usr/src/app/node_modules
     command: npm run dev
 
-  communication-service:
+  comm-service:
     container_name: communication-service
     build:
       context: ./communication-service
@@ -85,7 +83,7 @@ services:
     volumes:
       - mongo-comm-volume:/data/db
 
-  collaboration-service:
+  collab-service:
     container_name: collaboration-service
     build:
       context: ./collaboration-service
@@ -137,7 +135,7 @@ services:
       - 8080:8080
     restart: always
     depends_on:
-      [frontend, user-service, matching-service, communication-service, collaboration-service, question-service]
+      [frontend, user-service, matching-service, comm-service, collab-service, question-service]
 
 volumes:
   mongo-user-volume:
