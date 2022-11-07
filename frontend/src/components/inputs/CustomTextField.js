@@ -9,7 +9,7 @@ function CustomTextField(props) {
   return (
     <Box className={styles.icon_text_field}>
       {leftNode}
-      <TextField variant='filled' {...textFieldProp}/>
+      <TextField variant='outlined' {...textFieldProp}/>
     </Box>
   );
 }
