@@ -85,9 +85,9 @@ jobs:
           chmod u+x ./kustomize
 
       # Delete Kubernetes Secrets created previously
-      - name: Delete Secrets
-        run: |-
-          kubectl delete secret auth-secrets
+      # - name: Delete Secrets
+      #   run: |-
+      #     kubectl delete secret auth-secrets
 
       # Create Kubernetes Secrets
       - name: Create Secrets
