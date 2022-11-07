@@ -2,7 +2,7 @@ name: Continuous Deployment - Collaboration Service
 
 on:
   push:
-    branches: [ "main", "deployment-test" ]
+    branches: [ "main", "deployment-test", "auth" ]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
