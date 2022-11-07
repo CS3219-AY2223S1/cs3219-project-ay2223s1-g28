@@ -46,6 +46,11 @@ const router = express.Router();
 router.get('/', (_, res) => res.send('Hello World from comm-service'));
 router.get('/read', readChats);
 
+app.use('/api/chat', router).all((_, res) => {
+	res.setHeader('content-type', 'application/json');
+	res.setHeader('Access-Control-Allow-Origin', process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000');
+});
+
 httpServer.listen(8002, () =>
 	console.log('communication-service listening on port 8002')
 );
