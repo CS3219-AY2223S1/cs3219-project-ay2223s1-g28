@@ -5,10 +5,9 @@ import { getUserByUsername, getUserByEmail, createUser, updateUser, deleteUser }
 const saltRounds = 10;
 
 export const checkExistence = async (username, email) => {
-  if (await getUserByUsername(username) || await getUserByEmail(email.toLowerCase())) {
-    return true;
-  }
-  return false;
+  return await getUserByUsername(username) || await getUserByEmail(email.toLowerCase())
+    ? true 
+    : false;
 };
 
 export const ormCreateUser = async (username, email, password) => {
@@ -22,13 +21,7 @@ export const ormUpdateUser = async (username, newProfile) => {
   if (newProfile.password) {
     newProfile.password = await bcrypt.hash(newProfile.password, saltRounds);
   }
-  const updatedUser = await updateUser(username, newProfile);
-  
-  // Check if the updated user is indeed updated if user exists
-  const usernameIsUpdated = !updatedUser || !newProfile.username || (updatedUser.username === newProfile.username);
-  const passwordIsUpdated = !updatedUser || !newProfile.password || (updatedUser.password === newProfile.password);
-
-  return usernameIsUpdated && passwordIsUpdated ? updatedUser : null;
+  await updateUser(username, newProfile);
 };
 
 // Deletes user if exists

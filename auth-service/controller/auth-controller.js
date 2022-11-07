@@ -2,6 +2,7 @@ import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 
 import { 
+  getUser,
   checkPassword,
   generateJwt,
   getBlacklistedJwt,
@@ -15,14 +16,21 @@ export const signin = async (req, res) => {
   try {
     const { usernameOrEmail, password } = req.body;
     if (usernameOrEmail && password) {
+      // Check if user exists
+      const user = await getUser(usernameOrEmail);
+      if (!user) {
+        // Vague message for privacy concerns
+        return res.status(401).json({ message: 'User does not exist and/or wrong password.' });
+      }
+
       // Check if password is correct
-      const isPasswordCorrect = await checkPassword(usernameOrEmail, password);
+      const isPasswordCorrect = await checkPassword(user.password, password);
       if (!isPasswordCorrect) {
         return res.status(401).json({ message: 'User does not exist and/or wrong password.' });
       }
 
       // Create JWT
-      const token = generateJwt(usernameOrEmail);
+      const token = generateJwt(user.username);
 
       // Set cookie
       res.cookie('token', token, { 
@@ -70,13 +78,13 @@ export const authenticate = async (req, res) => {
     }
   
     // Verify token
-    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, data) => {
       if (err) {
         return res.status(401).json({ message: 'Invalid token.' });
       }
   
       // Refresh token and cookie
-      const token = generateJwt(user.user);
+      const token = generateJwt(data.username);
       res.cookie('token', token, {
         httpOnly: true,
         maxAge: COOKIE_EXPIRATION, // milliseconds
@@ -84,7 +92,7 @@ export const authenticate = async (req, res) => {
         secure: true,
       });
   
-      return res.status(200).json({ user: user.user });
+      return res.status(200).json({ username: data.username });
     })
   } catch (_) {
     return res.status(500).json({ message: 'Server error when authenticating user.' });

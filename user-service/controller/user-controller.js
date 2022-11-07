@@ -12,8 +12,8 @@ export const createUser = async (req, res) => {
     const { username, email, password } = req.body;
     if (username && email && password) {
       // Check if user exists
-      const user = await checkExistence(username, email);
-      if (user) {
+      const isExisted = await checkExistence(username, email);
+      if (isExisted) {
         return res.status(401).json({ message: 'User already exists.' });
       }
 
@@ -37,7 +37,6 @@ export const updateUser = async (req, res) => {
     if (newPassword) {
       newProfile.password = newPassword;
     }
-  
     // Directly return if newProfile is empty, no update
     if (
       newProfile && // null and undefined check
@@ -49,7 +48,7 @@ export const updateUser = async (req, res) => {
   
     // Update user
     await _updateUser(username, newProfile);
-    return res.status(200).json({ message: `Account ${username} udpated successfully.` });
+    return res.status(200).json({ message: `Account ${username} updated successfully.` });
   } catch (_) {
     return res.status(500).json({ message: 'Server error when updating profile.' });
   }

@@ -35,7 +35,7 @@ export function UserContextProvider(props) {
         callback(isAuthSuccess, null);
         return res.data;
       })
-      .then((data) => setUsername(data.user))
+      .then((data) => setUsername(data.username))
       .catch((error) => {
         setIsSignedIn(false);
         callback(false, error);
