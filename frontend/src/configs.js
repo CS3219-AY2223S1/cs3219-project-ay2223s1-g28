@@ -25,7 +25,7 @@ export const URL_COMM_SVC_SOCKET = URI_SVC;
 export const PATH_COMM_SVC_SOCKET = '/api/comm-service/socket';
 
 // API
-const PREFIX_COMM_SVC = '/api/communication-service';
+const PREFIX_COMM_SVC = '/api/comm-service';
 const URL_COMM_SVC = URI_SVC + PREFIX_COMM_SVC;
 
 const PREFIX_COMM_SVC_READ_CHAT = '/read';
@@ -43,8 +43,7 @@ export const URL_QUES_SVC = URI_SVC + PREFIX_QUES_SVC;
 
 /////////////// Auth Service ///////////////
 // API
-const PREFIX_AUTH_SVC = '';
-const URL_AUTH_SVC = URI_SVC + PREFIX_AUTH_SVC;
+const URL_AUTH_SVC = URI_SVC;
 
 const PREFIX_AUTH_SVC_SIGNIN = '/signin';
 const PREFIX_AUTH_SVC_SIGNOUT = '/signout';

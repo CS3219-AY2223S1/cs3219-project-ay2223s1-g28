@@ -1,4 +1,4 @@
-name: Continuous Deployment - Auth Service
+name: Continuous Deployment - Authentication Service
 
 on:
   push:

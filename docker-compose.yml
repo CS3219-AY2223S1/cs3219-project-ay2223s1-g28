@@ -145,6 +145,7 @@ services:
     container_name: gateway
     build:
       context: ./gateway
+      dockerfile: Dockerfile.dev
     ports:
       - 8080:8080
     restart: always

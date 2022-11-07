@@ -23,26 +23,18 @@ await client.connect();
 client.on('error', err => console.log('Redis connection error: ' + err));
 
 // Returns the corresponding user, or null if does not exist
-const checkExistence = async (usernameOrEmail) => {
+export const getUser = async (usernameOrEmail) => {
   return await getUserByUsername(usernameOrEmail) 
     || await getUserByEmail(usernameOrEmail); // Allow signin using email too
 };
 
-// Returns true if user exists and password is correct, else false
-export const checkPassword = async (usernameOrEmail, password) => {
-  // Check if user exists
-  const user = await checkExistence(usernameOrEmail);
-  if (!user) {
-    return false;
-  }
-
-  // Check if password is correct
-  const isPasswordCorrect = await bcrypt.compare(password, user.password);
-  return isPasswordCorrect;
+// Returns true if password is correct, else false
+export const checkPassword = async (userPassword, password) => {
+  return await bcrypt.compare(password, userPassword);
 };
 
-export const generateJwt = (user) => {
-  return jwt.sign({ user }, process.env.JWT_SECRET_KEY, { expiresIn: JWT_EXPIRATION });
+export const generateJwt = (username) => {
+  return jwt.sign({ username }, process.env.JWT_SECRET_KEY, { expiresIn: JWT_EXPIRATION });
 };
 
 export const blacklistJwt = async (token) => {
