@@ -28,64 +28,103 @@ export default function ButtonAppBar() {
 
   const handleClose = () => setAnchorEl(null);
 
+  const homePageNavigateHandler = () => {
+    if (window.location.pathname === "/room") {
+      alertCtx.onShow("Please end current session first before going back to home page", 'warning');
+    } else {
+      navigate("/home");
+    }
+  }
+
   const profilePageNavigateHandler = () => {
-    navigate('/profile');
-    handleClose();
+    if (window.location.pathname === "/room") {
+      alertCtx.onShow("Please end current session first before editing your profile", 'warning');
+    } else {
+      navigate('/profile');
+      handleClose();
+    }
   }
 
   const signoutHandler = () => {
-    userCtx.onSignout((message, err) => {
-      if (err) {
-        return alertCtx.onShow(err.message);
-      }
-      alertCtx.onShow(message, 'success');
-      navigate('/signin');
-    });
-    handleClose();
+    if (window.location.pathname === "/room") {
+      alertCtx.onShow("Please end current session first before signing out", 'warning');
+    } else {
+      userCtx.onSignout((message, err) => {
+        if (err) {
+          return alertCtx.onShow(err.message);
+        }
+        alertCtx.onShow(message, 'success');
+        navigate('/signin');
+      });
+      handleClose();
+    }
   }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static' elevation={0}>
+      <AppBar position="static" elevation={0}>
         <Toolbar>
           <Typography
-            variant='h6'
-            component={Link}
-            to="/home"
-            sx={{ flexGrow: 1, color: 'white', paddingRight: 3, textDecoration: "none" }}
+            variant="h6"
+            onClick={homePageNavigateHandler}
+            sx={{
+              flexGrow: 1,
+              color: 'white',
+              paddingRight: 3,
+              textDecoration: 'none',
+              cursor: 'pointer',
+            }}
           >
             PeerPrep
           </Typography>
-          {isSignedIn
-            ? <>
-                <Typography variant='subtitle1' color='secondary'>
-                  {userCtx.username}
-                </Typography>
-                <IconButton size='large' onClick={handleMenu} color='secondary'>
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={profilePageNavigateHandler}>Profile</MenuItem>
-                  <MenuItem onClick={signoutHandler}>Logout</MenuItem>
-                </Menu>
-              </>
-            : <>
-                <Button color='secondary' size='large' component={Link} to='/signin'>Sign in</Button>
-                <Button color='secondary' size='large' component={Link} to='/signup'>Sign up</Button>
-              </>}
+          {isSignedIn ? (
+            <>
+              <Typography variant="subtitle1" color="secondary">
+                {userCtx.username}
+              </Typography>
+              <IconButton size="large" onClick={handleMenu} color="secondary">
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={profilePageNavigateHandler}>
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={signoutHandler}>Logout</MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <>
+              <Button
+                color="secondary"
+                size="large"
+                component={Link}
+                to="/signin"
+              >
+                Sign in
+              </Button>
+              <Button
+                color="secondary"
+                size="large"
+                component={Link}
+                to="/signup"
+              >
+                Sign up
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
