@@ -6,11 +6,11 @@ import {
   Navigate,
 } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute.js';
 import AlertMessage from './components/ui/AlertMessage';
+import LoadingPage from './pages/Loading';
 
 const SignupPage = lazy(() => import('./pages/Signup/index'));
 const SigninPage = lazy(() => import('./pages/Signin/index'));
@@ -28,6 +28,7 @@ function App() {
       <Navbar setNavBarHeight={setNavBarHeight} />
       <Box
         display="flex"
+        padding="4rem"
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
@@ -35,13 +36,7 @@ function App() {
           height: `calc(100% - ${navbarHeight}px)`,
         }}
       >
-        <Suspense
-          fallback={
-            <div>
-              <CircularProgress />
-            </div>
-          }
-        >
+        <Suspense fallback={<LoadingPage />}>
           <Routes>
             <Route
               exact
