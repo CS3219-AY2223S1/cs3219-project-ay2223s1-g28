@@ -1,11 +1,10 @@
 import { createContext, useState } from 'react';
-
 import axios from 'axios';
 
 import { 
-  URL_USER_SVC_SIGNIN, 
-  URL_USER_SVC_JWT_VERIFICATION, 
-  URL_USER_SVC_LOGOUT, 
+  URL_AUTH_SVC_JWT_VERIFICATION, 
+  URL_AUTH_SVC_SIGNIN, 
+  URL_AUTH_SVC_SIGNOUT, 
   URL_USER_SVC_UPDATE, 
   URL_USER_SVC_DELETE,
 } from '../configs';
@@ -29,7 +28,7 @@ export function UserContextProvider(props) {
     await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
-      .get(URL_USER_SVC_JWT_VERIFICATION, { withCredentials: true })
+      .get(URL_AUTH_SVC_JWT_VERIFICATION, { withCredentials: true })
       .then((res) => {
         const isAuthSuccess = res && res.status === STATUS_CODE_OK;
         setIsSignedIn(isAuthSuccess);
@@ -43,12 +42,12 @@ export function UserContextProvider(props) {
       });
   };
 
-  const signinHandler = async (username, password, callback) => {
+  const signinHandler = async (usernameOrEmail, password, callback) => {
     await axios
       .post(
-        URL_USER_SVC_SIGNIN,
+        URL_AUTH_SVC_SIGNIN,
         {
-          username,
+          usernameOrEmail,
           password,
         },
         { withCredentials: true } // Crucial step to make sure the cookie is stored in browser
@@ -57,7 +56,7 @@ export function UserContextProvider(props) {
         const isSigninSuccess = res && res.status === STATUS_CODE_OK;
 
         setIsSignedIn(isSigninSuccess);
-        setUsername(username);
+        setUsername(usernameOrEmail);
         callback(isSigninSuccess, null);
       })
       .catch((err) => {
@@ -69,7 +68,7 @@ export function UserContextProvider(props) {
     await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
-      .post(URL_USER_SVC_LOGOUT, {}, { withCredentials: true })
+      .get(URL_AUTH_SVC_SIGNOUT, { withCredentials: true })
       .then((res) => {
         const isSignoutSuccess = res && res.status === STATUS_CODE_OK;
         setIsSignedIn(!isSignoutSuccess);
@@ -88,8 +87,8 @@ export function UserContextProvider(props) {
     await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
-      .post(
-        URL_USER_SVC_UPDATE,
+      .put(
+        URL_USER_SVC_UPDATE + '/' + username,
         { newUsername, newPassword },
         { withCredentials: true }
       )
@@ -109,14 +108,22 @@ export function UserContextProvider(props) {
     await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
-      .post(
-        URL_USER_SVC_DELETE,
-        {},
+      .delete(
+        URL_USER_SVC_DELETE + '/' + username,
         { withCredentials: true }
       )
-      .then((res) => {
+      .then(async(res) => {
         const isDeleteSuccess = res && res.status === STATUS_CODE_OK;
-        setIsSignedIn(!isDeleteSuccess); // Sign user out if delete success, else stay
+        if (isDeleteSuccess) {
+          await axios
+            .get(URL_AUTH_SVC_SIGNOUT, { withCredentials: true })
+            .then((res) => {
+              const isSignoutSuccess = res && res.status === STATUS_CODE_OK;
+              setIsSignedIn(!isSignoutSuccess);
+              return res.data;
+            })
+        }
+        setIsSignedIn(false); 
         return res.data;
       })
       .then((data) => {

@@ -64,6 +64,7 @@ function ChatBlock({ socket, roomId }) {
 				params: {
 					roomId,
 				},
+				withCredentials: true,
 			})
 			.catch((err) => {
 				alertCtx.onShow(err.response.data.message);

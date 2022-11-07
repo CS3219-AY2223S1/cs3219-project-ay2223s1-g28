@@ -8,15 +8,21 @@ import { ormGetCode as _getCode, ormSetCode as _setCode } from './model/collabor
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors()); // config cors so that front-end can use
+app.use(cors({
+  origin: process.env.ENV === 'PROD' ? process.env.FRONTEND_URL : 'http://localhost:3000',
+  credentials: true,
+}));
 
+// Socket
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
+    credentials: true,
   },
-  path: '/api/collaboration-service/socket',
+  path: '/api/collab-service/socket',
 });
+
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
@@ -76,11 +82,10 @@ io.on('connection', (socket) => {
   });
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello World from collaboration-service');
-});
+// Routes
+app.get('/', (_, res) => res.send('Hello World from collaboration-service'));
 
 const PORT = 8003;
-httpServer.listen(PORT, () =>
-  console.log(`collaboration-service listening on port ${PORT}`)
-);
+httpServer.listen(PORT, () => {
+  console.log(`collab-service listening on port ${PORT}`);
+});

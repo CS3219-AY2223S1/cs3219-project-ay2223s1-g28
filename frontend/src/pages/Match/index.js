@@ -29,6 +29,7 @@ const DURATION = 30;
 // Socket
 const socket = io(URL_MATCHING_SVC_SOCKET, {
   path: PATH_MATCHING_SVC_SOCKET,
+  withCredentials: true,
 });
 
 function MatchPage() {
