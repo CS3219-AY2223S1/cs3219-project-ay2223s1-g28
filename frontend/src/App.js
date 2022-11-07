@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Box from '@mui/material/Box';
 
 import Navbar from './components/Navbar';
@@ -24,39 +25,48 @@ function App() {
   const [navbarHeight, setNavBarHeight] = useState(0);
 
   return (
-    <Router>
-      <Navbar setNavBarHeight={setNavBarHeight} />
-      <Box
-        display="flex"
-        padding="4rem"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        sx={{
-          height: `calc(100% - ${navbarHeight}px)`,
-        }}
-      >
-        <Suspense fallback={<LoadingPage />}>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={<Navigate replace to="/signin" />}
-            ></Route>
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/signin" element={<SigninPage />} />
-            <Route element={<PrivateRoute />}>
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/match" element={<MatchPage />} />
-              <Route path="/room" element={<RoomPage />} />
-            </Route>
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </Box>
-      <AlertMessage />
-    </Router>
+    <HelmetProvider>
+      <Helmet>
+        <meta
+          name="CS3219-G28"
+          content="Makes coding fun!"
+        />
+        <title>PeerPrep</title>
+      </Helmet>
+      <Router>
+        <Navbar setNavBarHeight={setNavBarHeight} />
+        <Box
+          display="flex"
+          padding="4rem"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            height: `calc(100% - ${navbarHeight}px)`,
+          }}
+        >
+          <Suspense fallback={<LoadingPage />}>
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={<Navigate replace to="/signin" />}
+              ></Route>
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/signin" element={<SigninPage />} />
+              <Route element={<PrivateRoute />}>
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/match" element={<MatchPage />} />
+                <Route path="/room" element={<RoomPage />} />
+              </Route>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </Box>
+        <AlertMessage />
+      </Router>
+    </HelmetProvider>
   );
 }
 
