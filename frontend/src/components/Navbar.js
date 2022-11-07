@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -15,14 +15,19 @@ import Menu from '@mui/material/Menu';
 import AlertContext from '../context/alert-context';
 import UserContext from '../context/user-context';
 
-function NavBar() {
+function NavBar({setNavBarHeight}) {
+  console.log("Navbar");
   const alertCtx = useContext(AlertContext);
   const userCtx = useContext(UserContext);
   const isSignedIn = userCtx.isSignedIn;
 
   const navigate = useNavigate();
-
+  const navBarRef = useRef();
   const [anchorEl, setAnchorEl] = useState(null);
+
+  useEffect(() => {
+    setNavBarHeight(navBarRef.current.clientHeight);
+  }, [setNavBarHeight]);
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
 
@@ -61,7 +66,7 @@ function NavBar() {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box ref={navBarRef} sx={{ flexGrow: 1 }}>
       <AppBar position="static" elevation={0}>
         <Toolbar>
           <Typography
