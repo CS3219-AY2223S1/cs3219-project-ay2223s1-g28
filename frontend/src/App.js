@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -5,17 +6,18 @@ import {
   Navigate,
 } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute.js';
-import SignupPage from './pages/Signup';
-import SigninPage from './pages/Signin';
-import HomePage from './pages/Home';
-import ProfilePage from './pages/Profile';
-import RoomPage from './pages/Room';
-import MatchPage from './pages/Match';
-
 import AlertMessage from './components/ui/AlertMessage';
+
+const SignupPage = lazy(() => import('./pages/Signup/index'));
+const SigninPage = lazy(() => import('./pages/Signin/index'));
+const HomePage = lazy(() => import('./pages/Home/index'));
+const ProfilePage = lazy(() => import('./pages/Profile/index'));
+const RoomPage = lazy(() => import('./pages/Room/index'));
+const MatchPage = lazy(() => import('./pages/Match/index'));
 
 function App() {
   return (
@@ -23,21 +25,29 @@ function App() {
       <Router>
         <Navbar />
         <Box display="flex" flexDirection="column" padding="4rem">
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={<Navigate replace to="/signup" />}
-            ></Route>
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/signin" element={<SigninPage />} />
-            <Route element={<PrivateRoute />}>
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/match" element={<MatchPage />} />
-              <Route path="/room" element={<RoomPage />} />
-            </Route>
-          </Routes>
+          <Suspense
+            fallback={
+              <div>
+                <CircularProgress />
+              </div>
+            }
+          >
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={<Navigate replace to="/signup" />}
+              ></Route>
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/signin" element={<SigninPage />} />
+              <Route element={<PrivateRoute />}>
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/match" element={<MatchPage />} />
+                <Route path="/room" element={<RoomPage />} />
+              </Route>
+            </Routes>
+          </Suspense>
         </Box>
       </Router>
       <AlertMessage />
