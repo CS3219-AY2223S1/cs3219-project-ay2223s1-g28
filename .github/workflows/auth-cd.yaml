@@ -1,4 +1,4 @@
-name: Continuous Deployment - User Service
+name: Continuous Deployment - Auth Service
 
 on:
   push:
@@ -8,8 +8,8 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: cs3219-g28-peerprep-cluster
   GKE_ZONE: asia-southeast1
-  DEPLOYMENT_NAME: user-deployment
-  IMAGE: user
+  DEPLOYMENT_NAME: auth-deployment
+  IMAGE: auth
   # secrets
   FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
   DB_CLOUD_URI: ${{ secrets.USER_DB_CLOUD_URI }}
@@ -67,7 +67,7 @@ jobs:
       # For workflows triggered by push, this is the branch or tag ref that was pushed.
       - name: Build
         run: |-
-          docker build ../user-service \
+          docker build ../auth-service \
             --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" \
             --build-arg GITHUB_SHA="$GITHUB_SHA" \
             --build-arg GITHUB_REF="$GITHUB_REF" \
@@ -87,14 +87,18 @@ jobs:
       # Delete Kubernetes Secrets created previously
       - name: Delete Secrets
         run: |-
-          kubectl delete secret user-secrets
+          kubectl delete secret auth-secrets
 
       # Create Kubernetes Secrets
       - name: Create Secrets
         run: |-
-          kubectl create secret generic user-secrets \
+          kubectl create secret generic auth-secrets \
             --from-literal=FRONTEND_URL="$FRONTEND_URL" \
             --from-literal=DB_CLOUD_URI="$DB_CLOUD_URI" \
+            --from-literal=JWT_SECRET_KEY="$JWT_SECRET_KEY" \
+            --from-literal=REDIS_CLOUD_HOST="$REDIS_CLOUD_HOST" \
+            --from-literal=REDIS_CLOUD_PORT="$REDIS_CLOUD_PORT" \
+            --from-literal=REDIS_CLOUD_PASSWORD="$REDIS_CLOUD_PASSWORD"
 
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
