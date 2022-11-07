@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,40 +18,50 @@ const HomePage = lazy(() => import('./pages/Home/index'));
 const ProfilePage = lazy(() => import('./pages/Profile/index'));
 const RoomPage = lazy(() => import('./pages/Room/index'));
 const MatchPage = lazy(() => import('./pages/Match/index'));
+const NotFoundPage = lazy(() => import('./pages/NotFound/index'));
 
 function App() {
+  const [navbarHeight, setNavBarHeight] = useState(0);
+
   return (
-    <div className="App">
-      <Router>
-        <Navbar />
-        <Box display="flex" flexDirection="column" padding="4rem">
-          <Suspense
-            fallback={
-              <div>
-                <CircularProgress />
-              </div>
-            }
-          >
-            <Routes>
-              <Route
-                exact
-                path="/"
-                element={<Navigate replace to="/signup" />}
-              ></Route>
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/signin" element={<SigninPage />} />
-              <Route element={<PrivateRoute />}>
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/match" element={<MatchPage />} />
-                <Route path="/room" element={<RoomPage />} />
-              </Route>
-            </Routes>
-          </Suspense>
-        </Box>
-      </Router>
+    <Router>
+      <Navbar setNavBarHeight={setNavBarHeight} />
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          height: `calc(100% - ${navbarHeight}px)`,
+        }}
+      >
+        <Suspense
+          fallback={
+            <div>
+              <CircularProgress />
+            </div>
+          }
+        >
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={<Navigate replace to="/signin" />}
+            ></Route>
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/signin" element={<SigninPage />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/match" element={<MatchPage />} />
+              <Route path="/room" element={<RoomPage />} />
+            </Route>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
+      </Box>
       <AlertMessage />
-    </div>
+    </Router>
   );
 }
 
