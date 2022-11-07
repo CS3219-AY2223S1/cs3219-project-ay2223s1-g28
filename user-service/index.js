@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+
 import { createUser, updateUser, deleteUser } from './controller/user-controller.js';
 
 const app = express();

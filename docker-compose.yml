@@ -1,3 +1,4 @@
+# Docker compose used only in development
 version: "3.8"
 
 services:
@@ -6,15 +7,15 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
     environment:
       - WATCHPACK_POLLING=true
+    depends_on:
+      [user-service, matching-service, comm-service, collab-service, question-service, auth-service]
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    ports:
-      - 3000:3000
-    depends_on:
-      [user-service, matching-service, comm-service, collab-service, question-service, auth-service]
 
   user-service:
     container_name: user-service
@@ -61,13 +62,13 @@ services:
     command: npm run dev
 
   comm-service:
-    container_name: communication-service
+    container_name: comm-service
     build:
       context: ./communication-service
-    environment:
-      - WATCHPACK_POLLING=true
     ports:
       - 8002:8002
+    environment:
+      - WATCHPACK_POLLING=true
     depends_on:
       - mongo-comm
     volumes:
@@ -84,13 +85,13 @@ services:
       - mongo-comm-volume:/data/db
 
   collab-service:
-    container_name: collaboration-service
+    container_name: collab-service
     build:
       context: ./collaboration-service
-    environment:
-      - WATCHPACK_POLLING=true
     ports:
       - 8003:8003
+    environment:
+      - WATCHPACK_POLLING=true
     depends_on:
       - redis-collab
     volumes:

@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+
 import {
   getAllQuestions,
   createQuestion,
@@ -17,6 +18,7 @@ app.use(cors({
 }));
 app.options("*", cors());
 
+// Routes
 const router = express.Router();
 
 router.get("/", getAllQuestions);

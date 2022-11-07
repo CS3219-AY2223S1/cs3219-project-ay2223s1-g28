@@ -10,8 +10,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
   origin: process.env.ENV === 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
+  credentials: true,
 }));
 
+// Socket
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
@@ -28,6 +30,7 @@ io.on('connection', (socket) => {
   handleDisconnect(socket);
 });
 
+// Routes
 app.get('/', (_, res) => res.send('Hello World from matching-service'));
 
 const PORT = 8001;

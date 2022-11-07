@@ -22,7 +22,7 @@ export const PATH_MATCHING_SVC_SOCKET = '/api/matching-service/socket';
 /////////////// Communication Service ///////////////
 // Socket
 export const URL_COMM_SVC_SOCKET = URI_SVC; 
-export const PATH_COMM_SVC_SOCKET = '/api/communication-service/socket';
+export const PATH_COMM_SVC_SOCKET = '/api/comm-service/socket';
 
 // API
 const PREFIX_COMM_SVC = '/api/communication-service';
@@ -34,7 +34,7 @@ export const URL_COMM_SVC_READ_CHAT = URL_COMM_SVC + PREFIX_COMM_SVC_READ_CHAT;
 /////////////// Collaboration Service ///////////////
 // Socket
 export const URL_COLLAB_SVC_SOCKET = URI_SVC;
-export const PATH_COLLAB_SVC_SOCKET = '/api/collaboration-service/socket';
+export const PATH_COLLAB_SVC_SOCKET = '/api/collab-service/socket';
 
 /////////////// Question Service ///////////////
 // API
