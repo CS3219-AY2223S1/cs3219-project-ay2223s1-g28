@@ -15,7 +15,7 @@ import Menu from '@mui/material/Menu';
 import AlertContext from '../context/alert-context';
 import UserContext from '../context/user-context';
 
-function NavBar({setNavBarHeight}) {
+function NavBar({ setNavBarHeight }) {
   const alertCtx = useContext(AlertContext);
   const userCtx = useContext(UserContext);
   const isSignedIn = userCtx.isSignedIn;
@@ -33,25 +33,34 @@ function NavBar({setNavBarHeight}) {
   const handleClose = () => setAnchorEl(null);
 
   const homePageNavigateHandler = () => {
-    if (window.location.pathname === "/room") {
-      alertCtx.onShow("Please end current session first before going back to home page", 'warning');
+    if (window.location.pathname === '/room') {
+      alertCtx.onShow(
+        'Please end current session first before going back to home page',
+        'warning'
+      );
     } else {
-      navigate("/home");
+      navigate('/home');
     }
-  }
+  };
 
   const profilePageNavigateHandler = () => {
-    if (window.location.pathname === "/room") {
-      alertCtx.onShow("Please end current session first before editing your profile", 'warning');
+    if (window.location.pathname === '/room') {
+      alertCtx.onShow(
+        'Please end current session first before editing your profile',
+        'warning'
+      );
     } else {
       navigate('/profile');
       handleClose();
     }
-  }
+  };
 
   const signoutHandler = () => {
-    if (window.location.pathname === "/room") {
-      alertCtx.onShow("Please end current session first before signing out", 'warning');
+    if (window.location.pathname === '/room') {
+      alertCtx.onShow(
+        'Please end current session first before signing out',
+        'warning'
+      );
     } else {
       userCtx.onSignout((message, err) => {
         if (err) {
@@ -62,13 +71,13 @@ function NavBar({setNavBarHeight}) {
       });
       handleClose();
     }
-  }
+  };
 
   return (
     <Box ref={navBarRef} sx={{ flexGrow: 1 }}>
       <AppBar position="static" elevation={0}>
         <Toolbar>
-          <Typography
+          {/* <Typography
             variant="h6"
             onClick={homePageNavigateHandler}
             sx={{
@@ -78,9 +87,19 @@ function NavBar({setNavBarHeight}) {
               textDecoration: 'none',
               cursor: 'pointer',
             }}
+          /> */}
+          <div
+            onClick={homePageNavigateHandler}
+            style={{
+              flex: 1,
+              cursor: 'pointer',
+            }}
           >
-            PeerPrep
-          </Typography>
+            <img
+              src={require('../assets/peerprep-navbar-logo.svg').default}
+              alt="Logo"
+            />
+          </div>
           {isSignedIn ? (
             <>
               <Typography variant="subtitle1" color="secondary">
