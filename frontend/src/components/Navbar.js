@@ -15,7 +15,7 @@ import Menu from '@mui/material/Menu';
 import AlertContext from '../context/alert-context';
 import UserContext from '../context/user-context';
 
-export default function ButtonAppBar() {
+function NavBar() {
   const alertCtx = useContext(AlertContext);
   const userCtx = useContext(UserContext);
   const isSignedIn = userCtx.isSignedIn;
@@ -130,3 +130,5 @@ export default function ButtonAppBar() {
     </Box>
   );
 }
+
+export default NavBar;
