@@ -5,12 +5,10 @@ import { createUser, updateUser, deleteUser } from './controller/user-controller
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(
-  cors({
-    origin: ['http://localhost:3000'],
-    credentials: true,
-  })
-); // config cors so that front-end can use
+app.use(cors({
+  origin: process.env.ENV == 'PROD'? process.env.FRONTEND_URL : 'http://localhost:3000',
+  credentials: true,
+}));
 app.options('*', cors());
 
 // Routes
@@ -23,8 +21,9 @@ router.delete('/delete/:id', deleteUser);
 
 app.use('/api/user', router).all((_, res) => {
   res.setHeader('content-type', 'application/json');
-  res.setHeader('Access-Control-Allow-Origin', '*');
 });
 
 const PORT = 8000;
-app.listen(PORT, () => console.log(`user-service listening on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`user-service listening on port ${PORT}`);
+});

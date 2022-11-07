@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Define the Deployment name
+  name: gateway-deployment
+  labels:
+    app: gateway
+spec:
+  # Specify the number of desired Pods
+  replicas: 2
+  # Define how the Deployment finds which Pods to manage
+  selector:
+    matchLabels:
+      app: gateway
+  # Define template for Pods
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      # Container details
+      containers:
+        - name: gateway-deployment
+          image: gcr.io/cs3219-g28-peerprep/gateway:latest
+          ports:
+            - name: gateway-http
+              containerPort: 8080
+          resources:
+            limits:
+              cpu: 40m
+              memory: 100Mi

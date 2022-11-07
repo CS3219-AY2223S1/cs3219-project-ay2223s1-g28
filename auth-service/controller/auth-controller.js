@@ -28,6 +28,8 @@ export const signin = async (req, res) => {
       res.cookie('token', token, { 
         httpOnly: true,
         maxAge: COOKIE_EXPIRATION, // milliseconds
+        sameSite: 'none', 
+        secure: true,
       });
       return res.status(200).json({ message: 'Signed in successfully.' });
     } else {
@@ -78,6 +80,8 @@ export const authenticate = async (req, res) => {
       res.cookie('token', token, {
         httpOnly: true,
         maxAge: COOKIE_EXPIRATION, // milliseconds
+        sameSite: 'none',
+        secure: true,
       });
   
       return res.status(200).json({ user: user.user });

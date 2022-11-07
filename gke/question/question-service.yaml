@@ -2,18 +2,18 @@ apiVersion: v1
 kind: Service
 metadata:
   # Define the Service name
-  name: frontend-service
+  name: question-service
   labels:
-    app: frontend
+    app: question
 spec:
   # Scans for Pods that match its selector
   selector:
-    app: frontend
+    app: question
   # Exposes the Service on a cluster-internal IP. 
   # Hence, this Service is only reachable from within the cluster. 
   type: ClusterIP
   ports:
-    - name: frontend-http
-      port: 3000
+    - name: question-http
+      port: 8004
       protocol: TCP
-      targetPort: frontend-http
+      targetPort: question-http
