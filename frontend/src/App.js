@@ -42,7 +42,7 @@ function App() {
           justifyContent="center"
           alignItems="center"
           sx={{
-            height: `calc(100% - ${navbarHeight}px)`,
+            minHeight: `calc(100% - ${navbarHeight}px)`,
           }}
         >
           <Suspense fallback={<LoadingPage />}>
