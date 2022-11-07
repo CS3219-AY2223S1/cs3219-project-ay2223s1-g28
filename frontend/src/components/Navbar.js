@@ -11,11 +11,13 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import AlertContext from '../context/alert-context';
 import UserContext from '../context/user-context';
 
 function NavBar({ setNavBarHeight }) {
+  const isMobileView = useMediaQuery('(max-width:900px)');
   const alertCtx = useContext(AlertContext);
   const userCtx = useContext(UserContext);
   const isSignedIn = userCtx.isSignedIn;
@@ -123,10 +125,20 @@ function NavBar({ setNavBarHeight }) {
             </>
           ) : (
             <>
-              <Button size="large" component={Link} to="/signin">
+              <Button
+                color={isMobileView ? 'secondary' : 'primary'}
+                size="large"
+                component={Link}
+                to="/signin"
+              >
                 Sign in
               </Button>
-              <Button size="large" component={Link} to="/signup">
+              <Button
+                color={isMobileView ? 'secondary' : 'primary'}
+                size="large"
+                component={Link}
+                to="/signup"
+              >
                 Sign up
               </Button>
             </>
