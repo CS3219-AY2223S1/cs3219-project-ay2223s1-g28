@@ -16,7 +16,6 @@ import AlertContext from '../context/alert-context';
 import UserContext from '../context/user-context';
 
 function NavBar({setNavBarHeight}) {
-  console.log("Navbar");
   const alertCtx = useContext(AlertContext);
   const userCtx = useContext(UserContext);
   const isSignedIn = userCtx.isSignedIn;
