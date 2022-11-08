@@ -73,7 +73,7 @@ function SigninForm() {
     <form onSubmit={submitHandler}>
       <Grid container justifyContent="center" alignItems="center" spacing={6}>
         <Grid item xs={12}>
-          <Header text="Welcome back!" />
+          <Header text="Welcome back to PeerPrep!" />
           <Caption text="signin to continue" />
         </Grid>
         <Grid item xs={12}>
