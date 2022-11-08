@@ -25,7 +25,7 @@ function PasswordTextField(props) {
 
   return (
     <FormControl variant="outlined" fullWidth={isFullWidth}>
-      <InputLabel>{label}</InputLabel>
+      <InputLabel color={helperText && 'error'}>{label}</InputLabel>
       <OutlinedInput
         {...inputProps}
         type={showPassword ? 'text' : 'password'}

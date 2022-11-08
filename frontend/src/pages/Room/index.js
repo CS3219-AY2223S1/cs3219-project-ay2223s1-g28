@@ -164,7 +164,7 @@ function RoomPage() {
           onClick={openChatHandler}
           sx={{ position: 'fixed', bottom: 0, mb: '5px', color: 'white' }}
         >
-          <ChatIcon />
+          <ChatIcon onClick={openChatHandler}/>
           Chat
         </Fab>
       </Draggable>

@@ -34,6 +34,7 @@ function CustomBackdrop({
                 color="primary"
                 onClick={primaryAction.onClick}
                 fullWidth
+                sx={{ color: 'white' }}
               >
                 {primaryAction.text}
               </Button>
