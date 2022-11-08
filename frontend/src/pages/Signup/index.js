@@ -8,7 +8,7 @@ function SignupPage() {
       <SplitterContainer
         primaryChild={
           <img
-            src={require('../../assets/signup.png').default}
+            src={require('../../assets/signup.png')}
             alt="Signup"
             width="100%"
             height="100%"
