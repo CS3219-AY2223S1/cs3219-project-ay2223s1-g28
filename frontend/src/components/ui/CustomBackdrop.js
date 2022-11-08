@@ -21,27 +21,34 @@ function CustomBackdrop({
           <Grid item>{content}</Grid>
           <Grid
             item
+            xs={6}
             container
             justifyContent="center"
             direction="row"
-            columnGap={5}
+            columnSpacing={5}
           >
-            <Button
-              variant="outlined"
-              size="large"
-              color="primary"
-              onClick={primaryAction.onClick}
-            >
-              {primaryAction.text}
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
-              color="error"
-              onClick={secondaryAction.onClick}
-            >
-              {secondaryAction.text}
-            </Button>
+            <Grid item xs={3}>
+              <Button
+                variant="contained"
+                size="large"
+                color="primary"
+                onClick={primaryAction.onClick}
+                fullWidth
+              >
+                {primaryAction.text}
+              </Button>
+            </Grid>
+            <Grid item xs={3}>
+              <Button
+                variant="outlined"
+                size="large"
+                color="error"
+                onClick={secondaryAction.onClick}
+                fullWidth
+              >
+                {secondaryAction.text}
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </OutlinedContainer>
