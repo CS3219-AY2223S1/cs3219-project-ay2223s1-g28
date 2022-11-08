@@ -2,13 +2,13 @@ import { render, screen } from '@testing-library/react';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import Navbar from './Navbar';
+import NavBar from './NavBar';
 
-describe('Navbar component', () => {
+describe('NavBar component', () => {
   it('renders "PeerPrep" text', () => {
     render(
       <Router>
-        <Navbar />
+        <NavBar />
       </Router>
     );
 
