@@ -40,6 +40,7 @@ function PasswordTextField(props) {
             </IconButton>
           </InputAdornment>
         }
+        label={label}
       />
       {helperText && (
         <FormHelperText component={Typography} error>
