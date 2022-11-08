@@ -103,6 +103,7 @@ function UpdateProfileForm() {
           >
             <Grid item xs={12}>
               <TextField
+                label="Username"
                 value={usernameValue}
                 error={usernameHasError}
                 helperText={usernameHasError && usernameErrorHelperText}
@@ -113,6 +114,7 @@ function UpdateProfileForm() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                label="Password"
                 type="password"
                 value={passwordValue}
                 error={passwordHasError}
