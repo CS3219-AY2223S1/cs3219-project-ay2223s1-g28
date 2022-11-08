@@ -1,16 +1,10 @@
-.code_editor {
+.wrapper {
+  width: 100%;
+  height: 70vh;
   border: 1px solid #707070;
-  padding: 5px;
-  margin-top: 150px;
-  margin-bottom: 50px;
+  padding: 0px;
   border-radius: 6px;
-  width: 95%;
   overflow: hidden;
   resize: none;
+  text-align: start;
 }
-
-/* Prevent code editor from stretching the browser when long texts are entered */
-.wrap {
-  display: grid;
-}
-
