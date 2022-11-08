@@ -10,6 +10,8 @@ import MediumMedia from '../../assets/medium.svg';
 import HardMedia from '../../assets/hard.svg';
 
 function HomePage() {
+  
+
   return (
     <Grid
       container
@@ -39,7 +41,7 @@ function HomePage() {
       >
         <Grid item xs={2} sm={4} md={3}>
           <Card
-            text="Easy"
+            level="Easy"
             imageUrl={EasyMedia}
             footer={
               <>
@@ -51,7 +53,7 @@ function HomePage() {
         </Grid>
         <Grid item xs={2} sm={4} md={3}>
           <Card
-            text="Medium"
+            level="Medium"
             imageUrl={MediumMedia}
             footer={
               <>
@@ -62,12 +64,16 @@ function HomePage() {
           />
         </Grid>
         <Grid item xs={2} sm={4} md={3}>
-          <Card text="Hard" imageUrl={HardMedia} footer={
+          <Card
+            level="Hard"
+            imageUrl={HardMedia}
+            footer={
               <>
                 Suitable for expert
                 <br /> ~1.5hrs
               </>
-            } />
+            }
+          />
         </Grid>
       </Grid>
     </Grid>
