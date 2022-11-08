@@ -33,8 +33,8 @@ function App() {
         justifyContent="center"
         alignItems="center"
         sx={{
-          height: '100vh',
-          width: '100vw',
+          width: '100%',
+          minHeight: '100vh',
         }}
       >
         <Router>
