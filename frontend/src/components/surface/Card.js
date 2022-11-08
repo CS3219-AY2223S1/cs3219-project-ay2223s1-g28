@@ -1,17 +1,19 @@
 import styles from './Card.module.css';
 
-function Card({ text, footer }) {
+function Card({ text, imageUrl, footer }) {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
         <img
-          src={require('../../assets/signin.svg').default}
+          src={imageUrl}
           alt="Difficulty Card"
           height="100%"
           width="100%"
         />
-        <p>{text}</p>
-        <p className={styles['card-footer']}>{footer}</p>
+        <h1>
+          <strong>{text}</strong>
+        </h1>
+        <div className={styles['card-footer']}>{footer}</div>
       </div>
     </div>
   );
