@@ -5,9 +5,9 @@ import Card from '../../components/surface/Card';
 import Header from '../../components/ui/Header';
 import Caption from '../../components/ui/Caption';
 
-import EasyMedia from '../../assets/easy.svg';
-import MediumMedia from '../../assets/medium.svg';
-import HardMedia from '../../assets/hard.svg';
+import EasyMedia from '../../assets/easy.png';
+import MediumMedia from '../../assets/medium.png';
+import HardMedia from '../../assets/hard.png';
 
 function HomePage() {
   return (
