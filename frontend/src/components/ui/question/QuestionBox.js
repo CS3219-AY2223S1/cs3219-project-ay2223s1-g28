@@ -29,7 +29,7 @@ const DUMMY_CONTENT =
 // Question service and display it
 function QuestionBox({ difficulty, roomId }) {
   const [title, setTitle] = useState('This is a default title');
-  const [categories, setCategories] = useState(['Default category']);
+  const [categories, setCategories] = useState([]);
   const [content, setContent] = useState(DUMMY_CONTENT);
   const [questionNumber, setQuestionNumber] = useState();
 
