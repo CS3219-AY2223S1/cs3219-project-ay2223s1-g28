@@ -1,4 +1,4 @@
-import { useContext, useState, useRef, useEffect } from 'react';
+import { useContext, useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -11,24 +11,18 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 import AlertContext from '../context/alert-context';
 import UserContext from '../context/user-context';
+import NavBarLogo from '../assets/NavBarLogo';
 
-function NavBar({ setNavBarHeight }) {
-  const isMobileView = useMediaQuery('(max-width:900px)');
+function NavBar() {
   const alertCtx = useContext(AlertContext);
   const userCtx = useContext(UserContext);
   const isSignedIn = userCtx.isSignedIn;
 
   const navigate = useNavigate();
-  const navBarRef = useRef();
   const [anchorEl, setAnchorEl] = useState(null);
-
-  useEffect(() => {
-    setNavBarHeight(navBarRef.current.clientHeight);
-  }, [setNavBarHeight]);
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
 
@@ -76,31 +70,37 @@ function NavBar({ setNavBarHeight }) {
   };
 
   return (
-    <Box ref={navBarRef} sx={{ flexGrow: 1 }}>
+    <Box sx={{ flex: 1 }}>
       <AppBar
         position="static"
         elevation={0}
         sx={{ backgroundColor: 'transparent' }}
       >
         <Toolbar>
-          <div
+          <NavBarLogo
+            fontSize="large"
             onClick={homePageNavigateHandler}
-            style={{
+            sx={{ mr: 'auto', cursor: 'pointer' }}
+          />
+          <Typography
+            variant="h6"
+            color="primary"
+            onClick={homePageNavigateHandler}
+            sx={{
               flex: 1,
+              ml: 2,
+              display: { xs: 'none', md: 'flex' },
               cursor: 'pointer',
             }}
           >
-            <img
-              src={require('../assets/peerprep-navbar-logo.svg').default}
-              alt="Logo"
-            />
-          </div>
+            PeerPrep
+          </Typography>
           {isSignedIn ? (
             <>
-              <Typography variant="subtitle1" color="secondary">
+              <Typography variant="subtitle1" color="primary">
                 {userCtx.username}
               </Typography>
-              <IconButton size="large" onClick={handleMenu} color="secondary">
+              <IconButton size="large" onClick={handleMenu} color="primary">
                 <AccountCircle />
               </IconButton>
               <Menu
@@ -112,7 +112,7 @@ function NavBar({ setNavBarHeight }) {
                 keepMounted
                 transformOrigin={{
                   vertical: 'top',
-                  horizontal: 'right',
+                  horizontal: 'center',
                 }}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
@@ -125,20 +125,10 @@ function NavBar({ setNavBarHeight }) {
             </>
           ) : (
             <>
-              <Button
-                color={isMobileView ? 'secondary' : 'primary'}
-                size="large"
-                component={Link}
-                to="/signin"
-              >
+              <Button size="large" component={Link} to="/signin">
                 Sign in
               </Button>
-              <Button
-                color={isMobileView ? 'secondary' : 'primary'}
-                size="large"
-                component={Link}
-                to="/signup"
-              >
+              <Button size="large" component={Link} to="/signup">
                 Sign up
               </Button>
             </>
