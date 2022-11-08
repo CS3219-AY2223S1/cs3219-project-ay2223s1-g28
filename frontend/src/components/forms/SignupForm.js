@@ -1,25 +1,22 @@
 import { useContext } from 'react';
 
 import axios from 'axios';
-import {Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import PasswordTextField from '../inputs/PasswordTextField';
-import styles from './SignupForm.module.css';
-
-import AlertContext from '../../context/alert-context';
-import BigButton from '../inputs/BigButton';
 import useInput from '../../hooks/use-input';
-
+import AlertContext from '../../context/alert-context';
 import isValidUsername from '../../validators/username-validator';
 import isValidEmail from '../../validators/email-validator';
 import isValidPassword from '../../validators/password-validator';
 
 import Header from '../../components/ui/Header';
 import Caption from '../../components/ui/Caption';
+import PasswordTextField from '../inputs/PasswordTextField';
+import BigButton from '../inputs/BigButton';
 
 import { URL_USER_SVC_SIGNUP } from '../../configs';
 import { STATUS_CODE_CREATED } from '../../constants';
@@ -113,7 +110,6 @@ function SignupForm() {
   return (
     <form onSubmit={submitHandler}>
       <Grid
-        className={styles.signup_form}
         container
         direction="column"
         justifyContent="center"
