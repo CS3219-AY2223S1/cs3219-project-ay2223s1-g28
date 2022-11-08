@@ -2,7 +2,7 @@ name: Continuous Deployment - User Service
 
 on:
   push:
-    branches: [ "main", "deployment-test" ]
+    branches: [ "main", "frontend" ]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
