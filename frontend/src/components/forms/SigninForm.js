@@ -13,6 +13,8 @@ import UserContext from '../../context/user-context';
 import useInput from '../../hooks/use-input';
 import isValidUsername from '../../validators/username-validator';
 import isValidPassword from '../../validators/password-validator';
+import Header from '../../components/ui/Header';
+import Caption from '../../components/ui/Caption';
 
 function SigninForm() {
   const alertCtx = useContext(AlertContext);
@@ -70,6 +72,10 @@ function SigninForm() {
   return (
     <form onSubmit={submitHandler}>
       <Grid container justifyContent="center" alignItems="center" spacing={6}>
+        <Grid item xs={12}>
+          <Header text="Welcome back!" />
+          <Caption text="signin to continue" />
+        </Grid>
         <Grid item xs={12}>
           <CustomTextField
             label="Email/Username"

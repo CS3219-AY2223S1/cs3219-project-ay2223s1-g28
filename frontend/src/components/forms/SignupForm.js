@@ -1,22 +1,25 @@
 import { useContext } from 'react';
 
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 import PasswordTextField from '../inputs/PasswordTextField';
 import styles from './SignupForm.module.css';
 
 import AlertContext from '../../context/alert-context';
-
+import BigButton from '../inputs/BigButton';
 import useInput from '../../hooks/use-input';
 
 import isValidUsername from '../../validators/username-validator';
 import isValidEmail from '../../validators/email-validator';
 import isValidPassword from '../../validators/password-validator';
+
+import Header from '../../components/ui/Header';
+import Caption from '../../components/ui/Caption';
 
 import { URL_USER_SVC_SIGNUP } from '../../configs';
 import { STATUS_CODE_CREATED } from '../../constants';
@@ -117,9 +120,13 @@ function SignupForm() {
         alignItems="center"
         rowGap={5}
       >
+        <Grid item xs={12}>
+          <Header text="Start your PeerPrep journey!" />
+          <Caption text="signup to continue" />
+        </Grid>
         <TextField
           label="Username"
-          variant="filled"
+          variant="outlined"
           value={usernameValue}
           error={usernameHasError}
           helperText={usernameHasError && usernameErrorHelperText}
@@ -130,7 +137,7 @@ function SignupForm() {
         />
         <TextField
           label="Email"
-          variant="filled"
+          variant="outlined"
           value={emailValue}
           error={emailHasError}
           helperText={emailHasError && emailErrorHelperText}
@@ -161,14 +168,24 @@ function SignupForm() {
           fullWidth
           required
         />
-        <Button
-          className={styles.signup_button}
-          variant="outlined"
-          size="large"
-          type="submit"
+        <BigButton
+          buttonProps={{
+            variant: 'contained',
+            type: 'submit',
+            fullWidth: true,
+          }}
+          sx={{
+            color: 'white',
+          }}
         >
           Sign up
-        </Button>
+        </BigButton>
+        <Typography variant="button">
+          Have an account?{' '}
+          <Typography component={Link} to="/signin" color="primary">
+            Sign in here!
+          </Typography>
+        </Typography>
       </Grid>
     </form>
   );
