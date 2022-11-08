@@ -10,18 +10,18 @@ import MediumMedia from '../../assets/medium.svg';
 import HardMedia from '../../assets/hard.svg';
 
 function HomePage() {
-  
-
   return (
     <Grid
       container
       justifyContent="flex-start"
       textAlign="center"
       columnSpacing={1}
+      rowSpacing={2}
       rowGap={3}
       sx={{
         width: '100%',
-        height: '100%',
+        minHeight: '100vh',
+        pb: '50px',
       }}
     >
       <Grid item xs={12}>
