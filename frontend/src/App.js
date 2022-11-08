@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,7 +8,6 @@ import {
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Box from '@mui/material/Box';
 
-import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute.js';
 import AlertMessage from './components/ui/AlertMessage';
 import LoadingPage from './pages/Loading';
@@ -22,36 +21,30 @@ const MatchPage = lazy(() => import('./pages/Match/index'));
 const NotFoundPage = lazy(() => import('./pages/NotFound/index'));
 
 function App() {
-  const [navbarHeight, setNavBarHeight] = useState(0);
-
   return (
     <HelmetProvider>
       <Helmet>
-        <meta
-          name="CS3219-G28"
-          content="Makes coding fun!"
-        />
+        <meta name="CS3219-G28" content="Makes coding fun!" />
         <title>PeerPrep</title>
       </Helmet>
-      <Router>
-        <Navbar setNavBarHeight={setNavBarHeight} />
-        <Box
-          display="flex"
-          padding="4rem"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            minHeight: `calc(100% - ${navbarHeight}px)`,
-          }}
-        >
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          height: '100vh',
+          width: '100vw',
+        }}
+      >
+        <Router>
           <Suspense fallback={<LoadingPage />}>
             <Routes>
               <Route
                 exact
                 path="/"
                 element={<Navigate replace to="/signin" />}
-              ></Route>
+              />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/signin" element={<SigninPage />} />
               <Route element={<PrivateRoute />}>
@@ -63,9 +56,9 @@ function App() {
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
-        </Box>
-        <AlertMessage />
-      </Router>
+          <AlertMessage />
+        </Router>
+      </Box>
     </HelmetProvider>
   );
 }
