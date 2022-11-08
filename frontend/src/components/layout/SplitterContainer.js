@@ -11,6 +11,7 @@ function SplitterContainer({ primaryChild, secondaryChild }) {
       sx={{
         width: '100%',
         minHeight: '100vh',
+        p: '50px 0',
       }}
       columnSpacing={10}
     >
