@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import CustomTextField from '../inputs/CustomTextField';
 import OutlinedContainer from '../ui/OutlinedContainer';
 
 import useInput from '../../hooks/use-input';
@@ -102,8 +102,7 @@ function UpdateProfileForm() {
             sx={{ m: '50px 0' }}
           >
             <Grid item xs={12}>
-              <CustomTextField
-                leftNode={<Typography>Username:</Typography>}
+              <TextField
                 value={usernameValue}
                 error={usernameHasError}
                 helperText={usernameHasError && usernameErrorHelperText}
@@ -113,8 +112,7 @@ function UpdateProfileForm() {
               />
             </Grid>
             <Grid item xs={12}>
-              <CustomTextField
-                leftNode={<Typography>Password:</Typography>}
+              <TextField
                 type="password"
                 value={passwordValue}
                 error={passwordHasError}

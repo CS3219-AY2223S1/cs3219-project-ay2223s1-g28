@@ -3,9 +3,9 @@ import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import CustomTextField from '../inputs/CustomTextField';
 import BigButton from '../inputs/BigButton';
 
 import AlertContext from '../../context/alert-context';
@@ -77,7 +77,7 @@ function SigninForm() {
           <Caption text="signin to continue" />
         </Grid>
         <Grid item xs={12}>
-          <CustomTextField
+          <TextField
             label="Email/Username"
             value={usernameValue}
             error={usernameHasError}
@@ -89,7 +89,7 @@ function SigninForm() {
           />
         </Grid>
         <Grid item xs={12}>
-          <CustomTextField
+          <TextField
             label="Password"
             type="password"
             value={passwordValue}
