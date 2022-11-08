@@ -1,0 +1,24 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  background-color: transparent;
+  background-image: linear-gradient(to bottom, #3fa7a5, transparent 50%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+@media only screen and (min-width: 900px) {
+  .wrapper {
+    background-image: radial-gradient(at top left, #3fa7a5, transparent 45%);
+  }
+}
+
+.children {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1 !important;
+}
