@@ -25,7 +25,7 @@
 /* Code reference: https://codepen.io/FlorinCornea/pen/gOwwybX */
 .card {
   width: 50vw;
-  height: 50vh;
+  min-height: 50vh;
   padding: 10px;
   border-radius: 20px;
   color: #fff;
