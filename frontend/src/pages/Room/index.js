@@ -1,21 +1,29 @@
-import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Draggable from 'react-draggable';
 
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import io from "socket.io-client";
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Menu from '@mui/material/Menu';
+import Fab from '@mui/material/Fab';
+import ChatIcon from '@mui/icons-material/Chat';
+import io from 'socket.io-client';
 
-import AlertContext from "../../context/alert-context";
-import ChatBlock from "../../components/ui/chat/ChatBlock";
-import CustomBackDrop from "../../components/ui/CustomBackdrop";
-import QuestionBox from "../../components/ui/question/QuestionBox";
-import CollabEditor from "../../components/ui/collaboration/CollabEditor";
-import styles from "./Room.module.css";
+import AlertContext from '../../context/alert-context';
+import ChatBlock from '../../components/ui/chat/ChatBlock';
+import CustomBackDrop from '../../components/ui/CustomBackdrop';
+import QuestionBox from '../../components/ui/question/QuestionBox';
+import CollabEditor from '../../components/ui/collaboration/CollabEditor';
+import styles from './Room.module.css';
 
-import { 
-  URL_COMM_SVC_SOCKET, PATH_COMM_SVC_SOCKET, 
-  URL_COLLAB_SVC_SOCKET, PATH_COLLAB_SVC_SOCKET,
+import SplitterContainer from '../../components/layout/SplitterContainer';
+import Header from '../../components/ui/Header';
+
+import {
+  URL_COMM_SVC_SOCKET,
+  PATH_COMM_SVC_SOCKET,
+  URL_COLLAB_SVC_SOCKET,
+  PATH_COLLAB_SVC_SOCKET,
 } from '../../configs';
 
 const comm_socket = io(URL_COMM_SVC_SOCKET, {
@@ -30,8 +38,10 @@ const collab_socket = io(URL_COLLAB_SVC_SOCKET, {
 function RoomPage() {
   const alertCtx = useContext(AlertContext);
   const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const openChat = Boolean(anchorEl);
 
   const roomId = location.state?.room;
   const difficulty = location.state?.difficulty;
@@ -39,19 +49,19 @@ function RoomPage() {
   useEffect(() => {
     if (!roomId) {
       // Prevent user from entering the path '/room' directly
-      navigate("/home");
-      alertCtx.onShow("Please select a difficulty level!");
+      navigate('/home');
+      alertCtx.onShow('Please select a difficulty level!');
       return;
     }
 
     // Join both communication and collaboration sockets to same room
-    comm_socket.emit("join-room", roomId);
-    collab_socket.emit("join-room", roomId);
+    comm_socket.emit('join-room', roomId);
+    collab_socket.emit('join-room', roomId);
 
     const createSessionEndListener = (socket) => {
-      socket.on("session-end", (message, severity) => {
+      socket.on('session-end', (message, severity) => {
         // Room leaving is handled by respective server
-        navigate("/home");
+        navigate('/home');
         alertCtx.onShow(message, severity);
       });
     };
@@ -62,85 +72,111 @@ function RoomPage() {
     // the listeners must be removed in the cleanup step,
     // in order to prevent multiple event registrations
     return () => {
-      comm_socket.off("join-room");
-      comm_socket.off("session-end");
-      collab_socket.off("join-room");
-      collab_socket.off("session-end");
+      comm_socket.off('join-room');
+      comm_socket.off('session-end');
+      collab_socket.off('join-room');
+      collab_socket.off('session-end');
     };
   }, [alertCtx, navigate, roomId]);
 
   const leaveSessionHandler = () => {
-    comm_socket.emit("leave-session");
-    collab_socket.emit("leave-session");
+    comm_socket.emit('leave-session');
+    collab_socket.emit('leave-session');
+  };
+
+  const openChatHandler = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const closeChatHandler = () => {
+    setAnchorEl(null);
   };
 
   return (
-    <>
-      <Grid container>
-        <Grid xs={2} item></Grid>
-        <Grid xs={8} item>
-          <Typography
-            variant="h4"
-            fontWeight="lighter"
-            textAlign="center"
-            sx={{ mb: "40px" }}
-          >
-            Your technical interview begins...
-          </Typography>
-        </Grid>
-        <Grid xs={2} item justifyContent="flex-end">
-          <div className={styles.leave_session_button}>
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={() => setOpenBackdrop(true)}
-            >
-              <b>Finish</b>
-            </Button>
-          </div>
-        </Grid>
+    <Grid
+      container
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
+      textAlign="center"
+      sx={{
+        minHeight: '100vh',
+        width: '100%',
+        background: 'linear-gradient(to top, #EBFDFC, transparent)',
+      }}
+    >
+      <Grid item xs={11} m="16px 0 0 0">
+        <Header text="Your technical interview begins..." />
+        <br />
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() => setOpenBackdrop(true)}
+        >
+          <b>FINISH SESSION</b>
+        </Button>
       </Grid>
-      <Grid container spacing={4}>
-        {/* Question component */}
-        <Grid xs={12} md={5} item container>
-          {difficulty ? (
-            <QuestionBox difficulty={difficulty} roomId={roomId} />
-          ) : (
-            <p>
-              You have not successfully selected your difficulty, <br /> please return
-              to home page and try again!
-            </p>
-          )}
-        </Grid>
-        <Grid xs={12} md={7} item container direction="column">
-          {/* Chat component */}
-          <Grid item>
-            <ChatBlock socket={comm_socket} roomId={roomId} />
-          </Grid>
-          {/* Code Editor component */}
-          <Grid item>
-            <div className={styles.wrap}>
-              <div className={styles.code_editor}>
-                <CollabEditor socket={collab_socket} roomId={roomId} />
-              </div>
+      <SplitterContainer
+        minHeight="30vh"
+        textAlign="start"
+        primaryChild={
+          <>
+            <p>Question</p>
+            <div className={styles.wrapper}>
+              {difficulty ? (
+                <QuestionBox difficulty={difficulty} roomId={roomId} />
+              ) : (
+                <p>
+                  You have not successfully selected your difficulty, <br />{' '}
+                  please return to home page and try again!
+                </p>
+              )}
             </div>
-          </Grid>
-        </Grid>
-      </Grid>
+          </>
+        }
+        secondaryChild={
+          <>
+            <p>Code editor</p>
+            <div className={styles.wrapper}>
+              <CollabEditor socket={collab_socket} roomId={roomId} />
+            </div>
+          </>
+        }
+      />
       <CustomBackDrop
         openBackdrop={openBackdrop}
         onClick={() => setOpenBackdrop(false)}
         content="Are you sure you want to leave the 'interview'?"
         primaryAction={{
-          text: "No",
+          text: 'No',
           onClick: () => setOpenBackdrop(false),
         }}
         secondaryAction={{
-          text: "Yes",
+          text: 'Yes',
           onClick: leaveSessionHandler,
         }}
       />
-    </>
+      <Draggable>
+        <Fab
+          variant="extended"
+          size="medium"
+          color="primary"
+          onClick={openChatHandler}
+          sx={{ position: 'fixed', bottom: 0, mb: '5px', color: 'white' }}
+        >
+          <ChatIcon />
+          Chat
+        </Fab>
+      </Draggable>
+      <Menu
+        anchorEl={anchorEl}
+        open={openChat}
+        onClose={closeChatHandler}
+        sx={{ p: '1px' }}
+      >
+        <ChatBlock socket={comm_socket} roomId={roomId} />
+      </Menu>
+    </Grid>
   );
 }
 
