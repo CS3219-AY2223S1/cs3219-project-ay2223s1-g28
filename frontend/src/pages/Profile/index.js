@@ -8,7 +8,7 @@ function ProfilePage() {
       <SplitterContainer
         primaryChild={
           <img
-            src={require('../../assets/profile.svg').default}
+            src={require('../../assets/profile.png').default}
             alt="Signin"
             height="100%"
             width="100%"
