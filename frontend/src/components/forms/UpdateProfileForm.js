@@ -135,7 +135,6 @@ function UpdateProfileForm() {
             buttonProps={{
               variant: 'outlined',
               size: 'large',
-              type: 'submit',
               fullWidth: true,
               color: 'error',
               startIcon: <WarningIcon />,
