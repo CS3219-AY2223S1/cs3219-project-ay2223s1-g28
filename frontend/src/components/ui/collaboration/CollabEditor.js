@@ -17,7 +17,8 @@ function CollabEditor({ socket, roomId }) {
                 mode: 'javascript'
             }
         );
-
+        
+        editor.setSize(null, '100%');
         editor.on('change', (instance, changes) => {
             const { origin } = changes;
             if (origin !== 'setValue') {
