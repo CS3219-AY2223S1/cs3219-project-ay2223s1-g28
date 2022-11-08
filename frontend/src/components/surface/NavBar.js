@@ -89,7 +89,7 @@ function NavBar() {
             sx={{
               flex: 1,
               ml: 2,
-              display: { xs: 'none', md: 'flex' },
+              display: { xs: 'none', sm: 'flex' },
               cursor: 'pointer',
             }}
           >
