@@ -21,13 +21,13 @@ function CustomBackdrop({
           <Grid item>{content}</Grid>
           <Grid
             item
-            xs={6}
             container
             justifyContent="center"
             direction="row"
             columnSpacing={5}
+            rowSpacing={1}
           >
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <Button
                 variant="contained"
                 size="large"
@@ -38,7 +38,7 @@ function CustomBackdrop({
                 {primaryAction.text}
               </Button>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <Button
                 variant="outlined"
                 size="large"
