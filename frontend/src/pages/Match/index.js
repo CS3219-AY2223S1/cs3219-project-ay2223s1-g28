@@ -26,12 +26,6 @@ const PADDED_BTN = {
 // Timer
 const DURATION = 30; 
 
-// Socket
-const socket = io(URL_MATCHING_SVC_SOCKET, {
-  path: PATH_MATCHING_SVC_SOCKET,
-  withCredentials: true,
-});
-
 function MatchPage() {
   // Hooks
   const location = useLocation();
@@ -41,13 +35,14 @@ function MatchPage() {
   const difficulty = location.state?.difficulty;
 
   // Socket
+  const [socket, setSocket] = useState(null);
   const [isMatchFailed, setIsMatchFailed] = useState(false);
 
   // Timer
   const [counter, setCounter] = useState(DURATION);
   const [timerEnd, setTimerEnd] = useState(false);
 
-  // Check if there is a difficulty selected
+  // Prevent users from navigating to the '/match' path directly
   useEffect(() => {
     if (!difficulty) {
       navigate('/home');
@@ -57,6 +52,13 @@ function MatchPage() {
 
   // Socket setup
   useEffect(() => {
+    // Connect to socket server
+    const socket = io(URL_MATCHING_SVC_SOCKET, {
+      path: PATH_MATCHING_SVC_SOCKET,
+      withCredentials: true,
+    });
+    setSocket(socket);
+    
     // Register socket listeners
     socket.on('matchSuccess', (room) => {
       if (difficulty) {
@@ -78,11 +80,9 @@ function MatchPage() {
       });
     }
 
-    // Unregister listeners when unmount
+    // Disconnect when unmount
     return () => {
-      socket.off('matchSuccess');
-      socket.off('matchFail');
-      socket.off('disconnect');
+      socket.disconnect();
     }
   }, [difficulty, navigate, userCtx]);
 
@@ -97,14 +97,13 @@ function MatchPage() {
 
   // Handlers
   const handleCancel = () => {
-    socket.emit('cancelMatch', { id: socket.id });
     navigate('/home');
   };
   const handleRetry = () => {
     setIsMatchFailed(false);
     setTimerEnd(false);
     setCounter(DURATION);
-    socket.emit('match', { difficulty });
+    socket && socket.emit('match', { difficulty });
   }
 
   // Styling

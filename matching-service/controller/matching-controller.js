@@ -35,12 +35,6 @@ export const handleMatch = (socket) => {
   });
 };
 
-export const handleCancelMatch = (socket) => {
-  socket.on('cancelMatch', async () => {
-    await _deletePendingMatchById(socket.id);
-  });
-};
-
 export const handleDisconnect = (socket) => {
   socket.on('disconnect', async () => {
     await _deletePendingMatchById(socket.id);
