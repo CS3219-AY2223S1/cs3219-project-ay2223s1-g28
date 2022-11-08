@@ -83,13 +83,13 @@ export function UserContextProvider(props) {
       });
   };
 
-  const updateAccountHandler = async (newUsername, newPassword, callback) => {
+  const updateAccountHandler = async (newPassword, callback) => {
     await axios
       // Must set "withCredentials" to true so the cookie stored on browser
       // is sent to the server for checking
       .put(
         URL_USER_SVC_UPDATE + '/' + username,
-        { newUsername, newPassword },
+        { newPassword },
         { withCredentials: true }
       )
       .then((res) => {

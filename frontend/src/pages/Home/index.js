@@ -1,87 +1,80 @@
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 
-import OutlinedContainer from '../../components/ui/OutlinedContainer';
-import DifficultyButtonGroup from '../../components/ui/DifficultyButtonGroup';
+import NavBar from '../../components/surface/NavBar';
+import Card from '../../components/surface/Card';
+import Header from '../../components/ui/Header';
+import Caption from '../../components/ui/Caption';
+
+import EasyMedia from '../../assets/easy.svg';
+import MediumMedia from '../../assets/medium.svg';
+import HardMedia from '../../assets/hard.svg';
 
 function HomePage() {
   return (
-    <Grid container>
-      <Grid container item lg={4} alignItems="center" justifyContent="center">
-        <Grid item>
-          <Typography
-            variant="h2"
-            fontWeight="lighter"
-            textAlign="center"
-            color="#3EA7A5"
-          >
-            Welcome to PeerPrep
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography
-            variant="h5"
-            fontWeight="lighter"
-            textAlign="center"
-            color="#A7C7C8"
-          >
-            Your one stop solution to acing your technical interviews
-          </Typography>
-        </Grid>
-        <Grid item textAlign="center">
-          <img
-            src={require('../../assets/home_media.svg').default}
-            alt="Code"
-            height="90%"
-            width="90%"
+    <Grid
+      container
+      justifyContent="flex-start"
+      textAlign="center"
+      columnSpacing={1}
+      rowSpacing={2}
+      rowGap={3}
+      sx={{
+        width: '100%',
+        minHeight: '100vh',
+        pb: '50px',
+      }}
+    >
+      <Grid item xs={12}>
+        <NavBar />
+      </Grid>
+      <Grid item xs={12}>
+        <Header text="Ready to ace your interview?" />
+        <Caption text="pick a difficulty level" />
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        container
+        justifyContent="center"
+        gap={{ xs: 2, md: 4 }}
+        columns={{ xs: 3, sm: 8, md: 12 }}
+      >
+        <Grid item xs={2} sm={4} md={3}>
+          <Card
+            level="Easy"
+            imageUrl={EasyMedia}
+            footer={
+              <>
+                Suitable for beginner
+                <br /> ~15mins
+              </>
+            }
           />
         </Grid>
-      </Grid>
-      <Grid item container lg={8}>
-        <OutlinedContainer>
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-around"
-            alignItems="center"
-          >
-            <Grid item>
-              <Typography
-                variant="h3"
-                fontWeight="lighter"
-                textAlign="center"
-                sx={{ mt: '3vw' }}
-                color="#3EA7A5"
-              >
-                Question Difficulty
-              </Typography>
-              <Typography
-                variant="h5"
-                fontWeight="lighter"
-                textAlign="center"
-                sx={{ mt: '10vw' }}
-                color="#A7C7C8"
-              >
-                Start by choosing <br />a{' '}
-                <Typography variant="h4" component="span" fontWeight="bold">
-                  difficulty
-                </Typography>{' '}
-                level for <br />
-                your coding question.
-                <br />
-                Let PeerPrep handle the rest!
-              </Typography>
-              <Grid
-                item
-                justifyContent="center"
-                alignItems="center"
-                sx={{ mt: '10vw' }}
-              >
-                <DifficultyButtonGroup />
-              </Grid>
-            </Grid>
-          </Grid>
-        </OutlinedContainer>
+        <Grid item xs={2} sm={4} md={3}>
+          <Card
+            level="Medium"
+            imageUrl={MediumMedia}
+            footer={
+              <>
+                Suitable for intermediate user
+                <br /> ~45mins
+              </>
+            }
+          />
+        </Grid>
+        <Grid item xs={2} sm={4} md={3}>
+          <Card
+            level="Hard"
+            imageUrl={HardMedia}
+            footer={
+              <>
+                Suitable for expert
+                <br /> ~1.5hrs
+              </>
+            }
+          />
+        </Grid>
       </Grid>
     </Grid>
   );

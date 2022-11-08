@@ -2,19 +2,22 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import CenterContainer from '../../components/layout/CenterContainer';
 
 import io from 'socket.io-client';
 
-import { URL_MATCHING_SVC_SOCKET, PATH_MATCHING_SVC_SOCKET } from '../../configs';
+import {
+  URL_MATCHING_SVC_SOCKET,
+  PATH_MATCHING_SVC_SOCKET,
+} from '../../configs';
 import AlertContext from '../../context/alert-context';
 import UserContext from '../../context/user-context';
-import OutlinedContainer from '../../components/ui/OutlinedContainer';
 import styles from './Match.module.css';
+import DustBackground from '../../components/layout/DustBackground';
 
 // Styling
 const DARKGREY = '#707070';
@@ -22,9 +25,9 @@ const GREY = '#757d86';
 const PADDED_BTN = {
   paddingLeft: 6,
   paddingRight: 6,
-}
+};
 // Timer
-const DURATION = 30; 
+const DURATION = 30;
 
 // Socket
 const socket = io(URL_MATCHING_SVC_SOCKET, {
@@ -70,7 +73,7 @@ function MatchPage() {
       setIsMatchFailed(true);
     });
 
-     // Emit match event
+    // Emit match event
     if (difficulty && userCtx.username) {
       socket.emit('match', {
         difficulty,
@@ -83,13 +86,13 @@ function MatchPage() {
       socket.off('matchSuccess');
       socket.off('matchFail');
       socket.off('disconnect');
-    }
+    };
   }, [difficulty, navigate, userCtx]);
 
   // Timer logic
   useEffect(() => {
     if (counter > 0) {
-      setTimeout(() => setCounter(prevCounter => prevCounter - 1), 1000);
+      setTimeout(() => setCounter((prevCounter) => prevCounter - 1), 1000);
     } else {
       setTimerEnd(true);
     }
@@ -105,7 +108,7 @@ function MatchPage() {
     setTimerEnd(false);
     setCounter(DURATION);
     socket.emit('match', { difficulty });
-  }
+  };
 
   // Styling
   let boxStyling = styles.difficultyBox;
@@ -124,7 +127,9 @@ function MatchPage() {
   }
 
   return (
-    <OutlinedContainer customStyle={{ width: '75vw', maxWidth: '500px !important' }}>
+    <CenterContainer>
+      <DustBackground />
+      <div className={styles.card}>
       <Grid container direction='column' alignItems='center' padding={3}>
         <Grid item>
           <div className={boxStyling}>
@@ -133,11 +138,9 @@ function MatchPage() {
         </Grid>
 
         <Grid item mt={2} className={styles.spaceAround}>
-          <PersonOutlineIcon color='primary' sx={{ fontSize: 80 }} />
           {isMatchFailed && timerEnd
             ? <CancelOutlinedIcon color='error' sx={{ fontSize: 55}} />
             : <CircularProgress sx={{ color: DARKGREY, margin: 1 }} />}
-          <PersonOutlineIcon color='primary' sx={{ fontSize: 80 }} />
         </Grid>
 
         <Grid item mt={2}>
@@ -183,7 +186,8 @@ function MatchPage() {
             </Button>}
         </Grid>
       </Grid> 
-    </OutlinedContainer>
+      </div>
+    </CenterContainer>
   );
 }
 

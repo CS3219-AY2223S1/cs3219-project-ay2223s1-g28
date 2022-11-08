@@ -1,30 +1,22 @@
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-
-import OutlinedContainer from '../../components/ui/OutlinedContainer';
+import SplitterContainer from '../../components/layout/SplitterContainer';
 import SignupForm from '../../components/forms/SignupForm';
+import GradientBackground from '../../components/layout/GradientBackground';
 
 function SignupPage() {
   return (
-    <OutlinedContainer
-      customStyle={{ width: '75vw', maxWidth: '500px !important' }}
-    >
-      <Grid
-        container
-        direction="column"
-        justifyContent="space-evenly"
-        alignItems="center"
-      >
-        <AssignmentIndIcon color="primary" sx={{ fontSize: 80 }} />
-        <Grid item>
-          <Typography>You must be new here!</Typography>
-        </Grid>
-        <Grid item>
-          <SignupForm />
-        </Grid>
-      </Grid>
-    </OutlinedContainer>
+    <GradientBackground>
+      <SplitterContainer
+        primaryChild={
+          <img
+            src={require('../../assets/signup.svg').default}
+            alt="Signup"
+            width="100%"
+            height="100%"
+          />
+        }
+        secondaryChild={<SignupForm />}
+      />
+    </GradientBackground>
   );
 }
 

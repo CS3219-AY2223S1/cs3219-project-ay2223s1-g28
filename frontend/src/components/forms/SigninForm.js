@@ -3,21 +3,18 @@ import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
-import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import CustomTextField from '../inputs/CustomTextField';
-import styles from './SigninForm.module.css';
+import BigButton from '../inputs/BigButton';
 
 import AlertContext from '../../context/alert-context';
 import UserContext from '../../context/user-context';
-
 import useInput from '../../hooks/use-input';
-
 import isValidUsername from '../../validators/username-validator';
 import isValidPassword from '../../validators/password-validator';
+import Header from '../../components/ui/Header';
+import Caption from '../../components/ui/Caption';
 
 function SigninForm() {
   const alertCtx = useContext(AlertContext);
@@ -60,7 +57,7 @@ function SigninForm() {
 
     userCtx.onSignin(usernameValue, passwordValue, (isSigninSuccess, err) => {
       if (err || !isSigninSuccess) {
-        alertCtx.onShow(err ? err.response.data.message : "Sign in failed!");
+        alertCtx.onShow(err ? err.response.data.message : 'Sign in failed!');
         return;
       }
 
@@ -74,15 +71,13 @@ function SigninForm() {
 
   return (
     <form onSubmit={submitHandler}>
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        spacing={6}
-      >
+      <Grid container justifyContent="center" alignItems="center" spacing={6}>
         <Grid item xs={12}>
-          <CustomTextField
-            leftNode={<AccountCircle color="primary" fontSize="large" />}
+          <Header text="Welcome back to PeerPrep!" />
+          <Caption text="signin to continue" />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
             label="Email/Username"
             value={usernameValue}
             error={usernameHasError}
@@ -94,8 +89,7 @@ function SigninForm() {
           />
         </Grid>
         <Grid item xs={12}>
-          <CustomTextField
-            leftNode={<HttpsOutlinedIcon color="primary" fontSize="large" />}
+          <TextField
             label="Password"
             type="password"
             value={passwordValue}
@@ -107,32 +101,27 @@ function SigninForm() {
             required
           />
         </Grid>
-        <Grid
-          item
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          rowSpacing={1}
-        >
-          <Grid item>
-            <Button
-              className={styles.signin_button}
-              variant="outlined"
-              size="large"
-              type="submit"
-            >
-              Sign in
-            </Button>
-          </Grid>
-          <Grid item>
-            <Typography variant="button">
-              Don't have an account?{' '}
-              <Link to="/signup" className={styles.signup_link}>
-                Sign up here!
-              </Link>
+        <Grid item xs={12}>
+          <BigButton
+            buttonProps={{
+              variant: 'contained',
+              type: 'submit',
+              fullWidth: true,
+            }}
+            sx={{
+              color: 'white',
+            }}
+          >
+            Sign in
+          </BigButton>
+        </Grid>
+        <Grid item>
+          <Typography variant="button">
+            Don't have an account?{' '}
+            <Typography component={Link} to="/signup" color="primary">
+              Sign up here!
             </Typography>
-          </Grid>
+          </Typography>
         </Grid>
       </Grid>
     </form>
