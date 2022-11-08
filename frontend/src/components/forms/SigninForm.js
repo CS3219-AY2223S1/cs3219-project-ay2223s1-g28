@@ -3,8 +3,6 @@ import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import Typography from '@mui/material/Typography';
 
 import CustomTextField from '../inputs/CustomTextField';
