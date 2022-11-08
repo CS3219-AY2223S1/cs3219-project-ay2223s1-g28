@@ -130,112 +130,62 @@ function MatchPage() {
     <CenterContainer>
       <DustBackground />
       <div className={styles.card}>
-        <Grid container direction="column" alignItems="center" padding={3}>
-          <Grid item>
-            <div className={boxStyling}>
-              <Typography variant="h5" color="white">
-                {difficulty}
-              </Typography>
-            </div>
-          </Grid>
+      <Grid container direction='column' alignItems='center' padding={3}>
+        <Grid item>
+          <div className={boxStyling}>
+            <Typography variant='h5' color='white'>{difficulty}</Typography>
+          </div>
+        </Grid>
 
-          <Grid item mt={2} className={styles.spaceAround}>
-            {isMatchFailed && timerEnd ? (
-              <CancelOutlinedIcon color="error" sx={{ fontSize: 55 }} />
-            ) : (
-              <CircularProgress sx={{ color: DARKGREY, margin: 1 }} />
-            )}
-          </Grid>
+        <Grid item mt={2} className={styles.spaceAround}>
+          {isMatchFailed && timerEnd
+            ? <CancelOutlinedIcon color='error' sx={{ fontSize: 55}} />
+            : <CircularProgress sx={{ color: DARKGREY, margin: 1 }} />}
+        </Grid>
 
-          <Grid item mt={2}>
-            <Typography
-              variant="h6"
-              textAlign="center"
-              sx={{ color: GREY, lineHeight: 1.3 }}
-            >
-              {isMatchFailed && timerEnd ? (
-                <>
-                  Looks like no one is willing to
-                  <br />
-                  take on your challenge yet.
-                  <br />
-                  Let's try matching again!
-                </>
-              ) : (
-                <>
-                  We are currently matching you.
-                  <br />
-                  Please wait.
-                </>
-              )}
-            </Typography>
-          </Grid>
+        <Grid item mt={2}>
+          <Typography variant='h6' textAlign='center' sx={{ color: GREY, lineHeight: 1.3 }}>
+            {isMatchFailed && timerEnd
+            ? <>Looks like no one is willing to<br />
+                take on your challenge yet.<br />
+                Let's try matching again!</>
+            : <>We are currently matching you.<br />
+                Please wait.</>}
+          </Typography>
+        </Grid>
 
-          <Grid item mt={5}>
-            {!isMatchFailed && timerEnd ? (
-              <Typography
-                variant="h6"
-                display="inline"
-                sx={{ color: DARKGREY }}
-              >
+        <Grid item mt={5}>
+          {!isMatchFailed && timerEnd
+            ? <Typography variant='h6' display='inline' sx={{ color: DARKGREY }}>
                 Loading...
               </Typography>
-            ) : isMatchFailed && timerEnd ? (
-              <></>
-            ) : (
-              <>
-                <Typography
-                  variant="h6"
-                  display="inline"
-                  sx={{ color: DARKGREY }}
-                >
+            : isMatchFailed && timerEnd
+            ? <></>
+            : <>
+                <Typography variant='h6' display='inline' sx={{ color: DARKGREY }}>
                   Time left:{' '}
                 </Typography>
-                <Typography
-                  variant="h5"
-                  display="inline"
-                  sx={{ color: DARKGREY }}
-                >
+                <Typography variant='h5' display='inline' sx={{ color: DARKGREY }}>
                   {counter} sec
                 </Typography>
-              </>
-            )}
-          </Grid>
+              </>}
+        </Grid>
 
-          <Grid item mt={10} className={styles.spaceAround}>
-            {isMatchFailed && timerEnd ? (
-              <>
-                <Button
-                  onClick={handleRetry}
-                  variant="outlined"
-                  size="large"
-                  sx={{ color: '#a7c7c8', ...PADDED_BTN }}
-                >
-                  Retry
-                </Button>
-                <Button
-                  onClick={handleCancel}
-                  variant="outlined"
-                  color="error"
-                  size="large"
-                  sx={PADDED_BTN}
-                >
-                  Cancel
-                </Button>
-              </>
-            ) : (
-              <Button
-                onClick={handleCancel}
-                variant="outlined"
-                color="error"
-                size="large"
-                sx={PADDED_BTN}
-              >
+        <Grid item mt={10} className={styles.spaceAround}>
+          {isMatchFailed && timerEnd
+          ? <>
+              <Button onClick={handleRetry} variant='outlined' size='large' sx={{ color: '#a7c7c8', ...PADDED_BTN }}>
+                Retry
+              </Button>
+              <Button onClick={handleCancel} variant='outlined' color='error' size='large' sx={PADDED_BTN}>
                 Cancel
               </Button>
-            )}
-          </Grid>
+            </>
+          : <Button onClick={handleCancel} variant='outlined' color='error' size='large' sx={PADDED_BTN}>
+              Cancel
+            </Button>}
         </Grid>
+      </Grid> 
       </div>
     </CenterContainer>
   );
