@@ -1,17 +1,17 @@
 import Grid from '@mui/material/Grid';
 
-function SplitterContainer({ primaryChild, secondaryChild }) {
+function SplitterContainer({ primaryChild, secondaryChild, textAlign="center", minHeight="100vh" }) {
   return (
     <Grid
       container
       direction="row"
       justifyContent="center"
       alignItems="center"
-      textAlign="center"
+      textAlign={textAlign}
       sx={{
         width: '100%',
-        minHeight: '100vh',
-        p: '50px 0',
+        minHeight: {minHeight},
+        pb: '50px',
       }}
       columnSpacing={10}
     >
