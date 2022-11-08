@@ -12,7 +12,7 @@ function SplitterContainer({ primaryChild, secondaryChild }) {
         width: '100%',
         height: '100%',
       }}
-      columnSpacing={5}
+      columnSpacing={10}
     >
       <Grid item xs={12} md={6}>
         {primaryChild}
