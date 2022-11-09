@@ -32,7 +32,7 @@ This is the repository for CS3219 Group 28 PeerPrep project.
 	`cd cs3219-project-ay2223s1-g28`
 <br>
 
-4. Rename the file `.env.sample` to `.env` within each project folder except `.github`, `gateway` and `gke`. There are a total of 7 of them you need to rename.
+4. Rename the file `.env.sample` to `.env` within each project folder except `.github`, `frontend`, `gateway` and `gke`. There are a total of 6 of them you need to rename.
 <br>
 
 5. Open `Docker desktop`.
