@@ -113,7 +113,7 @@ function RoomPage() {
           color="error"
           onClick={() => setOpenBackdrop(true)}
         >
-          <b>FINISH SESSION</b>
+          <b>Finish</b>
         </Button>
       </Grid>
       <SplitterContainer
