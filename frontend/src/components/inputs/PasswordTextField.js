@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
-import FilledInput from '@mui/material/FilledInput';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
@@ -24,9 +24,9 @@ function PasswordTextField(props) {
   const { helperText, label, fullWidth: isFullWidth, ...inputProps } = props;
 
   return (
-    <FormControl variant="filled" fullWidth={isFullWidth}>
-      <InputLabel>{label}</InputLabel>
-      <FilledInput
+    <FormControl variant="outlined" fullWidth={isFullWidth}>
+      <InputLabel color={helperText && 'error'}>{label}</InputLabel>
+      <OutlinedInput
         {...inputProps}
         type={showPassword ? 'text' : 'password'}
         endAdornment={
@@ -40,9 +40,12 @@ function PasswordTextField(props) {
             </IconButton>
           </InputAdornment>
         }
+        label={label}
       />
       {helperText && (
-        <FormHelperText component={Typography} error>{helperText}</FormHelperText>
+        <FormHelperText component={Typography} error>
+          {helperText}
+        </FormHelperText>
       )}
     </FormControl>
   );

@@ -1,38 +1,42 @@
-import { useContext } from 'react';
-
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '@mui/material/Button';
+import BigButton from '../inputs/BigButton';
 import Grid from '@mui/material/Grid';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Typography from '@mui/material/Typography';
-
-import CustomTextField from '../inputs/CustomTextField';
-import OutlinedContainer from '../ui/OutlinedContainer';
+import Divider from '@mui/material/Divider';
+import WarningIcon from '@mui/icons-material/Warning';
 
 import useInput from '../../hooks/use-input';
-
 import AlertContext from '../../context/alert-context';
 import UserContext from '../../context/user-context';
-
 import isValidPassword from '../../validators/password-validator';
-import isValidUsername from '../../validators/username-validator';
-
-import styles from './UpdateProfileForm.module.css';
+import PasswordTextField from '../inputs/PasswordTextField';
+import CustomBackdrop from '../../components/ui/CustomBackdrop';
+import Header from '../../components/ui/Header';
+import Caption from '../../components/ui/Caption';
 
 function UpdateProfileForm() {
   const alertCtx = useContext(AlertContext);
   const userCtx = useContext(UserContext);
 
-  const {
-    value: usernameValue,
-    isValid: usernameIsValid,
-    hasError: usernameHasError,
-    errorHelperText: usernameErrorHelperText,
-    valueChangeHandler: usernameChangeHandler,
-    inputBlurHandler: usernameBlurHandler,
-    reset: resetUsername,
-  } = useInput(isValidUsername);
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+
+  const navigate = useNavigate();
+
+  const toggleBackdropHandler = () => setOpenBackdrop(!openBackdrop);
+
+  const deleteAccountHandler = () => {
+    userCtx.onDeleteAccount((deleteSuccessMessage, err) => {
+      if (err || !deleteSuccessMessage) {
+        return alertCtx.onShow(
+          err ? err.message : 'Delete account failed, please try again later!'
+        );
+      }
+      alertCtx.onShow(deleteSuccessMessage, 'success');
+      navigate('/signup');
+    });
+  };
 
   const {
     value: passwordValue,
@@ -44,14 +48,9 @@ function UpdateProfileForm() {
     reset: resetPassword,
   } = useInput(isValidPassword);
 
-  const navigate = useNavigate();
-
   let formIsValid = false;
 
-  if (
-    (!usernameValue || usernameIsValid) &&
-    (!passwordValue || passwordIsValid)
-  ) {
+  if (!passwordValue || passwordIsValid) {
     // If the field is empty, assume it to be true since it will not update the profile
     formIsValid = true;
   }
@@ -63,94 +62,102 @@ function UpdateProfileForm() {
       return;
     }
 
-    userCtx.onUpdateAccount(
-      usernameValue,
-      passwordValue,
-      (updateSuccessMessage, err) => {
-        if (err || !updateSuccessMessage) {
-          alertCtx.onShow(err ? err.response.data.message : 'Update failed!');
-          return;
-        }
-
-        alertCtx.onShow(updateSuccessMessage, 'success');
-        navigate('/home');
+    userCtx.onUpdateAccount(passwordValue, (updateSuccessMessage, err) => {
+      if (err || !updateSuccessMessage) {
+        alertCtx.onShow(err ? err.response.data.message : 'Update failed!');
+        return;
       }
-    );
 
-    resetUsername();
+      alertCtx.onShow(updateSuccessMessage, 'success');
+      navigate('/home');
+    });
+
     resetPassword();
   };
 
   return (
     <form onSubmit={submitHandler}>
-      <OutlinedContainer
-        customStyle={{ width: '75vw', maxWidth: '800px !important' }}
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        spacing={6}
+        height="100%"
       >
-        <Grid container direction="row" justifyContent="space-between">
-          <Grid item xs={1}>
-            <PersonOutlineIcon color="primary" sx={{ fontSize: 80, mt: 1 }} />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={9}
-            lg={8}
-            container
-            direction="row"
-            justifyContent="center"
-            rowGap={5}
-            sx={{ m: '50px 0' }}
-          >
-            <Grid item xs={12}>
-              <CustomTextField
-                leftNode={<Typography>Username:</Typography>}
-                value={usernameValue}
-                error={usernameHasError}
-                helperText={usernameHasError && usernameErrorHelperText}
-                onChange={usernameChangeHandler}
-                onBlur={usernameBlurHandler}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <CustomTextField
-                leftNode={<Typography>Password:</Typography>}
-                type="password"
-                value={passwordValue}
-                error={passwordHasError}
-                helperText={passwordHasError && passwordErrorHelperText}
-                onChange={passwordChangeHandler}
-                onBlur={passwordBlurHandler}
-                fullWidth
-              />
-            </Grid>
-            <Grid item>
-              <Button
-                className={styles.update_profile_button}
-                variant="outlined"
-                size="large"
-                type="submit"
-              >
-                Update Profile
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid
-            item
-            xs={0}
-            md={1}
-            container
-            direction="column-reverse"
-            alignItems="flex-end"
-          >
-            <Grid item>
-              <Typography textAlign="end" sx={{ mb: 1 }}>
-                PeerCard
-              </Typography>
-            </Grid>
-          </Grid>
+        <Grid item xs={12}>
+          <Header text="Update account!" />
+          <Caption text="all in your control" />
         </Grid>
-      </OutlinedContainer>
+        <Grid item xs={12}>
+          <PasswordTextField
+            label="Password"
+            type="password"
+            value={passwordValue}
+            error={passwordHasError}
+            helperText={passwordHasError && passwordErrorHelperText}
+            onChange={passwordChangeHandler}
+            onBlur={passwordBlurHandler}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <BigButton
+            buttonProps={{
+              variant: 'contained',
+              size: 'large',
+              type: 'submit',
+              fullWidth: true,
+              disabled: !passwordValue,
+            }}
+            sx={{
+              color: 'white',
+              margin: '10px 0',
+            }}
+          >
+            Update Password
+          </BigButton>
+          <BigButton
+            buttonProps={{
+              variant: 'outlined',
+              size: 'large',
+              fullWidth: true,
+              color: 'primary',
+            }}
+            sx={{
+              margin: '10px 0',
+            }}
+            onClick={() => navigate('/home')}
+          >
+            Back to Home
+          </BigButton>
+          <Divider sx={{ margin: '64px 0' }} />
+          <BigButton
+            buttonProps={{
+              variant: 'outlined',
+              size: 'large',
+              fullWidth: true,
+              color: 'error',
+              startIcon: <WarningIcon />,
+            }}
+            onClick={toggleBackdropHandler}
+            fullWidth
+          >
+            Delete Account
+          </BigButton>
+        </Grid>
+      </Grid>
+      <CustomBackdrop
+        openBackdrop={openBackdrop}
+        onClick={toggleBackdropHandler}
+        content={
+          <Typography>Are you sure you want to delete this account?</Typography>
+        }
+        primaryAction={{
+          text: 'No',
+          onClick: toggleBackdropHandler,
+        }}
+        secondaryAction={{ text: 'Delete', onClick: deleteAccountHandler }}
+      />
     </form>
   );
 }

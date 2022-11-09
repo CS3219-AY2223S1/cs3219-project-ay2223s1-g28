@@ -24,24 +24,32 @@ function CustomBackdrop({
             container
             justifyContent="center"
             direction="row"
-            columnGap={5}
+            columnSpacing={5}
+            rowSpacing={1}
           >
-            <Button
-              variant="outlined"
-              size="large"
-              color="primary"
-              onClick={primaryAction.onClick}
-            >
-              {primaryAction.text}
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
-              color="error"
-              onClick={secondaryAction.onClick}
-            >
-              {secondaryAction.text}
-            </Button>
+            <Grid item xs={12} md={3}>
+              <Button
+                variant="contained"
+                size="large"
+                color="primary"
+                onClick={primaryAction.onClick}
+                fullWidth
+                sx={{ color: 'white' }}
+              >
+                {primaryAction.text}
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Button
+                variant="outlined"
+                size="large"
+                color="error"
+                onClick={secondaryAction.onClick}
+                fullWidth
+              >
+                {secondaryAction.text}
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </OutlinedContainer>
