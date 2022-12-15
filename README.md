@@ -62,7 +62,7 @@ This is the repository for CS3219 Group 28 PeerPrep project.
 <br>
 
 
-## Access Project On Live
+## Access Project On Live (Expires on 9/2/2023)
 ### Prerequisite(s) :memo:
 1. Any browser of your choice. Use `Google Chrome`, `Mozilla Firefox` or `Safari` for the best experience.
 
