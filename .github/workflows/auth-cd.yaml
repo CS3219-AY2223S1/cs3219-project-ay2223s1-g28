@@ -51,6 +51,12 @@ jobs:
       # helper for authentication
       - run: |-
           gcloud --quiet auth configure-docker
+        
+      - run: |-
+          source ~/.bashrc
+      
+      - run: |-
+          gcloud components update
 
       # Use GKE auth plugin
       - run: |-
