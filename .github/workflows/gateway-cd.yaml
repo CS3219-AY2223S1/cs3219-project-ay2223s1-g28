@@ -35,6 +35,13 @@ jobs:
         uses: google-github-actions/auth@v0.8.3
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      
+      # Setup GKE credentials
+      - name: Get GKE Credentials
+        uses: google-github-actions/get-gke-credentials@v1.0.1
+        with:
+          cluster_name: "$GKE_CLUSTER"
+          location: "$GKE_ZONE"
 
       # Setup gcloud CLI
       - name: Set up gcloud Cloud SDK environment
