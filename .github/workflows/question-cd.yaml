@@ -2,7 +2,7 @@ name: Continuous Deployment - Question Service
 
 on:
   push:
-    branches: [ "main", "frontend" ]
+    branches: [ "main", "cd" ]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -48,6 +48,7 @@ jobs:
       - run: |-
           gcloud --quiet auth configure-docker
 
+      export USE_GKE_GCLOUD_AUTH_PLUGIN=True
       # Get the GKE credentials so we can deploy to the cluster
       - run: |-
           gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
