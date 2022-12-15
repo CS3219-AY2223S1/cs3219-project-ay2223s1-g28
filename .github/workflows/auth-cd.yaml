@@ -51,16 +51,19 @@ jobs:
       # helper for authentication
       - run: |-
           gcloud --quiet auth configure-docker
-        
+
+      # Use GKE auth plugin
+      - run: |-
+          sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+
+      - run: |-
+          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
       - run: |-
           source ~/.bashrc
       
       - run: |-
           gcloud components update
-
-      # Use GKE auth plugin
-      - run: |-
-          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
       # Get the GKE credentials so we can deploy to the cluster
       - run: |-
