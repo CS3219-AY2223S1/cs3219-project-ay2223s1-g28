@@ -49,6 +49,9 @@ jobs:
 
       # Use GKE auth plugin
       - run: |-
+          sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+
+      - run: |-
           export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
       - run: |-
