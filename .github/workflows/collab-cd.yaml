@@ -45,8 +45,8 @@ jobs:
       - name: Get GKE Credentials
         uses: google-github-actions/get-gke-credentials@v1.0.1
         with:
-          cluster_name: "$GKE_CLUSTER"
-          location: "$GKE_ZONE"
+          cluster_name: 'cs3219-g28-peerprep-cluster'
+          location: 'asia-southeast1'
 
       # Setup gcloud CLI
       - name: Set up gcloud Cloud SDK environment
