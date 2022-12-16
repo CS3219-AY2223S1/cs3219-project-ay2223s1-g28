@@ -44,7 +44,7 @@ jobs:
       
       # Get the GKE credentials so we can deploy to the cluster
       - name: Get GKE Credentials
-        uses: google-github-actions/get-gke-credentials@v1.0.1
+        uses: google-github-actions/get-gke-credentials@vfb08709ba27618c31c09e014e1d8364b02e5042e
         with:
           cluster_name: 'cs3219-g28-peerprep-cluster'
           location: 'asia-southeast1'
