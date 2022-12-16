@@ -1,0 +1,23 @@
+.container {
+  width: 100%;
+}
+
+.card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 50px;
+  border-radius: 50px;
+
+  background-color: hsl(120deg 20% 95%);
+  box-shadow: 34px 34px 68px 0px hsl(120deg 10% 50%),
+    inset -8px -8px 16px 0px hsl(120deg 20% 50% / 70%),
+    inset 0px 14px 28px 0px hsl(120deg 20% 95%);
+}
+
+.card-footer {
+  font-size: 0.75em;
+  color: hsl(120deg 5% 50%);
+}

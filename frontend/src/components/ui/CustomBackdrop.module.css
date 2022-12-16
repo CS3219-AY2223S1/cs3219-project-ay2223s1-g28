@@ -1,0 +1,9 @@
+.backdrop_card {
+    width: 50% !important; /* To override the default width */
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 15px;
+    box-shadow: 0 16px #d6d6d6;
+    color: black;
+    padding: 50px;
+}

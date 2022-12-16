@@ -1,0 +1,5 @@
+.question {
+    width: 100%;
+    overflow-x: auto;
+    word-wrap: break-word;
+}

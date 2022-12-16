@@ -1,0 +1,160 @@
+# Docker compose used only in development
+version: "3.8"
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    environment:
+      - WATCHPACK_POLLING=true
+    depends_on:
+      [user-service, matching-service, comm-service, collab-service, question-service, auth-service]
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  user-service:
+    container_name: user-service
+    build:
+      context: ./user-service
+    ports:
+      - 8000:8000
+    environment:
+      - WATCHPACK_POLLING=true
+    depends_on:
+      - mongo-user
+    volumes:
+      - ./user-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
+  mongo-user:
+    container_name: mongo-user
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-user-volume:/data/db
+
+  redis-auth:
+    container_name: redis-auth
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-auth-volume:/data
+
+  matching-service:
+    container_name: matching-service
+    build:
+      context: ./matching-service
+    ports:
+      - 8001:8001
+    environment:
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./matching-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
+  comm-service:
+    container_name: comm-service
+    build:
+      context: ./communication-service
+    ports:
+      - 8002:8002
+    environment:
+      - WATCHPACK_POLLING=true
+    depends_on:
+      - mongo-comm
+    volumes:
+      - ./communication-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
+  mongo-comm:
+    container_name: mongo-comm
+    image: mongo
+    ports:
+      - 27019:27017
+    volumes:
+      - mongo-comm-volume:/data/db
+
+  collab-service:
+    container_name: collab-service
+    build:
+      context: ./collaboration-service
+    ports:
+      - 8003:8003
+    environment:
+      - WATCHPACK_POLLING=true
+    depends_on:
+      - redis-collab
+    volumes:
+      - ./collaboration-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
+  redis-collab:
+    container_name: redis-collab
+    image: redis
+    ports:
+      - 6380:6379
+    volumes:
+      - redis-collab-volume:/data
+
+  question-service:
+    container_name: question-service
+    build:
+      context: ./question-service
+    ports:
+      - 8004:8004
+    depends_on:
+      - mongo-question
+    volumes:
+      - ./question-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
+  mongo-question:
+    container_name: mongo-question
+    image: mongo
+    ports:
+      - 27018:27017
+    volumes:
+      - mongo-question-volume:/data/db
+
+  auth-service:
+    container_name: auth-service
+    build:
+      context: ./auth-service
+    ports:
+      - 8005:8005
+    depends_on:
+      [mongo-user, redis-auth]
+    volumes:
+      - ./auth-service:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
+  gateway:
+    container_name: gateway
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on:
+      [frontend, user-service, matching-service, comm-service, collab-service, question-service, auth-service]
+
+volumes:
+  mongo-user-volume:
+  mongo-comm-volume:
+  mongo-question-volume:
+  redis-auth-volume:
+  redis-collab-volume:
