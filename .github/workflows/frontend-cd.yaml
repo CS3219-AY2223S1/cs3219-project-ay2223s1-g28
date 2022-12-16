@@ -50,23 +50,6 @@ jobs:
           location: 'asia-southeast1'
           credentials: '${{ secrets.GCP_CREDENTIALS }}'
 
-      # Use GKE auth plugin
-      - run: |-
-          gcloud components install gke-gcloud-auth-plugin
-
-      - run: |-
-          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-
-      - run: |-
-          source ~/.bashrc
-      
-      - run: |-
-          gcloud components update
-
-      # Get the GKE credentials so we can deploy to the cluster
-      - run: |-
-          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
-
       # Build the Docker image
       #
       # GITHUBP_SHA:
