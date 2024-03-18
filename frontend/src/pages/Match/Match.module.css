@@ -1,0 +1,39 @@
+.difficultyBox {
+  padding: 3px 20px;
+  border-radius: 10px;
+}
+
+.easy {
+  background-color: #a7c7c8;
+}
+
+.medium {
+  background-color: #ffce0c;
+}
+
+.hard {
+  background-color: #ffa2a2;
+}
+
+.spaceAround {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* Code reference: https://codepen.io/FlorinCornea/pen/gOwwybX */
+.card {
+  width: 50vw;
+  min-height: 50vh;
+  padding: 10px;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 10px 10px 20px -10px rgba(255, 255, 255, 0.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: 0.5s ease;
+}

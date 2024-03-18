@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Define the Deployment name
+  name: matching-deployment
+  labels:
+    app: matching
+spec:
+  # Specify the number of desired Pods
+  replicas: 1
+  # Define how the Deployment finds which Pods to manage
+  selector:
+    matchLabels:
+      app: matching
+  # Define template for Pods
+  template:
+    metadata:
+      labels:
+        app: matching
+    spec:
+      # Container details
+      containers:
+        - name: matching-deployment
+          image: gcr.io/cs3219-g28-peerprep/matching:latest
+          ports:
+            - name: matching-http
+              containerPort: 8001
+          resources:
+            limits:
+              cpu: 50m
+              memory: 150Mi
+          env:
+            - name: ENV
+              value: PROD
+            - name: FRONTEND_URL
+              valueFrom:
+                secretKeyRef:
+                  name: matching-secrets
+                  key: FRONTEND_URL

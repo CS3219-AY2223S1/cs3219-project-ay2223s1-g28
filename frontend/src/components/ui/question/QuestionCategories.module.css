@@ -1,0 +1,10 @@
+.category {
+    display: inline-block;
+}
+
+.categories {
+    padding: 3px;
+    margin: 3px;
+    background: white;
+    float: left;
+}

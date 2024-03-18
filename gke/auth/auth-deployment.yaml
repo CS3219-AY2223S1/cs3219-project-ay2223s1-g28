@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Define the Deployment name
+  name: auth-deployment
+  labels:
+    app: auth
+spec:
+  # Specify the number of desired Pods
+  replicas: 1
+  # Define how the Deployment finds which Pods to manage
+  selector:
+    matchLabels:
+      app: auth
+  # Define template for Pods
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      # Container details
+      containers:
+        - name: auth-deployment
+          image: gcr.io/cs3219-g28-peerprep/auth:latest
+          ports:
+            - name: auth-http
+              containerPort: 8005
+          resources:
+            limits:
+              cpu: 40m
+              memory: 100Mi
+          env:
+            - name: ENV
+              value: PROD
+            - name: FRONTEND_URL
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secrets
+                  key: FRONTEND_URL
+            - name: DB_CLOUD_URI
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secrets
+                  key: DB_CLOUD_URI
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secrets
+                  key: JWT_SECRET_KEY
+            - name: REDIS_CLOUD_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secrets
+                  key: REDIS_CLOUD_HOST
+            - name: REDIS_CLOUD_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secrets
+                  key: REDIS_CLOUD_PORT
+            - name: REDIS_CLOUD_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secrets
+                  key: REDIS_CLOUD_PASSWORD

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # Define the Service name
+  name: user-service
+  labels:
+    app: user
+spec:
+  # Scans for Pods that match its selector
+  selector:
+    app: user
+  # Exposes the Service on a cluster-internal IP. 
+  # Hence, this Service is only reachable from within the cluster. 
+  type: ClusterIP
+  ports:
+    - name: user-http
+      port: 8000
+      protocol: TCP
+      targetPort: user-http
